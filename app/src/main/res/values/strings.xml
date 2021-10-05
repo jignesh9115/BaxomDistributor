@@ -1,0 +1,255 @@
+<resources>
+    <string name="app_name">Baxom Distribution</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+
+    <!--baxom api key-->
+    <!--  AIzaSyBombwoKL7S3_uFcbUtg6fLxulOnMSCRD8 -->
+    <!--<string name="Google_map_key">AIzaSyBombwoKL7S3_uFcbUtg6fLxulOnMSCRD8</string>-->
+    <string name="Google_map_key">AIzaSyAMhXV5wOSgo02HRr9ynMtUK0PLnRmGvHA</string>
+    <string name="Base_URL">http://projects.drbbagpks.org/Baxom/API_TESTING/</string>
+    <string name="Local_URL">http://192.168.43.193/baxom/API/</string>
+    <string name="URL_TESTING">http://projects.drbbagpks.org/Baxom/Tesing_DB_API/</string>
+
+
+    <string name="UndeliveredOrders_ByDistid_url">salesorderbydate.php?dist_id=</string>
+    <string name="UndeliveredOrder_ByDistid_date_url">salesorderbysalesman.php?dist_id=</string>
+    <string name="UndeliveredOrders_Bydistid_date_salmanid_url">salesorderbyshop.php?dist_id=</string>
+    <string name="DeliveredOrders_ByDistid_url">salesorderdelbydate.php?dist_id=</string>
+    <string name="DeliveredOrders_ByDistid_date_url">salesorderdelbysalesman.php?dist_id=</string>
+    <string name="DeliveredOrders_ByDistid_date_salmanid_url">salesorderdelbyshop.php?dist_id=</string>
+    <string name="update_salesman_working_date_url">updatesalesmanworkingdate.php?id=</string>
+    <string name="get_salesman_list_by_salid_url">salesmanlist.php?salesman_id=</string>
+    <!--    <string name="get_salesman_monthly_report_url">salesmanmonthlyreport.php?salesman_id=</string>-->
+    <string name="get_salesman_monthly_report_url">salesman_monthly_summery_reports.php?salesman_id=</string>
+    <string name="get_delfail_confirm_data_url">deliveryfailconfirmation.php?salesman_id=</string>
+    <string name="update_delfail_confirl_url">updatedeliveryfailconfirm.php?order_id=</string>
+    <string name="viewsales_orderdetail_url">viewsalesorderdetail.php?order_id=</string>
+    <string name="updateneworder_url">updateneworder.php?prod_list=</string>
+    <string name="salesmanlist_by_parentId_url">salesmanlistByparentId.php?salesman_id=</string>
+    <string name="fulldelivar_all_neworder_url">updateallneworderfulldelivary.php?dist_id=</string>
+    <string name="fulldelivary_neworder_url">updateneworderfulldelivary.php?order_id=</string>
+
+
+    <string name="delete_shop_url">delete_shop_with_backup.php?shop_id=</string>
+    <string name="get_shop_category_list_url">shopcategorylists.php</string>
+    <string name="getShopDetailbyId_url">shopDetailByshopId.php?shop_id=</string>
+    <string name="updateShopDetail_url">updateShopDetail.php?shop_id=</string>
+    <string name="shoplists_by_salesmanbit_id_for_maps_url">shoplists_by_salesmanbit_id_for_maps.php?salesman_id=</string>
+    <string name="view_undelivered_order_shoplist_map_url">view_undelivered_order_shoplist_map.php?salesman_id=</string>
+    <string name="view_undelivered_order_shoplist_map_group_dates_url">view_undelivered_order_shoplist_map_group_dates.php?salesdate_arr=</string>
+    <string name="view_bitwise_shoplist_location_url">view_bitwise_shoplist_location.php?bit_id=</string>
+    <string name="purchaseorder_distributor_list_by_distId_url">purchaseorder_distributor_list_by_distId.php?distributor_id=</string>
+    <string name="purchaseorder_distributor_list_url">purchaseorder_distributor_list.php?salesman_id=</string>
+    <string name="add_stock_statement_url">add_stock_statement.php?dist_id=</string>
+    <string name="get_stock_statement_url">monthly_stock_statement.php?dist_id=</string>
+    <string name="get_suchna_list_url">view_all_multi_language_suchna.php</string>
+    <string name="view_all_multi_language_url">view_all_multi_language.php</string>
+    <string name="downloadperticularprodimage_url">downloadperticularprodimage.php?product_ids=</string>
+    <string name="viewallmulti_language_by_screen_id_url">view_all_multi_language_by_screen_id.php?screen_id=6,41,52</string>
+
+
+    <!--Change Language BottomSheet-->
+    <string name="langBottomsheet_txt_heading">Select Language</string>
+    <string name="langBottomsheet_rb_english_title">English</string>
+    <string name="langBottomsheet_rb_gujarati_title">Gujarati</string>
+    <string name="langBottomsheet_rb_hindi_title">Hindi</string>
+    <string name="langBottomsheet_btn_change_language">change Language</string>
+
+    <!--view undelivered sales order by date-->
+    <string name="undelorderbydate_txt_titlebar_heading">Un-Delivered Sales Order</string>
+    <string name="undelorderbydate_txt_title_total">TOTAL</string>
+    <string name="undelorderbydate_btn_title_download_pdf">DOWNLOAD SELECTED SALESMAN\'S ORDER LIST and ORDER SUMMERY</string>
+    <string name="undelorderbydate_btn_title_show_map">Show selected salesman\'s shop locations</string>
+
+    <!--view undelivered sales order by salesman-->
+    <string name="undelorderbysaelsman_txt_titlebar_heading">Un-Delivered Sales Order</string>
+    <string name="undelorderbysaelsman_txt_title_salesman_name">Salesman Name</string>
+    <string name="undelorderbysaelsman_btn_title_deliver_all">deliver all</string>
+
+    <!--Activity View Sales Orders -->
+    <string name="viewsalesorder_txt_titlebar_heading">SHOP DELIEVERY-ORDER</string>
+    <string name="viewsalesorder_txt_title_this_order_rs">THIS ORDER RS.</string>
+    <string name="viewsalesorder_txt_title_this_delivery_rs">THIS DELIVERY RS.</string>
+    <string name="viewsalesorder_txt_title_order_datetime">ORDER DATE AND TIME</string>
+    <string name="viewsalesorder_txt_title_delivery_datetime">DELIVERY DATE AND TIME</string>
+    <string name="viewsalesorder_txt_title_order_no">ORDER NO.</string>
+    <string name="viewsalesorder_txt_title_shop_name">SHOP NAME</string>
+    <string name="viewsalesorder_txt_title_contact_person">CONTACT PERSON</string>
+    <string name="viewsalesorder_txt_title_last_order_rs">LAST ORDER RS.</string>
+    <string name="viewsalesorder_txt_title_last_3_visit_average">LAST 3 VISIT AVERAGE</string>
+    <string name="viewsalesorder_txt_title_last_10_visit_average">LAST 10 VISIT AVERAGE</string>
+    <string name="viewsalesorder_btn_title_available_product_list_icon">Available product list icon</string>
+    <string name="viewsalesorder_txt_title_delivery">DELIVERY</string>
+    <string name="viewsalesorder_txt_title_attempt">ATTEMPT</string>
+    <string name="viewsalesorder_txt_title_bussiness">BUSSINESS</string>
+    <string name="viewsalesorder_txt_title_line">LINE</string>
+    <string name="viewsalesorder_txt_title_available_scheme">Available Scheme</string>
+    <string name="viewsalesorder_btn_title_check_scheme">Check Scheme</string>
+    <string name="viewsalesorder_txt_title_total_scheme_norder_value">TOTAL SCHEME <br>ORDER VALUE</br></string>
+    <string name="viewsalesorder_txt_title_total_discount_value">TOTAL DISCOUNT VALUE</string>
+    <string name="viewsalesorder_txt_title_reason_for_n_delivery_fail">REASON FOR <br> DELIVERY FAIL</br></string>
+    <string name="viewsalesorder_txt_title_delivery_n_fail_reason">DELIVERY <br> FAIL REASON</br></string>
+    <string name="viewsalesorder_txt_title_reason_for_delivery_fail">REASON FOR DELIVERY FAIL</string>
+    <string name="viewsalesorder_txt_btn_confirmation_fail_order">CONFIRMATION OF FAIL ORDER</string>
+    <string name="viewsalesorder_btn_title_sending_redelivery">SENDING FOR <br>RE-DELIVERY</br></string>
+    <string name="viewsalesorder_txt_title_submit">submit</string>
+
+    <!--entity sales order product -->
+    <string name="entitysalesorderprod_order_qty">ORDER QTY.</string>
+    <string name="entitysalesorderprod_order_nrs">ORDER RS.</string>
+    <string name="entitysalesorderprod_delivery_rs">DELIVERY RS.</string>
+
+    <!--entity view order schemes list-->
+    <string name="entityvieworderschemeslist_scheme_norder_nqty">scheme <br>order</br> <br>qty</br></string>
+
+    <!--Activity Update Shop-->
+    <string name="updateshop_txt_titlebar_heading">View Shop Detail</string>
+    <string name="updateshop_txt_title_shop_name">Shop Name</string>
+    <string name="updateshop_txt_hint_shop_name">Shop Name</string>
+    <string name="updateshop_txt_title_address">Address</string>
+    <string name="updateshop_txt_hint_address">Address</string>
+    <string name="updateshop_txt_title_contact_person_name">Contact Person Name</string>
+    <string name="updateshop_txt_hint_contact_person_name">Name</string>
+    <string name="updateshop_txt_title_contact_number_1">Contact Number 1</string>
+    <string name="updateshop_txt_hint_contact_number_1">contact number 1</string>
+    <string name="updateshop_txt_title_contact_number_2">Contact Number 2</string>
+    <string name="updateshop_txt_hint_contact_number_2">contact number 2</string>
+    <string name="updateshop_txt_title_shop_category">Shop Category</string>
+    <string name="updateshop_txt_title_invoice_type">Invoice Type</string>
+    <string name="updateshop_txt_title_gst_no">GST No.</string>
+    <string name="updateshop_txt_hint_gst_no">GST NO</string>
+    <string name="updateshop_btn_title_verify_gst">copy to clip board AND VERIFY GST NO.</string>
+    <string name="updateshop_btn_title_update">update</string>
+    <string name="updateshop_btn_title_delete">delete</string>
+
+    <!--Activity Map-->
+    <string name="map_txt_titlebar_heading">My Shop Location</string>
+    <string name="map_txt_title_select_date">SELECT DATE</string>
+
+    <!--fragment delivered sales orders-->
+    <string name="fgt_deliveredsalesorders_txt_title_from_date">FROM DATE</string>
+    <string name="fgt_deliveredsalesorders_txt_title_to_date">TO DATE</string>
+    <string name="fgt_deliveredsalesorders_chk_title_this_month">THIS MONTH</string>
+    <string name="fgt_deliveredsalesorders_chk_title_un_delievered_orders">UN-DELIEVERED ORDERS</string>
+    <string name="fgt_deliveredsalesorders_chk_title_full_delievered_orders">FULL-DELIEVERED ORDERS</string>
+    <string name="fgt_deliveredsalesorders_chk_title_partialy_delievered_orders">PARTIALY DELIEVERED ORDERS</string>
+    <string name="fgt_deliveredsalesorders_chk_title_fail_delievered_orders">FAIL-DELIEVERED ORDERS</string>
+    <string name="fgt_deliveredsalesorders_txt_title_total">TOTAL</string>
+
+    <!--Activity View Delivered Orders by date-->
+    <string name="delorderbydate_txt_titlebar_heading">Delivered Sales Order</string>
+    <string name="delorderbydate_txt_title_total">TOTAL</string>
+
+    <!--Activity View Delivered Orders by salesman-->
+    <string name="delorderbysaelesman_txt_titlebar_heading">Delivered Sales Order</string>
+    <string name="delorderbysaelesman_txt_title_salesman_name">salesman Name</string>
+
+    <!--fragment my purchase order-->
+    <string name="fgt_mypurchaseorder_txt_title_from_date">FROM DATE</string>
+    <string name="fgt_mypurchaseorder_txt_title_to_date">TO DATE</string>
+    <string name="fgt_mypurchaseorder_chk_title_this_week">THIS WEEK</string>
+    <string name="fgt_mypurchaseorder_chk_title_this_month">THIS MONTH</string>
+    <string name="fgt_mypurchaseorder_chk_title_submited">SUBMITED</string>
+    <string name="fgt_mypurchaseorder_chk_title_verification">VERIFICATION</string>
+    <string name="fgt_mypurchaseorder_chk_title_authentication">AUTHENTICATION</string>
+    <string name="fgt_mypurchaseorder_chk_title_packing">PACKING</string>
+    <string name="fgt_mypurchaseorder_chk_title_shipping">SHIPPING</string>
+    <string name="fgt_mypurchaseorder_chk_title_shipped">SHIPPED</string>
+    <string name="fgt_mypurchaseorder_btn_title_pdf">Generate PDF for all orders</string>
+
+    <!--entity purchase order list-->
+    <string name="entitypurchaseorder_shippin_date">SHIPPING DATE :</string>
+    <string name="entitypurchaseorder_transporter">TRANSPORTER :</string>
+    <string name="entitypurchaseorder_transporter_contact_1">TRANSPORTER CONTACT-1:</string>
+    <string name="entitypurchaseorder_transporter_contact_2">TRANSPORTER CONTACT-2:</string>
+    <string name="entitypurchaseorder_article">ARTICLE :</string>
+    <string name="entitypurchaseorder_order_rs">ORDER RS. :</string>
+    <string name="entitypurchaseorder_billing_rs">BILLING RS. :</string>
+
+    <!--Activity Add Purchase Order-->
+    <string name="addpurchaseorder_titlebar_heading">ADD PURCHASE ORDER-STATUS</string>
+    <string name="addpurchaseorder_txt_title_dist_name">DISTRIBUTOR <br>NAME</br></string>
+    <string name="addpurchaseorder_txt_title_default_stock">DEFAULT STOCK POINT</string>
+    <string name="addpurchaseorder_txt_title_order_datetime">ORDER DATE AND TIME</string>
+    <string name="addpurchaseorder_txt_title_delorder_datetime">DELIVERY DATE AND TIME</string>
+    <string name="addpurchaseorder_txt_title_order_no">ORDER NO.</string>
+    <string name="addpurchaseorder_txt_title_order_rs">ORDER RS.</string>
+    <string name="addpurchaseorder_txt_title_this_month_target">THIS MONTH TARGET</string>
+    <string name="addpurchaseorder_txt_title_opening_rs">OPENING Rs.</string>
+    <string name="addpurchaseorder_txt_title_primary_rs">PRIMARY Rs.</string>
+    <string name="addpurchaseorder_txt_title_last_month_pending_primary">LAST MONTH\'S PENDING PRIMARY</string>
+    <string name="addpurchaseorder_txt_title_second_rs_pending_delivery">SECONDORY Rs. .INCL PENDING DELIVERY</string>
+    <string name="addpurchaseorder_txt_title_closing_rs">CLOSING Rs.</string>
+    <string name="addpurchaseorder_txt_title_primary_required_rs">PRIMARY REQUIRED Rs.</string>
+    <string name="addpurchaseorder_txt_title_total_payment_pending_rs">TOTAL PAYMENT PENDING Rs.</string>
+    <string name="addpurchaseorder_txt_title_payment_due_rs">PAYMENT DUE Rs.</string>
+    <string name="addpurchaseorder_txt_title_status">STATUS</string>
+    <string name="addpurchaseorder_btn_title_submit">submit</string>
+    <string name="addpurchaseorder_btn_title_cancel_norder">cancel<br>order</br></string>
+    <string name="shoporder_txt_title_total_scheme_norder_value">TOTAL SCHEME <br>ORDER VALUE</br></string>
+    <string name="shoporder_txt_title_total_discount_value">TOTAL DISCOUNT VALUE</string>
+    <string name="shoporder_txt_title_available_scheme">Available Scheme</string>
+
+    <!--entity order product add purchase order-->
+    <string name="entityorderprodaddpurchaseorder_required_stock">REQUIRED STOCK</string>
+    <string name="entityorderprodaddpurchaseorder_pts_rs">PTS RS.</string>
+    <string name="entityorderprodaddpurchaseorder_order_rs">ORDER RS.</string>
+
+    <!--fragment my stock statement-->
+    <string name="fgt_mystockstatement_txt_title_name_of_distributor">NAME OF DISTRIBUTOR</string>
+    <string name="fgt_mystockstatement_txt_title_month">MONTH</string>
+    <string name="fgt_mystockstatement_txt_title_detail_view_icon">detail view icon</string>
+    <string name="fgt_mystockstatement_txt_title_name_of_sales_person">Name of Sales Person</string>
+    <string name="fgt_mystockstatement_txt_title_booking">Booking</string>
+    <string name="fgt_mystockstatement_txt_title_delivery">DELIVERY</string>
+    <string name="fgt_mystockstatement_txt_title_del_fail">DEL. FAIL</string>
+    <string name="fgt_mystockstatement_txt_title_delivery_pending_rs">Delivery Pending Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_sales_person_wise_secondary_summery">SALES PERSON WISE SECONDARY SUMMERY</string>
+    <string name="fgt_mystockstatement_txt_title_particulars">Particulars</string>
+    <string name="fgt_mystockstatement_txt_title_bussiness_rs">Business Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_scheme_rs">Scheme Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_opening_rs">Opening Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_primary_rs">Primary Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_total_secondary_rs">Total Secondary Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_closing_rs">Closing Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_last_month_s_pending_primary_rs">Last Month\'s Pending Primary Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_this_month_s_pending_primary_rs">This Month\'s Pending Primary Rs.</string>
+    <string name="fgt_mystockstatement_txt_title_product_wise_summery">PRODUCT WISE SUMMERY</string>
+    <string name="fgt_mystockstatement_txt_title_product_with_unit">PRODUCT WITH UNIT</string>
+    <string name="fgt_mystockstatement_txt_title_opening">OPENING</string>
+    <string name="fgt_mystockstatement_txt_title_primary">PRIMARY</string>
+    <string name="fgt_mystockstatement_txt_title_secondary">SECONDARY</string>
+    <string name="fgt_mystockstatement_txt_title_closing">CLOSING</string>
+    <string name="fgt_mystockstatement_btn_title_verify_stock">PHYSICAL VERIFICATION OF STOCK AND SCHEME</string>
+
+    <!--Activity Refresh Data-->
+    <string name="activityrefresh_txt_title_downloading_photos">Downloading Photos...</string>
+    <string name="activityrefresh_txt_title_photos_download_complete">Photos Download Complete !</string>
+    <string name="activityrefresh_btn_title_update_photos">update photos</string>
+    <string name="activityrefresh_txt_title_downloading_suchana">Downloading Suchana...</string>
+    <string name="activityrefresh_txt_title_suchana_download_complete">Suchana Download Complete !</string>
+    <string name="activityrefresh_btn_title_update_suchana">update suchana</string>
+    <string name="activityrefresh_txt_title_downloading_lang">Downloading Language...</string>
+    <string name="activityrefresh_txt_title_lang_download_complete">Language Download Complete !</string>
+    <string name="activityrefresh_btn_title_update_lang">Update lang</string>
+    <string name="activityrefresh_btn_title_change_lang">Change Language</string>
+
+    <!--Activity Login-->
+    <string name="login_txt_hint_enter_username">Enter Username</string>
+    <string name="login_txt_hint_enter_password">Enter Password</string>
+    <string name="login_btn_title_login">Login</string>
+
+    <!--Activity Choose Language-->
+    <string name="actvityChooseLang_tv_title_choose_language">Choose Language</string>
+    <string name="activityChooseLang_rb_title_english">English</string>
+    <string name="activityChooseLang_rb_title_gujarati">ગુજરાતી</string>
+    <string name="activityChooseLang_rb_title_hindi">हिन्दी</string>
+    <string name="activityChooseLang_btn_title_next">Next</string>
+</resources>

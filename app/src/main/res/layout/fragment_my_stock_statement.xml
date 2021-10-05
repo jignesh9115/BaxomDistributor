@@ -1,0 +1,1517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <!-- ============= first layout starts ==============-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimary"
+        android:padding="1dp">
+
+        <TextView
+            android:id="@+id/tv_name_of_dist_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:text="@string/fgt_mystockstatement_txt_title_name_of_distributor"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="2"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@drawable/spinner_border">
+
+                <Spinner
+                    android:id="@+id/spn_dist_name_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+        <TextView
+            android:id="@+id/tv_month_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:paddingStart="10dp"
+            android:text="@string/fgt_mystockstatement_txt_title_month"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/tv_month_date_stock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableRight="@drawable/calendaricon"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:padding="5dp"
+            android:text="October-2020"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+
+        <CheckBox
+            android:id="@+id/cb_last_month_stock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center"
+            android:text="LAST MONTH" />
+
+        <CheckBox
+            android:id="@+id/cb_this_month_stock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center"
+            android:text="THIS MONTH" />
+
+    </LinearLayout>
+
+    <!-- ============= first layout ends ==============-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/textPrimary"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/tv_target_rs_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Target Rs."
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/tv_target_rs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@color/textPrimary"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/tv_achiv_rs_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Achivement Rs."
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/tv_achiv_rs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@color/textPrimary"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/tv_target_left_rs_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Target Left Rs."
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/tv_target_left_rs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20sp">
+
+
+            <!--sales person wise secondary summery layout starts-->
+
+
+            <TextView
+                android:id="@+id/tv_sales_wise_summery_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/fgt_mystockstatement_txt_title_sales_person_wise_secondary_summery"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_salesman_name_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_name_of_sales_person"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_booking_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_booking"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_delivery_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_delivery"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_del_fail_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_del_fail"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_sales_wise_summery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/entity_sales_wise_summery_stock" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_tot_secondary_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_total_secondary_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_booking_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_delivery_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_del_fail_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_tot_del_pending_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_delivery_pending_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_del_pending_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_view_detail_title"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="View \nDetail"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--sales person wise secondary summery layout ends-->
+
+
+            <!--stock summery layout starts-->
+
+            <TextView
+                android:id="@+id/tv_stock_summery_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="STOCK SUMMERY"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_particulars_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_particulars"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_bussiness_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_bussiness_rs"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_scheme_rs"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_opening_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_opening_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_opening_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_opening_scheme_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="N/A"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_primary_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_primary_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_primary_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_primary_scheme_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_secondary_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="Secondary Rs."
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_secondary_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_secondary_scheme_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_closing_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_closing_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_closing_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="N/A"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_last_month_pending_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_last_month_s_pending_primary_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_last_month_pending_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_last_month_pending_scheme_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_this_month_pending_rs_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_this_month_s_pending_primary_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_this_month_pending_bussiness_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_this_month_pending_scheme_rs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--stock summery layout ends-->
+
+            <!--product wise summery layout starts-->
+
+            <TextView
+                android:id="@+id/tv_prod_wise_summery_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/fgt_mystockstatement_txt_title_product_wise_summery"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_prod_with_unit_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_product_with_unit"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_prod_opening_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_opening"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_prod_primary_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_primary"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_prod_secondary_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimary"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:text="Secondary"
+                            android:textColor="@color/white"
+                            android:textSize="10dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_prod_secondary_delivery_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:lines="1"
+                                android:text="DELIVERY"
+                                android:textColor="@color/white"
+                                android:textSize="10dp" />
+
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_prod_secondary_pen_del_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:lines="1"
+                                android:text="DEL+PEN"
+                                android:textColor="@color/white"
+                                android:textSize="9sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_prod_closing_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimary"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:text="Closing"
+                            android:textColor="@color/white"
+                            android:textSize="10dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_prod_closing_delivery_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:lines="1"
+                                android:text="DELIVERY"
+                                android:textColor="@color/white"
+                                android:textSize="10dp" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_prod_closing_pen_del_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:lines="1"
+                                android:text="DEL+PEN"
+                                android:textColor="@color/white"
+                                android:textSize="9sp" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_prod_wise_summery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="0"
+                    tools:listitem="@layout/entity_prod_wise_summery_stock" />
+
+
+            </LinearLayout>
+
+            <!--product wise summery layout ends-->
+
+
+            <!--scheme wise summery layout starts-->
+
+            <TextView
+                android:id="@+id/tv_scheme_summery_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="SCHEME SUMMERY"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_scheme_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="SCHEME"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_opening_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_opening"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_primary_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_primary"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_secondary_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_secondary"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_closing_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/fgt_mystockstatement_txt_title_closing"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_schme_summery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="0"
+                    tools:listitem="@layout/entity_scheme_wise_summery_stock" />
+
+
+            </LinearLayout>
+
+            <!--scheme wise summery layout ends-->
+
+
+            <TextView
+                android:id="@+id/tv_phycal_verification_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/fgt_mystockstatement_btn_title_verify_stock"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/white"
+                android:paddingTop="1dp">
+
+                <TextView
+                    android:id="@+id/tv_signing_authority_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Singing Authority"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_status_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Status"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_sign_button_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Sign Button"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_login_dist_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Distributor login name"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_parent_univerified"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Unverified"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="11sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_verified"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_verified_on_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:text="Verified on :"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_verified_on"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:text="10-05-2021 11:17 AM"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_imei_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:text="IMEI No.: 1234569875221"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_ip_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:text="IP Address : "
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_sign_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="#4CAF50"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Sign complete"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@color/colorPrimary" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sign_authorities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/entity_immediate_parent_stock" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

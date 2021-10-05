@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/tv_title_distributor_name_delivered_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Distributor Name"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="1dp">
+
+        <TextView
+            android:id="@+id/tv_from_date_title_dso"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="@string/fgt_deliveredsalesorders_txt_title_from_date"
+            android:textColor="@color/textPrimary"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tv_from_date_delivered_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableRight="@drawable/calendaricon"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="24-10-2020"
+            android:textColor="@color/textPrimary"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tv_to_date_title_dso"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="@string/fgt_deliveredsalesorders_txt_title_to_date"
+            android:textColor="@color/textPrimary"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tv_to_date_delivered_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableRight="@drawable/calendaricon"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="24-10-2020"
+            android:textColor="@color/textPrimary"
+            android:textSize="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/white">
+
+
+            <CheckBox
+                android:id="@+id/cb_this_month_delivered_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_deliveredsalesorders_chk_title_this_month"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+        <CheckBox
+            android:id="@+id/cb_undelivered_orders_delivered_order"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:text="@string/fgt_deliveredsalesorders_chk_title_un_delievered_orders"
+            android:textSize="10dp" />
+
+        <CheckBox
+            android:id="@+id/cb_fulldelivered_orders_delivered_order"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:text="@string/fgt_deliveredsalesorders_chk_title_full_delievered_orders"
+            android:textSize="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+        <CheckBox
+            android:id="@+id/cb_partialdelivered_orders_delivered_order"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:text="@string/fgt_deliveredsalesorders_chk_title_partialy_delievered_orders"
+            android:textSize="10dp" />
+
+        <CheckBox
+            android:id="@+id/cb_faildelivered_orders_delivered_order"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:buttonTint="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:text="@string/fgt_deliveredsalesorders_chk_title_fail_delievered_orders"
+            android:textSize="10dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_total_title_dso"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/fgt_deliveredsalesorders_txt_title_total"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_total_count_delivered_orders"
+                android:layout_width="match_parent"
+                android:layout_height="20sp"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_total_booking_amount"
+                android:layout_width="match_parent"
+                android:layout_height="20sp"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_total_delivered_amount"
+                android:layout_width="match_parent"
+                android:layout_height="20sp"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_total_pending_amount"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_total_fail_amount"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_delivered_order_list_by_dist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp" />
+
+    <ImageView
+        android:id="@+id/img_empty_list_delivered_orders"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/empty_list_icon" />
+
+
+</LinearLayout>

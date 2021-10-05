@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.AddPurchaseOrder">
+
+    <!-- ========================title bar layout start===================== -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/shoporder_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/img_back_purchase_order"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/icon_arrow_left_white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/img_back_purchase_order"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_screen_heading_apo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/addpurchaseorder_titlebar_heading"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_salesman_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!-- =======================title bar layout end======================== -->
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimary"
+        android:padding="1dp">
+
+        <TextView
+            android:id="@+id/tv_distributor_name_title_apo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:text="@string/addpurchaseorder_txt_title_dist_name"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="2"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/ll_dist_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@drawable/spinner_border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_dist_name_addpurchaseorder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:padding="3dp"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+
+                <Spinner
+                    android:id="@+id/spn_dist_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="2dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp">
+
+        <TextView
+            android:id="@+id/tv_default_stock_title_apo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:text="@string/addpurchaseorder_txt_title_default_stock"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="2"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_stock_point_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_border"
+                android:padding="5dp"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_purchase_order_detail"
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/textPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/textPrimary"
+            android:paddingLeft="1dp"
+            android:paddingTop="1dp"
+            android:paddingRight="1dp">
+
+            <TextView
+                android:id="@+id/tv_orderdatetime_title_apo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/addpurchaseorder_txt_title_order_datetime"
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/tv_deliverydatetime_title_apo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="2"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/addpurchaseorder_txt_title_delorder_datetime"
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/tv_orderno_title_apo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/addpurchaseorder_txt_title_order_no"
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/textPrimary"
+            android:paddingLeft="1dp"
+            android:paddingTop="1dp"
+            android:paddingRight="1dp">
+
+
+            <TextView
+                android:id="@+id/tv_order_datetime_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/tv_delivery_datetime_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="2"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/tv_order_no_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="#FFE6E6"
+                android:gravity="center"
+                android:lines="2"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/textPrimary"
+        android:padding="1dp">
+
+        <TextView
+            android:id="@+id/tv_orderrs_title_apo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFE6E6"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="2"
+            android:text="@string/addpurchaseorder_txt_title_order_rs"
+            android:textColor="@color/textPrimary"
+            android:textSize="11dp" />
+
+        <TextView
+            android:id="@+id/tv_total_order_rs_add_purchase_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#FFE6E6"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="2"
+            android:text=""
+            android:textColor="@color/textPrimary"
+            android:textSize="11dp" />
+
+
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@color/textPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_thismonthtarget_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_this_month_target"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_openingrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_opening_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_primaryrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_primary_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_lastmonthpendingprimary_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_last_month_pending_primary"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_secondaryrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="4"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_second_rs_pending_delivery"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="4"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_closingrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_closing_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_primaryrsrequiredrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_primary_required_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_totalpaymentpendingrs_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_total_payment_pending_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp">
+
+                    <TextView
+                        android:id="@+id/tv_paymentduers_title_apo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="start|center_vertical"
+                        android:lines="2"
+                        android:paddingStart="5dp"
+                        android:text="@string/addpurchaseorder_txt_title_payment_due_rs"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!--purchase order product list layout start-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_purchase_order_product_list"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="2dp" />
+
+
+            <TextView
+                android:id="@+id/tv_available_title_purchaseorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:shadowColor="#00ccff"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                android:text="@string/shoporder_txt_title_available_scheme"
+                android:textColor="#c0392b"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_scheme_list_purchaseorder"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="1"
+                tools:listitem="@layout/entity_schemes_list" />
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_total_scheme_order_value_title_purchaseorder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="1dp"
+                        android:text="@string/shoporder_txt_title_total_scheme_norder_value"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_scheme_order_value_purchaseorder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="1dp"
+                        android:text="0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_total_discount_value_title_purchaseorder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="1dp"
+                        android:text="@string/shoporder_txt_title_total_discount_value"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_discount_value_purchaseorder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="1dp"
+                        android:text="0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--purchase order product list layout end-->
+
+            <Button
+                android:id="@+id/btn_add_more_prod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/icon_add_white"
+                android:text="add more product"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_add_more_prod_list"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="2dp"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/btn_submit_add_more_prod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="add product"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:layout_width="354dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimary"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/tv_status_title_apo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|center"
+                    android:lines="2"
+                    android:paddingStart="10dp"
+                    android:text="@string/addpurchaseorder_txt_title_status"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|center"
+                    android:lines="2"
+                    android:paddingStart="10dp"
+                    android:text="STATUS\nSTATUS"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- <LinearLayout
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_marginLeft="1dp"
+                     android:layout_weight="2"
+                     android:background="@color/white">
+
+                      <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:layout_margin="2dp"
+                          android:background="@drawable/spinner_border">
+
+                          <Spinner
+                              android:id="@+id/spn_purchase_order_status"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:layout_marginLeft="1dp" />
+
+                      </LinearLayout>
+
+                 </LinearLayout>-->
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_order_btn"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="20dp"
+                android:padding="1dp">
+
+                <Button
+                    android:id="@+id/btn_submit_add_purchase_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/addpurchaseorder_btn_title_submit"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_update_prod_add_purchase_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="modify order"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/btn_cancel_purchase_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#F44336"
+                    android:text="@string/addpurchaseorder_btn_title_cancel_norder"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

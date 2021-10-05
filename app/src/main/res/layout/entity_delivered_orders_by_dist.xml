@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_date_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_undelivered_order_entry_date"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:text="09-10-2020"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_total_delivered_order_delivered_order"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:text=""
+                android:paddingStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_total_booking_amount_delivered_order"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:text=""
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_total_delivered_amount_delivered_order"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:text=""
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_total_pending_amount_delivered_order"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:text=""
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_total_fail_amount_delivered_order"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:text=""
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

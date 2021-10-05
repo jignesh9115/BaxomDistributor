@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".ui.mypurchaseorder.MyPurchaseOrderFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_first_layout"
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:padding="1dp">
+
+            <TextView
+                android:id="@+id/tv_from_date_title_mpo"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/fgt_mypurchaseorder_txt_title_from_date"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_from_date_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableRight="@drawable/calender_icon_16"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="26-10-2020"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_to_date_title_mpo"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/fgt_mypurchaseorder_txt_title_to_date"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_to_date_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableRight="@drawable/calender_icon_16"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="26-10-2020"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/cb_this_week_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_this_week"
+                android:textSize="10dp" />
+
+            <CheckBox
+                android:id="@+id/cb_this_month_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_this_month"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/cb_submited_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_submited"
+                android:textSize="10dp" />
+
+
+            <CheckBox
+                android:id="@+id/cb_verification_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_verification"
+                android:textSize="10dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/cb_authentication_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_authentication"
+                android:textSize="10dp" />
+
+            <CheckBox
+                android:id="@+id/cb_packing_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_packing"
+                android:textSize="10dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+
+            <CheckBox
+                android:id="@+id/cb_shipping_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_shipping"
+                android:textSize="10dp" />
+
+            <CheckBox
+                android:id="@+id/cb_shipped_purchase_order"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:text="@string/fgt_mypurchaseorder_chk_title_shipped"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_select_all_purchase_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="SELECT ALL"
+                    android:textSize="10dp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_first_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_purchase_order_list"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp" />
+
+
+            <Button
+                android:id="@+id/btn_generate_pdf_for_all"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/fgt_mypurchaseorder_btn_title_pdf" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_purchase_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="30sp"
+        android:layout_marginBottom="20sp"
+        android:backgroundTint="@color/colorPrimary"
+        app:elevation="0dp"
+        app:srcCompat="@drawable/icon_add_white"
+        app:tint="@color/white" />
+
+
+</RelativeLayout>

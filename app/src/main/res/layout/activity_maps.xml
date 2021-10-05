@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.MapsActivity">
+
+    <!-- ========================title bar layout start===================== -->
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back_map"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/icon_arrow_left_white"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/img_back_map"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_title_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:text="@string/map_txt_titlebar_heading"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_salesman_name_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- =======================title bar layout end======================== -->
+
+    <LinearLayout
+        android:id="@+id/ll_date_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_titlebar_map"
+        android:background="@color/colorPrimary"
+        android:padding="2dp"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_select_date_title_map"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:lines="2"
+            android:paddingStart="10dp"
+            android:text="@string/map_txt_title_select_date"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_location_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableRight="@drawable/calendaricon"
+            android:gravity="center"
+            android:lines="1"
+            android:padding="5dp"
+            android:text="06-11-2020"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_checckbox_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:padding="1dp">
+
+            <CheckBox
+                android:id="@+id/cbShopPhoto"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="Shop Photo"
+                android:textSize="10dp" />
+
+            <CheckBox
+                android:id="@+id/cbShopName"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="Shop Name"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCbSalesman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <CheckBox
+                android:id="@+id/cbSalesmanName"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="Order rs"
+                android:textSize="10dp" />
+
+            <CheckBox
+                android:id="@+id/cbOrderLine"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="Order Line"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <CheckBox
+                android:id="@+id/cbShopAddress"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="Salesman Name"
+                android:textSize="10dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+
+            <CheckBox
+                android:id="@+id/cbBitName"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:text="BIT Name"
+                android:textSize="10dp"
+                android:visibility="invisible" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_date_map"
+        android:theme="@style/Theme.AppCompat">
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        tools:context=".Activities.MapsActivity" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_border_rectangle">
+
+        <ImageView
+            android:id="@+id/img_change_view_map"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="1dp"
+            android:background="@drawable/roadmap_mode"
+            android:scaleType="fitXY" />
+
+
+    </LinearLayout>
+
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+         android:id="@+id/fab_chande_view_map"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentBottom="true"
+         android:layout_marginLeft="15dp"
+         android:layout_marginBottom="30dp"
+         style="@style/ShapeAppearance.App.SmallComponent"
+         android:backgroundTint="@color/colorPrimary"
+         app:elevation="0dp"
+         app:srcCompat="@drawable/icon_add_white"
+         app:tint="@color/white" />-->
+
+
+</RelativeLayout>

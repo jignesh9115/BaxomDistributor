@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_scheme_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+
+        <LinearLayout
+            android:id="@+id/rl_scheme_list"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/textPrimary"
+            android:padding="1dp">
+
+            <ImageView
+                android:id="@+id/img_scheme_photo"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:background="@color/white"
+                android:padding="3dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/notfoundimages" />
+
+            <LinearLayout
+                android:id="@+id/ll_scheme_value"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/img_scheme_photo"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_long_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:padding="1dp"
+                    android:text="scheme long name"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="10sp" />
+
+                <View
+                    android:id="@+id/view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_condition_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="condition value"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="10sp" />
+
+                <View
+                    android:id="@+id/view_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textPrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp">
+
+                    <TextView
+                        android:id="@+id/tv_scheme_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:lines="1"
+                        android:text="0.0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_order_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:lines="1"
+                        android:text=" / 0.0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_result_prod_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="result prod value"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="10sp" />
+
+                <View
+                    android:id="@+id/view_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textPrimary" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/img_result_prod_photo"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_toRightOf="@+id/ll_scheme_value"
+                android:background="@color/white"
+                android:src="@drawable/notfoundimages" />
+
+            <View
+                android:id="@+id/view_6"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/textPrimary" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_scheme_qty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_toRightOf="@+id/img_result_prod_photo"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_scheme_plus_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_add" />
+
+                <EditText
+                    android:id="@+id/edt_scheme_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:digits="0123456789."
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:text="0"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="11dp" />
+
+                <ImageView
+                    android:id="@+id/img_scheme_minus_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_minus" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white" />
+
+</LinearLayout>

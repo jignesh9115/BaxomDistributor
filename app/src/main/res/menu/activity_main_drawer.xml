@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_black"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_undelivered_sales_orders"
+            android:icon="@drawable/undelivered_order_icon"
+            android:title="Undelivered Sales Orders" />
+
+        <item
+            android:id="@+id/nav_undelivered_sales_orders_new"
+            android:icon="@drawable/undelivered_order_icon"
+            android:title="Undelivered Sales Orders New" />
+
+        <item
+            android:id="@+id/nav_delivered_sales_orders"
+            android:icon="@drawable/delivered_order"
+            android:title="Delivered Sales Orders" />
+
+        <!-- <item
+             android:id="@+id/nav_my_sales_orders_dist"
+             android:icon="@drawable/icon_sales_order"
+             android:title="My Sales Orders" />-->
+
+        <!-- <item
+             android:id="@+id/nav_delivery_fail_sales_orders"
+             android:icon="@drawable/delivery_fail_icon"
+             android:title="Delivery Fail Sales Orders" />
+
+         <item
+             android:id="@+id/nav_my_pending_purchase_orders"
+             android:icon="@drawable/pending_purchase_order"
+             android:title="Pending Purchase Orders" />
+
+         <item
+             android:id="@+id/nav_add_new_purchase_orders"
+             android:icon="@drawable/add_new_order"
+             android:title="Add New Purchase Orders" />-->
+
+        <item
+            android:id="@+id/nav_my_purchase_order"
+            android:icon="@drawable/icon_purchase_order"
+            android:title="My Purchase Order" />
+
+        <!-- <item
+             android:id="@+id/nav_my_fullfilled_purchase_orders"
+             android:icon="@drawable/fullfilled_order"
+             android:title="Fullfilled Purchase Orders" />
+
+         <item
+             android:id="@+id/nav_my_stock_statement"
+             android:icon="@drawable/stock_management_icon"
+             android:title="Stock Statement" />-->
+
+        <item
+            android:id="@+id/nav_my_stock_statement"
+            android:icon="@drawable/stock_management_icon"
+            android:title="Stock Statement" />
+
+        <item
+            android:id="@+id/nav_change_lang"
+            android:icon="@drawable/icon_change_lang"
+            android:onClick="changeLanguage"
+            android:title="Change Language" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logouticon"
+            android:onClick="logoutdistributor"
+            android:title="Logout" />
+
+    </group>
+</menu>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/textPrimary"
+        android:orientation="horizontal"
+        android:paddingStart="1dp"
+        android:paddingTop="1dp"
+        android:paddingEnd="1dp"
+        android:paddingBottom="1dp">
+
+
+        <ImageView
+            android:id="@+id/img_product_photo_add_purchase_order"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_margin="1dp"
+            android:src="@drawable/icon_shop_location" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_product_name_add_purchase_order"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="3"
+                android:text="PRODUCT NAME"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_unit_add_purchase_order"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="UNIT"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_stock_qty_add_purchade_order"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="STOCK QTY "
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_stock_indays_add_purchade_order"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="STOCK IN DAYS"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_required_stock_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entityorderprodaddpurchaseorder_required_stock"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_required_stock_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_pts_rs_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entityorderprodaddpurchaseorder_pts_rs"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_pts_rs_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_product_plus_qty_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_add" />
+
+            <EditText
+                android:id="@+id/edt_product_qty_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:text="0"
+                android:maxLength="5"
+                android:digits="0123456789."
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <ImageView
+                android:id="@+id/img_product_minus_qty_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_minus" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginRight="2dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_order_rs_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entityorderprodaddpurchaseorder_order_rs"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_product_order_rs_add_purchase_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingTop="1dp"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

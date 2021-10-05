@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.jp.baxomdistributor.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/nav_undelivered_sales_orders"
+        android:name="com.jp.baxomdistributor.ui.undelivered_sales_orders.UndeliveredSalesOrdersFragment"
+        android:label="Undelivered Sales Orders"
+        tools:layout="@layout/fragment_undelivered_sales_orders" />
+
+
+    <fragment
+        android:id="@+id/nav_undelivered_salesorders_new"
+        android:name="com.jp.baxomdistributor.ui.undeliveredordersnew.UndeliveredSalesOrdersNewFragment"
+        android:label="Undelivered Sales Orders"
+        tools:layout="@layout/fragment_undelivered_sales_orders_new" />
+
+    <fragment
+        android:id="@+id/nav_delivered_sales_orders"
+        android:name="com.jp.baxomdistributor.ui.delivered_sales_orders.DeliveredSalesOrdersFragment"
+        android:label="Delivered Sales Orders"
+        tools:layout="@layout/fragment_delivered_sales_orders" />
+
+
+    <fragment
+        android:id="@+id/nav_my_purchase_order"
+        android:name="com.jp.baxomdistributor.ui.mypurchaseorder.MyPurchaseOrderFragment"
+        android:label="My Purchase Order"
+        tools:layout="@layout/fragment_mypurchase_order" />
+
+    <fragment
+        android:id="@+id/nav_my_stock_statement"
+        android:name="com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment"
+        android:label="Stock Statement"
+        tools:layout="@layout/fragment_my_stock_statement" />
+</navigation>

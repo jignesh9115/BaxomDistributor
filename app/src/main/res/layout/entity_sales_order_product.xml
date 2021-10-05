@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/textPrimary"
+        android:orientation="horizontal"
+        android:paddingStart="1dp"
+        android:paddingTop="1dp"
+        android:paddingEnd="1dp"
+        android:paddingBottom="1dp">
+
+
+        <ImageView
+            android:id="@+id/img_sales_order_product_photo"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:src="@drawable/icon_shop_location" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_name"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="2"
+                android:text="PRODUCT NAME"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_unit"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="UNIT"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_mrp_rs"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="MRP RS."
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_point"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Points"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_orderqty_title_sales"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entitysalesorderprod_order_qty"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_qty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="49dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_orderrs_title_sales"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entitysalesorderprod_order_nrs"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_order_rs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_sales_product_plus_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_add" />
+
+            <EditText
+                android:id="@+id/edt_delivery_product_qty_sales__order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
+                android:maxLength="5"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="11dp" />
+
+            <ImageView
+                android:id="@+id/img_sales_product_minus_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_minus" />
+
+        </LinearLayout>
+
+        <!-- <LinearLayout
+             android:layout_width="50dp"
+             android:layout_height="match_parent"
+             android:layout_marginStart="1dp"
+             android:background="@color/textPrimary"
+             android:orientation="vertical">
+
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="40dp"
+                 android:background="@color/white"
+                 android:gravity="center"
+                 android:text="DELIVERY Qty."
+                 android:textColor="@color/textPrimary"
+                 android:textSize="10dp" />
+
+             <TextView
+                 android:id="@+id/tv_sales_order_product_delivery_qty"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_marginTop="1dp"
+                 android:background="@color/white"
+                 android:ellipsize="marquee"
+                 android:gravity="center"
+                 android:paddingTop="1dp"
+                 android:singleLine="true"
+                 android:text="0"
+                 android:textColor="@color/textPrimary"
+                 android:textSize="10dp" />
+
+         </LinearLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:background="@color/textPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_deliveryrs_title_sales"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/entitysalesorderprod_delivery_rs"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sales_order_product_delivery_rs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/textPrimary"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
