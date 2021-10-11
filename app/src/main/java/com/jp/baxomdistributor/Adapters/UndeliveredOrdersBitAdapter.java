@@ -74,7 +74,6 @@ public class UndeliveredOrdersBitAdapter extends RecyclerView.Adapter<Undelivere
                 }
             }
 
-
             adapter.notifyDataSetChanged();
 
         });

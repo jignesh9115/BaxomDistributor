@@ -34,6 +34,7 @@
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/app_bar_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/custom_notif.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/dialog_custom_pdf_name.xml" value="0.176" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/dialog_network_error.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/dialog_salesman_selection.xml" value="0.264" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/dialog_shop_detail_map.xml" value="0.25416666666666665" />
@@ -51,7 +52,8 @@
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_purchase_order_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_sales_order_product.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_sales_wise_summery_stock.xml" value="0.25416666666666665" />
-        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_salesman_name_undelivered_orders.xml" value="0.536" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_salesman_name_undelivered_orders.xml" value="0.264" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_salesman_selection_undelivered_orders.xml" value="0.4" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_scheme_wise_summery_stock.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_schemes_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_undelivered_orders_by_date.xml" value="0.25416666666666665" />

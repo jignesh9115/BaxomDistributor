@@ -1,5 +1,7 @@
 package com.jp.baxomdistributor.Activities;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.Manifest;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -17,6 +19,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -49,6 +52,7 @@ import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Services.NetConnetionService;
 import com.jp.baxomdistributor.Utils.ConstantVariables;
 import com.jp.baxomdistributor.Utils.Database;
+import com.jp.baxomdistributor.Utils.FileUtils;
 import com.jp.baxomdistributor.databinding.ActivityMainBinding;
 import com.jp.baxomdistributor.databinding.DialogNetworkErrorBinding;
 import com.jp.baxomdistributor.databinding.LayoutBotttomSheetBinding;
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         minIntentFilter.addAction(ConstantVariables.BroadcastStringForAction);
 
         Intent serviceIntent = new Intent(this, NetConnetionService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (SDK_INT >= Build.VERSION_CODES.O) {
             //startForegroundService(this,serviceIntent);
             ContextCompat.startForegroundService(this, serviceIntent);
         } else {
@@ -245,10 +249,17 @@ public class MainActivity extends AppCompatActivity {
             e.getMessage();
         }
 
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(intent);
+            }
+        }
+
         if (!AskPermissions(MainActivity.this, permissionsRequired)) {
             ActivityCompat.requestPermissions(MainActivity.this, permissionsRequired, 1);
         } else {
-
             MakeDirectory();
 
         }
@@ -367,15 +378,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void MakeDirectory() {
 
-        File file = new File(Environment.getExternalStorageDirectory() + "/Baxom Distribution");
+        //File file = new File(Environment.getExternalStorageDirectory() + "/Baxom Distribution");
+        File file = new File(FileUtils.MAIN_FOLDER_PATH);
         if (!file.exists()) {
 
             String root = Environment.getExternalStorageDirectory().toString();
-            File myDir = new File(root + "/Baxom Distribution");
+            File myDir = new File(FileUtils.MAIN_FOLDER_PATH);
             myDir.mkdirs();
 
             Log.i("directory===>", "making successfuly");
-
         } else {
 
             Log.i("Directory is", "Exist");
@@ -383,11 +394,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        File file1 = new File(Environment.getExternalStorageDirectory() + "/Baxom Distribution/" + "Order List");
+        //File file1 = new File(Environment.getExternalStorageDirectory() + "/Baxom Distribution/" + "Order List");
+        File file1 = new File(FileUtils.ORDER_PDF_FOLDER_PATH);
         if (!file1.exists()) {
 
             String root = Environment.getExternalStorageDirectory().toString();
-            File myDir = new File(root + "/Baxom Distribution/" + "Order List");
+            //File myDir = new File(root + "/Baxom Distribution/" + "Order List");
+            File myDir = new File(FileUtils.ORDER_PDF_FOLDER_PATH);
             myDir.mkdirs();
 
             Log.i("directory===>", "making successfuly");
@@ -658,5 +671,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(myReceiver, minIntentFilter);
         updateApp();
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(intent);
+            }
+        }
+        MakeDirectory();
     }
 }

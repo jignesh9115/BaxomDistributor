@@ -2,6 +2,7 @@ package com.jp.baxomdistributor.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.databinding.EntitySalesmanNameUndeliveredOrdersBinding;
 
 import java.util.ArrayList;
@@ -21,12 +21,14 @@ public class UndeliveredOrdersDatesAdapter extends RecyclerView.Adapter<Undelive
 
     Context context;
     ArrayList<String> arrayList;
+    ArrayList<Boolean> arrayList_is_gerated;
 
     private UndeliveredOrdersDatesAdapter.OnItemClickListener mListener;
 
-    public UndeliveredOrdersDatesAdapter(Context context, ArrayList<String> arrayList) {
+    public UndeliveredOrdersDatesAdapter(Context context, ArrayList<String> arrayList, ArrayList<Boolean> arrayList_is_gerated) {
         this.context = context;
         this.arrayList = arrayList;
+        this.arrayList_is_gerated = arrayList_is_gerated;
     }
 
     public void setOnItemClickListener(UndeliveredOrdersDatesAdapter.OnItemClickListener listener) {
@@ -42,7 +44,12 @@ public class UndeliveredOrdersDatesAdapter extends RecyclerView.Adapter<Undelive
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holder.binding.tvSalesman.setBackground(context.getResources().getDrawable(R.drawable.salesman_bg_unselect));
+
+        if (arrayList_is_gerated.get(position))
+            holder.binding.imgPdf.setVisibility(View.VISIBLE);
+        else
+            holder.binding.imgPdf.setVisibility(View.INVISIBLE);
+
         holder.binding.tvSalesman.setText("" + arrayList.get(position));
 
         holder.binding.tvSalesman.setOnLongClickListener(view -> {

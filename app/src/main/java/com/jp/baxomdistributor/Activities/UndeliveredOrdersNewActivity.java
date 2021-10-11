@@ -8,16 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,12 +26,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -54,13 +50,17 @@ import com.jp.baxomdistributor.Models.GroupDatesOfSalesmanPOJO;
 import com.jp.baxomdistributor.Models.SalesProdDetailPOJO;
 import com.jp.baxomdistributor.Models.SchemeListPDFPOJO;
 import com.jp.baxomdistributor.Models.UdeliveredOrdersModel;
+import com.jp.baxomdistributor.Models.UdeliveredOrdersSalesmanSelectionModel;
 import com.jp.baxomdistributor.Models.UndeliveredOrdersSalesmanModel;
 import com.jp.baxomdistributor.Models.ViewSalesOrderByOrderIdPOJO;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
+import com.jp.baxomdistributor.Utils.Database;
+import com.jp.baxomdistributor.Utils.FileUtils;
 import com.jp.baxomdistributor.Utils.GDateTime;
 import com.jp.baxomdistributor.Utils.PdfUtils;
 import com.jp.baxomdistributor.databinding.ActivityUndeliveredOrdersNewBinding;
+import com.jp.baxomdistributor.databinding.DialogCustomPdfNameBinding;
 import com.jp.baxomdistributor.databinding.DialogSalesmanSelectionBinding;
 
 import org.json.JSONArray;
@@ -75,12 +75,8 @@ import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -98,9 +94,16 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     Retrofit retrofit;
     Api api;
 
-    ArrayList<String> arrayList_salesman_id, arrayList_salesman_name, arrayList_order_date,
+    ArrayList<String> arrayList_salesman_id, arrayList_order_date,
             arrayList_date1_salesman, arrayList_date2_salesman, arrayList_date3_salesman,
             arrayList_date4_salesman, arrayList_date5_salesman;
+
+    ArrayList<Boolean> arrayList_ispdf_generate1, arrayList_ispdf_generate2, arrayList_ispdf_generate3,
+            arrayList_ispdf_generate4, arrayList_ispdf_generate5;
+
+
+    ArrayList<UdeliveredOrdersSalesmanSelectionModel> arrayList_salesmanSelection;
+    UdeliveredOrdersSalesmanSelectionModel salesmanSelectionModel;
 
     SharedPreferences sp_distributor_detail;
 
@@ -157,8 +160,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             Manifest.permission.CAMERA};
 
     private Uri uri;
-
     /*-----------PDF variable declaration ends---------*/
+
+    Database db;
 
 
     @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
@@ -167,7 +171,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         super.onCreate(savedInstanceState);
         binding = ActivityUndeliveredOrdersNewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        db = new Database(UndeliveredOrdersNewActivity.this);
         //================code for allow strictMode starts ================
 
         int SDK_INT = Build.VERSION.SDK_INT;
@@ -179,7 +183,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         }
 
         //================code for allow strictMode ends ===================
-
 
         if (!AskPermissions(UndeliveredOrdersNewActivity.this, permissionsRequired)) {
             ActivityCompat.requestPermissions(UndeliveredOrdersNewActivity.this, permissionsRequired, 1);
@@ -234,7 +237,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         binding.imgBack.setOnClickListener(v -> finish());
         getSalesmanListByDist(getIntent().getExtras().getString("date_list"));
 
-
         binding.btnApply.setOnClickListener(v -> {
 
             Log.i(TAG, "listToJarray..>" + listToJarray());
@@ -245,6 +247,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         });
 
         binding.btnClearlist.setOnClickListener(v -> {
+
             arrayList_date1_salesman.clear();
             arrayList_date2_salesman.clear();
             arrayList_date3_salesman.clear();
@@ -262,16 +265,20 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         binding.btnOrderSummery.setOnClickListener(v -> {
             Log.i(TAG, "arrayList_salesman_dates..>" + new Gson().toJson(arrayList_salesman_dates));
+
             if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), "");
+                showPDFNameDialog("");
             else
                 Toast.makeText(UndeliveredOrdersNewActivity.this, "please select salesman", Toast.LENGTH_SHORT).show();
         });
 
         binding.btnGeneratePdfMergedshop.setOnClickListener(v -> {
             Log.i(TAG, "arrayList_salesman_dates..>" + new Gson().toJson(arrayList_salesman_dates));
+            /*if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
+                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), "merge shop");*/
+
             if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), "merge shop");
+                showPDFNameDialog("merge shop");
             else
                 Toast.makeText(UndeliveredOrdersNewActivity.this, "please select salesman", Toast.LENGTH_SHORT).show();
 
@@ -376,7 +383,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                     JSONObject jsonObject = new JSONObject(response.body() + "");
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     arrayList_salesman_id = new ArrayList<>();
-                    arrayList_salesman_name = new ArrayList<>();
+                    //arrayList_salesman_name = new ArrayList<>();
+                    arrayList_salesmanSelection = new ArrayList<>();
                     arrayList_date1_salesman = new ArrayList<>();
                     arrayList_date2_salesman = new ArrayList<>();
                     arrayList_date3_salesman = new ArrayList<>();
@@ -386,10 +394,16 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         arrayList_salesman_id.add(object.getString("salesman_id"));
-                        arrayList_salesman_name.add(object.getString("salesman"));
+
+                        //arrayList_salesman_name.add(object.getString("salesman"));
+
+                        salesmanSelectionModel = new UdeliveredOrdersSalesmanSelectionModel(
+                                object.getString("salesman"),
+                                "");
+                        arrayList_salesmanSelection.add(salesmanSelectionModel);
                     }
 
-                    salesmansAdapter = new UndeliveredOrdersSalesmansAdapter(UndeliveredOrdersNewActivity.this, arrayList_salesman_name,
+                    salesmansAdapter = new UndeliveredOrdersSalesmansAdapter(UndeliveredOrdersNewActivity.this, arrayList_salesmanSelection,
                             UndeliveredOrdersNewActivity.this);
                     binding.rvSalesmanNames.setAdapter(salesmansAdapter);
 
@@ -398,22 +412,32 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                         for (int i = 0; i < dist_pattern_arr.length(); i++) {
                             JSONObject object = dist_pattern_arr.getJSONObject(i);
 
-                            if (object.getString("date_type").equalsIgnoreCase("type1"))
+                            if (object.getString("date_type").equalsIgnoreCase("type1")) {
                                 arrayList_date1_salesman.add(object.getString("salesmen"));
+                            }
 
-                            if (object.getString("date_type").equalsIgnoreCase("type2"))
-                                arrayList_date2_salesman.add(object.getString("salesmen"));
+                            if (arrayList_order_date.size() > 1)
+                                if (object.getString("date_type").equalsIgnoreCase("type2"))
+                                    arrayList_date2_salesman.add(object.getString("salesmen"));
 
-                            if (object.getString("date_type").equalsIgnoreCase("type3"))
-                                arrayList_date3_salesman.add(object.getString("salesmen"));
+                            if (arrayList_order_date.size() > 2)
+                                if (object.getString("date_type").equalsIgnoreCase("type3"))
+                                    arrayList_date3_salesman.add(object.getString("salesmen"));
 
-                            if (object.getString("date_type").equalsIgnoreCase("type4"))
-                                arrayList_date4_salesman.add(object.getString("salesmen"));
+                            if (arrayList_order_date.size() > 3)
+                                if (object.getString("date_type").equalsIgnoreCase("type4"))
+                                    arrayList_date4_salesman.add(object.getString("salesmen"));
 
-                            if (object.getString("date_type").equalsIgnoreCase("type5"))
-                                arrayList_date5_salesman.add(object.getString("salesmen"));
+                            if (arrayList_order_date.size() > 4)
+                                if (object.getString("date_type").equalsIgnoreCase("type5"))
+                                    arrayList_date5_salesman.add(object.getString("salesmen"));
                         }
+
+                        checkIsPdfGenerated();
+
                         initializeAdapters();
+
+                        setTickSelection();
                     }
 
                 } catch (JSONException e) {
@@ -426,6 +450,136 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
             }
         });
+
+    }
+
+    private void checkIsPdfGenerated() {
+
+        arrayList_ispdf_generate1 = new ArrayList<>();
+        arrayList_ispdf_generate2 = new ArrayList<>();
+        arrayList_ispdf_generate3 = new ArrayList<>();
+        arrayList_ispdf_generate4 = new ArrayList<>();
+        arrayList_ispdf_generate5 = new ArrayList<>();
+
+        if (arrayList_date1_salesman.size() > 0) {
+
+            db.open();
+            for (int i = 0; i < arrayList_date1_salesman.size(); i++) {
+                arrayList_ispdf_generate1.add(false);
+                Cursor cur = db.viewSalesPdfDate();
+                if (cur.getCount() > 0) {
+                    if (cur.moveToFirst()) {
+                        do {
+
+                            if (arrayList_order_date.get(0)
+                                    .equalsIgnoreCase(cur.getString(2))
+                                    && arrayList_date1_salesman.get(i)
+                                    .equalsIgnoreCase(cur.getString(1))) {
+                                arrayList_ispdf_generate1.set(i, true);
+                            }
+                        } while (cur.moveToNext());
+                    }
+                }
+                cur.close();
+            }
+            db.close();
+        }
+
+        if (arrayList_date2_salesman.size() > 0) {
+
+            db.open();
+            for (int i = 0; i < arrayList_date2_salesman.size(); i++) {
+                arrayList_ispdf_generate2.add(false);
+                Cursor cur = db.viewSalesPdfDate();
+                if (cur.getCount() > 0) {
+                    if (cur.moveToFirst()) {
+                        do {
+                            if (arrayList_order_date.get(1)
+                                    .equalsIgnoreCase(cur.getString(2))
+                                    && arrayList_date2_salesman.get(i)
+                                    .equalsIgnoreCase(cur.getString(1))) {
+                                arrayList_ispdf_generate2.set(i, true);
+                            }
+                        } while (cur.moveToNext());
+                    }
+                }
+                cur.close();
+            }
+            db.close();
+        }
+
+        if (arrayList_date3_salesman.size() > 0) {
+
+            db.open();
+            for (int i = 0; i < arrayList_date3_salesman.size(); i++) {
+                arrayList_ispdf_generate3.add(false);
+                Cursor cur = db.viewSalesPdfDate();
+                if (cur.getCount() > 0) {
+                    if (cur.moveToFirst()) {
+                        do {
+
+                            if (arrayList_order_date.get(2)
+                                    .equalsIgnoreCase(cur.getString(2))
+                                    && arrayList_date3_salesman.get(i)
+                                    .equalsIgnoreCase(cur.getString(1))) {
+                                arrayList_ispdf_generate3.set(i, true);
+                            }
+                        } while (cur.moveToNext());
+                    }
+                }
+                cur.close();
+            }
+            db.close();
+        }
+
+        if (arrayList_date4_salesman.size() > 0) {
+
+            db.open();
+            for (int i = 0; i < arrayList_date4_salesman.size(); i++) {
+                arrayList_ispdf_generate4.add(false);
+                Cursor cur = db.viewSalesPdfDate();
+                if (cur.getCount() > 0) {
+                    if (cur.moveToFirst()) {
+                        do {
+                            if (arrayList_order_date.get(3)
+                                    .equalsIgnoreCase(cur.getString(2))
+                                    && arrayList_date4_salesman.get(i)
+                                    .equalsIgnoreCase(cur.getString(1))) {
+                                arrayList_ispdf_generate4.set(i, true);
+                            }
+                        } while (cur.moveToNext());
+                    }
+                }
+                cur.close();
+            }
+            db.close();
+        }
+
+        if (arrayList_date5_salesman.size() > 0) {
+
+            db.open();
+            for (int i = 0; i < arrayList_date5_salesman.size(); i++) {
+                arrayList_ispdf_generate5.add(false);
+                Cursor cur = db.viewSalesPdfDate();
+                if (cur.getCount() > 0) {
+                    if (cur.moveToFirst()) {
+                        do {
+
+                            if (arrayList_order_date.get(4)
+                                    .equalsIgnoreCase(cur.getString(2))
+                                    && arrayList_date5_salesman.get(i)
+                                    .equalsIgnoreCase(cur.getString(1))) {
+                                arrayList_ispdf_generate5.set(i, true);
+                            }
+                        } while (cur.moveToNext());
+                    }
+                }
+                cur.close();
+            }
+            db.close();
+        }
+
+        initializeAdapters();
 
     }
 
@@ -539,7 +693,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         });
     }
 
-
     public JSONArray listToJarray() {
 
         JSONArray array = new JSONArray();
@@ -641,6 +794,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(String salesman) {
+
         DialogSalesmanSelectionBinding selectionBinding;
         Dialog dialog = new Dialog(UndeliveredOrdersNewActivity.this);
         selectionBinding = DialogSalesmanSelectionBinding.inflate(getLayoutInflater());
@@ -727,7 +881,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         selectionBinding.imgCancelSelection.setOnClickListener(v -> dialog.dismiss());
 
         selectionBinding.btnDone.setOnClickListener(v -> {
+            checkIsPdfGenerated();
             initializeAdapters();
+            setTickSelection();
             dialog.dismiss();
 
         });
@@ -771,8 +927,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     }
 
     public int getSalesIdFromName(String name) {
-        for (int i = 0; i < arrayList_salesman_name.size(); i++) {
-            if (name.equalsIgnoreCase(arrayList_salesman_name.get(i)))
+        for (int i = 0; i < arrayList_salesmanSelection.size(); i++) {
+            if (name.equalsIgnoreCase(arrayList_salesmanSelection.get(i).getSalesman_name()))
                 return Integer.parseInt(arrayList_salesman_id.get(i));
         }
         return 0;
@@ -781,8 +937,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     @SuppressLint("NotifyDataSetChanged")
     public void initializeAdapters() {
 
+        Log.i(TAG, "arrayList_ispdf_generate1..>" + arrayList_ispdf_generate1.size());
         salesDatesAdapter1 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date1_salesman);
+                arrayList_date1_salesman, arrayList_ispdf_generate1);
         binding.rvDate1Salesman.setAdapter(salesDatesAdapter1);
         salesDatesAdapter1.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
@@ -791,14 +948,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 if (arrayList_date1_salesman.size() > 0)
                     arrayList_date1_salesman.remove(salesman);
                 salesDatesAdapter1.notifyDataSetChanged();
+                setTickSelection();
+                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
+        Log.i(TAG, "arrayList_ispdf_generate2..>" + arrayList_ispdf_generate2.size());
         salesDatesAdapter2 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date2_salesman);
+                arrayList_date2_salesman, arrayList_ispdf_generate2);
         binding.rvDate2Salesman.setAdapter(salesDatesAdapter2);
         salesDatesAdapter2.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
@@ -807,14 +967,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 if (arrayList_date2_salesman.size() > 0)
                     arrayList_date2_salesman.remove(salesman);
                 salesDatesAdapter2.notifyDataSetChanged();
+                setTickSelection();
+                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
+        Log.i(TAG, "arrayList_ispdf_generate3..>" + arrayList_ispdf_generate3.size());
         salesDatesAdapter3 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date3_salesman);
+                arrayList_date3_salesman, arrayList_ispdf_generate3);
         binding.rvDate3Salesman.setAdapter(salesDatesAdapter3);
         salesDatesAdapter3.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
@@ -823,14 +986,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 if (arrayList_date3_salesman.size() > 0)
                     arrayList_date3_salesman.remove(salesman);
                 salesDatesAdapter3.notifyDataSetChanged();
+                setTickSelection();
+                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
+        Log.i(TAG, "arrayList_ispdf_generate4..>" + arrayList_ispdf_generate4.size());
         salesDatesAdapter4 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date4_salesman);
+                arrayList_date4_salesman, arrayList_ispdf_generate4);
         binding.rvDate4Salesman.setAdapter(salesDatesAdapter4);
         salesDatesAdapter4.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
@@ -839,14 +1005,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 if (arrayList_date4_salesman.size() > 0)
                     arrayList_date4_salesman.remove(salesman);
                 salesDatesAdapter4.notifyDataSetChanged();
+                setTickSelection();
+                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
+        Log.i(TAG, "arrayList_ispdf_generate5..>" + arrayList_ispdf_generate5.size());
         salesDatesAdapter5 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date5_salesman);
+                arrayList_date5_salesman, arrayList_ispdf_generate5);
         binding.rvDate5Salesman.setAdapter(salesDatesAdapter5);
         salesDatesAdapter5.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
@@ -855,6 +1024,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 if (arrayList_date5_salesman.size() > 0)
                     arrayList_date5_salesman.remove(salesman);
                 salesDatesAdapter5.notifyDataSetChanged();
+                setTickSelection();
+                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
@@ -900,11 +1071,18 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         return 0;
     }
 
+    public int getPosition(String sId) {
+
+        for (int i = 0; i < arrayList_salesman_id.size(); i++) {
+
+            if (sId.equalsIgnoreCase(arrayList_salesman_id.get(i)))
+                return i;
+        }
+        return 0;
+    }
+
     @Override
     public void onclick(UndeliveredOrdersSalesmanModel model, boolean b) {
-
-        Log.i(TAG, "getSalesman...>" + model.getSalesman());
-        Log.i(TAG, "checked...>" + b);
 
         if (b) {
             if (!isSalesmanAvailable(model.getSalesman_id(),
@@ -934,7 +1112,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     }
 
     /*-----------------code for get sales orders for PDF--------*/
-    public void getSalesOrdersByGroupDates(String sales_dates, String action) {
+    public void getSalesOrdersByGroupDates(String sales_dates, String action, String pdf_name) {
 
         pdialog = new ProgressDialog(UndeliveredOrdersNewActivity.this);
         pdialog.setMessage("Loading...");
@@ -1164,7 +1342,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                     //createPDF(data_array.length());
                     //if (!memoryInfo.lowMemory)
-                    createPDFUtils(data_array.length());
+                    createPDFUtils(data_array.length(), pdf_name);
             /*else
                 Toast.makeText(this, "low memory", Toast.LENGTH_SHORT).show();*/
 
@@ -1195,7 +1373,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     File file;
 
-    private void createPDFUtils(int tot_dist) {
+    private void createPDFUtils(int tot_dist, String pdf_name) {
 
         //try {
 
@@ -1268,8 +1446,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         createPDFUtiltGoodSummeryTable();
 
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
-            file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/" + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
+            file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + pdf_name + ".pdf");
             //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/Invoice.pdf");
             file.getParentFile().mkdirs();
             file.createNewFile();
@@ -1324,9 +1501,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 }
             }
 
-
         }
-
 
         PdfUtils.finishPage();
 
@@ -2088,5 +2263,89 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         System.gc();
     }
     //=====================code end for create pdf file =======================================
+
+    public void showPDFNameDialog(String s) {
+
+        DialogCustomPdfNameBinding customPdfNameBinding;
+        Dialog dialog = new Dialog(UndeliveredOrdersNewActivity.this);
+        customPdfNameBinding = DialogCustomPdfNameBinding.inflate(getLayoutInflater());
+        dialog.setContentView(customPdfNameBinding.getRoot());
+        dialog.setCancelable(false);
+
+        customPdfNameBinding.imgCancel.setOnClickListener(v1 -> dialog.dismiss());
+
+        customPdfNameBinding.btnDone.setOnClickListener(v1 -> {
+            if (customPdfNameBinding.edtPdfName.getText().toString().isEmpty())
+                Toast.makeText(getApplicationContext(), "please enter PDF name", Toast.LENGTH_SHORT).show();
+            else {
+
+                db.open();
+
+                for (int i = 0; i < arrayList_salesman_dates.size(); i++) {
+
+                    db.addSalesPdf(arrayList_salesman_dates.get(i).getSalesman_id(),
+                            arrayList_salesmanSelection
+                                    .get(getPosition(arrayList_salesman_dates.get(i).getSalesman_id()))
+                                    .getSalesman_name(),
+                            arrayList_salesman_dates.get(i).getDate());
+                }
+
+                db.close();
+
+                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), s, customPdfNameBinding.edtPdfName.getText().toString());
+
+                checkIsPdfGenerated();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void setTickSelection() {
+
+        for (int i = 0; i < arrayList_salesmanSelection.size(); i++) {
+
+            int count = 0;
+
+            for (int j = 0; j < arrayList_date1_salesman.size(); j++) {
+                if (arrayList_salesmanSelection.get(i).getSalesman_name()
+                        .equalsIgnoreCase(arrayList_date1_salesman.get(j)))
+                    count++;
+            }
+
+            for (int j = 0; j < arrayList_date2_salesman.size(); j++) {
+                if (arrayList_salesmanSelection.get(i).getSalesman_name()
+                        .equalsIgnoreCase(arrayList_date2_salesman.get(j)))
+                    count++;
+            }
+
+            for (int j = 0; j < arrayList_date3_salesman.size(); j++) {
+                if (arrayList_salesmanSelection.get(i).getSalesman_name()
+                        .equalsIgnoreCase(arrayList_date3_salesman.get(j)))
+                    count++;
+            }
+
+            for (int j = 0; j < arrayList_date4_salesman.size(); j++) {
+                if (arrayList_salesmanSelection.get(i).getSalesman_name()
+                        .equalsIgnoreCase(arrayList_date4_salesman.get(j)))
+                    count++;
+            }
+
+            for (int j = 0; j < arrayList_date5_salesman.size(); j++) {
+                if (arrayList_salesmanSelection.get(i).getSalesman_name()
+                        .equalsIgnoreCase(arrayList_date5_salesman.get(j)))
+                    count++;
+            }
+
+            //Log.i(TAG, "Salesman_name...>" + arrayList_salesmanSelection.get(i).getSalesman_name());
+            //Log.i(TAG, "count...>" + count);
+            arrayList_salesmanSelection.get(i).setTicks(count + "");
+        }
+
+        salesmansAdapter.notifyDataSetChanged();
+
+    }
+
 
 }

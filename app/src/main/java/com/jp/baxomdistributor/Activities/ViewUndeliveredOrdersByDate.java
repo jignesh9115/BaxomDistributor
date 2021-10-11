@@ -59,6 +59,7 @@ import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Services.NetConnetionService;
 import com.jp.baxomdistributor.Utils.ConstantVariables;
 import com.jp.baxomdistributor.Utils.Database;
+import com.jp.baxomdistributor.Utils.FileUtils;
 import com.jp.baxomdistributor.Utils.GDateTime;
 import com.jp.baxomdistributor.Utils.HttpHandler;
 import com.jp.baxomdistributor.Utils.PdfUtils;
@@ -1258,7 +1259,8 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
 
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
-                file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/" + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
+                //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/" + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
+                file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
                 //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/Invoice.pdf");
                 file.getParentFile().mkdirs();
                 file.createNewFile();
