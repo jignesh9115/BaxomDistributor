@@ -3,6 +3,7 @@ package com.jp.baxomdistributor.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,12 @@ public class UndeliverdOrdersBitSalesmanAdapter extends RecyclerView.Adapter<Und
         holder.binding.tvSalesExeName.setText("" + arrayList.get(position).getSalesman());
         holder.binding.tvTotOrders.setText("" + arrayList.get(position).getTot_order());
         holder.binding.tvTotOrdersRs.setText("" + arrayList.get(position).getTot_amount());
+
+        if (arrayList.get(position).getIs_pdf_generated().equalsIgnoreCase("true"))
+            holder.binding.imgPdf.setVisibility(View.VISIBLE);
+        else
+            holder.binding.imgPdf.setVisibility(View.INVISIBLE);
+
 
         holder.binding.llSalesman.setOnClickListener(v -> {
             bitSalesmanClickListener.onclick(arrayList.get(position));

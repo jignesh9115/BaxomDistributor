@@ -38,10 +38,10 @@
             android:id="@+id/tv_sales_exe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
+            android:gravity="center_vertical"
+            android:lines="1"
             android:padding="5dp"
             android:text="Salesman name"
             android:textColor="@color/textPrimary"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="5dp"
             android:text="00000"
@@ -76,12 +76,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="5dp"
             android:text="0000000/-"
             android:textColor="@color/textPrimary"
             android:textSize="11sp" />
+
+
+        <ImageView
+            android:id="@+id/img_pdf"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="2dp"
+            android:src="@drawable/icon_pdf_generated"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="1dp"
@@ -89,15 +98,13 @@
             android:background="@color/white" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_width="30dp"
+            android:layout_height="match_parent">
 
             <CheckBox
                 android:id="@+id/chk_sales"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp" />
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>

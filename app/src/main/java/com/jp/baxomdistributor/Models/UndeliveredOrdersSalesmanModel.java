@@ -5,16 +5,18 @@ package com.jp.baxomdistributor.Models;
  */
 public class UndeliveredOrdersSalesmanModel {
 
-    String salesman_id, salesman, tot_order, tot_amount, entry_date;
+    String salesman_id, salesman, tot_order, tot_amount, entry_date, bit_id, is_pdf_generated;
 
     boolean checked = false;
 
-    public UndeliveredOrdersSalesmanModel(String salesman_id, String salesman, String tot_order, String tot_amount, String entry_date, boolean checked) {
+    public UndeliveredOrdersSalesmanModel(String salesman_id, String salesman, String tot_order, String tot_amount, String entry_date, String bit_id, String is_pdf_generated, boolean checked) {
         this.salesman_id = salesman_id;
         this.salesman = salesman;
         this.tot_order = tot_order;
         this.tot_amount = tot_amount;
         this.entry_date = entry_date;
+        this.bit_id = bit_id;
+        this.is_pdf_generated = is_pdf_generated;
         this.checked = checked;
     }
 
@@ -56,6 +58,22 @@ public class UndeliveredOrdersSalesmanModel {
 
     public void setEntry_date(String entry_date) {
         this.entry_date = entry_date;
+    }
+
+    public String getBit_id() {
+        return bit_id;
+    }
+
+    public void setBit_id(String bit_id) {
+        this.bit_id = bit_id;
+    }
+
+    public String getIs_pdf_generated() {
+        return is_pdf_generated;
+    }
+
+    public void setIs_pdf_generated(String is_pdf_generated) {
+        this.is_pdf_generated = is_pdf_generated;
     }
 
     public boolean isChecked() {

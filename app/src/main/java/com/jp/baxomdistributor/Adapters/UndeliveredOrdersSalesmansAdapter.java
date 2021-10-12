@@ -62,12 +62,12 @@ public class UndeliveredOrdersSalesmansAdapter extends RecyclerView.Adapter<Unde
             holder.binding.tvTicks.setText("✓✓✓");
         }
         if (arrayList.get(position).getTicks().equalsIgnoreCase("4")) {
-            holder.binding.tvTicks.setText("✓✓✓✓");
+            holder.binding.tvTicks.setText("✓✓✓\n✓");
         }
 
         if (arrayList.get(position).getTicks().equalsIgnoreCase("5")) {
             holder.binding.tvTicks.setVisibility(View.VISIBLE);
-            holder.binding.tvTicks.setText("✓✓✓✓✓");
+            holder.binding.tvTicks.setText("✓✓✓\n✓✓");
         }
 
 

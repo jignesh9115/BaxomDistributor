@@ -11,11 +11,11 @@
 
     <TextView
         android:id="@+id/tv_salesman"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:maxLines="1"
+        android:lines="2"
         android:paddingStart="2dp"
         android:text="salesman name"
         android:textColor="@color/textPrimary"
@@ -23,12 +23,13 @@
 
     <TextView
         android:id="@+id/tv_ticks"
-        android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:lines="1"
-        android:text=""
+        android:paddingStart="2dp"
+        android:lines="2"
+        android:text="✓✓✓\n✓✓"
         android:textColor="@color/white"
         android:textSize="8sp" />
 

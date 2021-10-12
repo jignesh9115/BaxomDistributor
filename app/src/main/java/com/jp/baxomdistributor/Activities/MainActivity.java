@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             drawer_menu.findItem(R.id.nav_home).setTitle("" + commanList.getArrayList().get(0));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders).setTitle("" + commanList.getArrayList().get(1));
-            drawer_menu.findItem(R.id.nav_undelivered_sales_orders_new).setTitle("Undelivered Orders New");
+            drawer_menu.findItem(R.id.nav_undelivered_sales_orders_new).setTitle("" + commanList.getArrayList().get(12));
             drawer_menu.findItem(R.id.nav_delivered_sales_orders).setTitle("" + commanList.getArrayList().get(2));
             //drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setTitle("" + commanList.getArrayList().get(11));
             //drawer_menu.findItem(R.id.nav_delivery_fail_sales_orders).setTitle("" + commanList.getArrayList().get(3));
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new UndeliveredSalesOrdersNewFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle("Undelivered Orders New");
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(12));
                     drawer.close();
 
                 } else if (item.getItemId() == R.id.nav_delivered_sales_orders) {

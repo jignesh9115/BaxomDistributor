@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -48,11 +49,13 @@ import com.jp.baxomdistributor.Models.GoodsSummeryDetailsPOJO;
 import com.jp.baxomdistributor.Models.GoodsSummeryPOJO;
 import com.jp.baxomdistributor.Models.GroupDatesOfSalesmanPOJO;
 import com.jp.baxomdistributor.Models.SalesProdDetailPOJO;
+import com.jp.baxomdistributor.Models.SalesmanPDFGenerateModel;
 import com.jp.baxomdistributor.Models.SchemeListPDFPOJO;
 import com.jp.baxomdistributor.Models.UdeliveredOrdersModel;
 import com.jp.baxomdistributor.Models.UdeliveredOrdersSalesmanSelectionModel;
 import com.jp.baxomdistributor.Models.UndeliveredOrdersSalesmanModel;
 import com.jp.baxomdistributor.Models.ViewSalesOrderByOrderIdPOJO;
+import com.jp.baxomdistributor.MultiLanguageUtils.Language;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
 import com.jp.baxomdistributor.Utils.Database;
@@ -98,10 +101,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             arrayList_date1_salesman, arrayList_date2_salesman, arrayList_date3_salesman,
             arrayList_date4_salesman, arrayList_date5_salesman;
 
-    ArrayList<Boolean> arrayList_ispdf_generate1, arrayList_ispdf_generate2, arrayList_ispdf_generate3,
-            arrayList_ispdf_generate4, arrayList_ispdf_generate5;
-
-
     ArrayList<UdeliveredOrdersSalesmanSelectionModel> arrayList_salesmanSelection;
     UdeliveredOrdersSalesmanSelectionModel salesmanSelectionModel;
 
@@ -125,10 +124,11 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     ProgressDialog pdialog;
 
-    AlertDialog alertDialog;
+    AlertDialog alertDialog, ad_show_info;
     AlertDialog.Builder builder;
 
     ArrayList<GroupDatesOfSalesmanPOJO> arrayList_salesman_dates;
+    ArrayList<SalesmanPDFGenerateModel> arrayList_salesman_pdf_dates;
 
     /*-----------PDF variable declaration starts---------*/
     ArrayList<DitributorTablePOJO> arrayList_dist_table;
@@ -162,7 +162,10 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     private Uri uri;
     /*-----------PDF variable declaration ends---------*/
 
+    SharedPreferences sp_multi_lang;
+    ArrayList<String> arrayList_lang_desc;
     Database db;
+    Language.CommanList commanSuchnaList;
 
 
     @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
@@ -171,7 +174,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         super.onCreate(savedInstanceState);
         binding = ActivityUndeliveredOrdersNewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        db = new Database(UndeliveredOrdersNewActivity.this);
         //================code for allow strictMode starts ================
 
         int SDK_INT = Build.VERSION.SDK_INT;
@@ -190,6 +192,15 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         sp_distributor_detail = getSharedPreferences("distributor_detail", MODE_PRIVATE);
         dist_id = sp_distributor_detail.getString("distributor_id", "");
+
+        db = new Database(getApplicationContext());
+        sp_multi_lang = getSharedPreferences("Language", Context.MODE_PRIVATE);
+        setLanguage(sp_multi_lang.getString("lang", ""));
+
+        Language language = new Language(sp_multi_lang.getString("lang", ""),
+                UndeliveredOrdersNewActivity.this, setLangSuchna(sp_multi_lang.getString("lang", "")));
+        commanSuchnaList = language.getData();
+
 
         binding.tvDistName.setText("" + sp_distributor_detail.getString("name", ""));
 
@@ -243,7 +254,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             if (listToJarray().length() > 0)
                 getBitlist(listToJarray());
             else
-                Toast.makeText(getApplicationContext(), "please select salesman !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
         });
 
         binding.btnClearlist.setOnClickListener(v -> {
@@ -265,11 +276,32 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         binding.btnOrderSummery.setOnClickListener(v -> {
             Log.i(TAG, "arrayList_salesman_dates..>" + new Gson().toJson(arrayList_salesman_dates));
+            Log.i(TAG, "pdf_date : " + new Gson().toJson(arrayList_salesman_pdf_dates));
 
-            if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                showPDFNameDialog("");
-            else
-                Toast.makeText(UndeliveredOrdersNewActivity.this, "please select salesman", Toast.LENGTH_SHORT).show();
+            if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0) {
+                if (arrayList_salesmanSelection.size() > arrayList_salesman_dates.size()) {
+                    builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
+                    builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+
+                    if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("ENG"))
+                        builder.setMessage("There are still " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " salesmen left to select whether you want to make a PDF ? ");
+                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("GUJ"))
+                        builder.setMessage("તમે પીડીએફ બનાવવા માંગો છો કે કેમ તે પસંદ કરવા માટે હજી " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " સેલ્સમેન બાકી છે?");
+                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("HINDI"))
+                        builder.setMessage("क्या आप पीडीएफ बनाना चाहते हैं या नहीं, यह चुनने के लिए अभी भी " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " सेल्समैन बचे हैं?");
+
+                    builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(9), (dialogInterface, i) -> {
+                        ad_show_info.dismiss();
+                        showPDFNameDialog("");
+                    });
+                    builder.setNegativeButton("" + commanSuchnaList.getArrayList().get(10), (dialogInterface, i) -> ad_show_info.dismiss());
+
+                    ad_show_info = builder.create();
+                    ad_show_info.show();
+                } else
+                    showPDFNameDialog("");
+            } else
+                Toast.makeText(UndeliveredOrdersNewActivity.this, "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
         });
 
         binding.btnGeneratePdfMergedshop.setOnClickListener(v -> {
@@ -278,9 +310,29 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), "merge shop");*/
 
             if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                showPDFNameDialog("merge shop");
+                if (arrayList_salesmanSelection.size() > arrayList_salesman_dates.size()) {
+                    builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
+                    builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+
+                    if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("ENG"))
+                        builder.setMessage("There are still " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " salesmen left to select whether you want to make a PDF ? ");
+                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("GUJ"))
+                        builder.setMessage("તમે પીડીએફ બનાવવા માંગો છો કે કેમ તે પસંદ કરવા માટે હજી " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " સેલ્સમેન બાકી છે?");
+                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("HINDI"))
+                        builder.setMessage("क्या आप पीडीएफ बनाना चाहते हैं या नहीं, यह चुनने के लिए अभी भी " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " सेल्समैन बचे हैं?");
+
+                    builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(9), (dialogInterface, i) -> {
+                        ad_show_info.dismiss();
+                        showPDFNameDialog("merge shop");
+                    });
+                    builder.setNegativeButton("" + commanSuchnaList.getArrayList().get(10), (dialogInterface, i) -> ad_show_info.dismiss());
+
+                    ad_show_info = builder.create();
+                    ad_show_info.show();
+                } else
+                    showPDFNameDialog("merge shop");
             else
-                Toast.makeText(UndeliveredOrdersNewActivity.this, "please select salesman", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UndeliveredOrdersNewActivity.this, "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
 
         });
 
@@ -296,7 +348,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 startActivity(intent);
 
             } else {
-                Toast.makeText(UndeliveredOrdersNewActivity.this, "please select salesman", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UndeliveredOrdersNewActivity.this, "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -360,7 +412,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             if (array.length() > 0)
                 setDistPattern(array + "");
             else
-                Toast.makeText(getApplicationContext(), "please select salesman", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
 
         });
     }
@@ -432,11 +484,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                                 if (object.getString("date_type").equalsIgnoreCase("type5"))
                                     arrayList_date5_salesman.add(object.getString("salesmen"));
                         }
-
-                        checkIsPdfGenerated();
-
                         initializeAdapters();
-
                         setTickSelection();
                     }
 
@@ -450,136 +498,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
             }
         });
-
-    }
-
-    private void checkIsPdfGenerated() {
-
-        arrayList_ispdf_generate1 = new ArrayList<>();
-        arrayList_ispdf_generate2 = new ArrayList<>();
-        arrayList_ispdf_generate3 = new ArrayList<>();
-        arrayList_ispdf_generate4 = new ArrayList<>();
-        arrayList_ispdf_generate5 = new ArrayList<>();
-
-        if (arrayList_date1_salesman.size() > 0) {
-
-            db.open();
-            for (int i = 0; i < arrayList_date1_salesman.size(); i++) {
-                arrayList_ispdf_generate1.add(false);
-                Cursor cur = db.viewSalesPdfDate();
-                if (cur.getCount() > 0) {
-                    if (cur.moveToFirst()) {
-                        do {
-
-                            if (arrayList_order_date.get(0)
-                                    .equalsIgnoreCase(cur.getString(2))
-                                    && arrayList_date1_salesman.get(i)
-                                    .equalsIgnoreCase(cur.getString(1))) {
-                                arrayList_ispdf_generate1.set(i, true);
-                            }
-                        } while (cur.moveToNext());
-                    }
-                }
-                cur.close();
-            }
-            db.close();
-        }
-
-        if (arrayList_date2_salesman.size() > 0) {
-
-            db.open();
-            for (int i = 0; i < arrayList_date2_salesman.size(); i++) {
-                arrayList_ispdf_generate2.add(false);
-                Cursor cur = db.viewSalesPdfDate();
-                if (cur.getCount() > 0) {
-                    if (cur.moveToFirst()) {
-                        do {
-                            if (arrayList_order_date.get(1)
-                                    .equalsIgnoreCase(cur.getString(2))
-                                    && arrayList_date2_salesman.get(i)
-                                    .equalsIgnoreCase(cur.getString(1))) {
-                                arrayList_ispdf_generate2.set(i, true);
-                            }
-                        } while (cur.moveToNext());
-                    }
-                }
-                cur.close();
-            }
-            db.close();
-        }
-
-        if (arrayList_date3_salesman.size() > 0) {
-
-            db.open();
-            for (int i = 0; i < arrayList_date3_salesman.size(); i++) {
-                arrayList_ispdf_generate3.add(false);
-                Cursor cur = db.viewSalesPdfDate();
-                if (cur.getCount() > 0) {
-                    if (cur.moveToFirst()) {
-                        do {
-
-                            if (arrayList_order_date.get(2)
-                                    .equalsIgnoreCase(cur.getString(2))
-                                    && arrayList_date3_salesman.get(i)
-                                    .equalsIgnoreCase(cur.getString(1))) {
-                                arrayList_ispdf_generate3.set(i, true);
-                            }
-                        } while (cur.moveToNext());
-                    }
-                }
-                cur.close();
-            }
-            db.close();
-        }
-
-        if (arrayList_date4_salesman.size() > 0) {
-
-            db.open();
-            for (int i = 0; i < arrayList_date4_salesman.size(); i++) {
-                arrayList_ispdf_generate4.add(false);
-                Cursor cur = db.viewSalesPdfDate();
-                if (cur.getCount() > 0) {
-                    if (cur.moveToFirst()) {
-                        do {
-                            if (arrayList_order_date.get(3)
-                                    .equalsIgnoreCase(cur.getString(2))
-                                    && arrayList_date4_salesman.get(i)
-                                    .equalsIgnoreCase(cur.getString(1))) {
-                                arrayList_ispdf_generate4.set(i, true);
-                            }
-                        } while (cur.moveToNext());
-                    }
-                }
-                cur.close();
-            }
-            db.close();
-        }
-
-        if (arrayList_date5_salesman.size() > 0) {
-
-            db.open();
-            for (int i = 0; i < arrayList_date5_salesman.size(); i++) {
-                arrayList_ispdf_generate5.add(false);
-                Cursor cur = db.viewSalesPdfDate();
-                if (cur.getCount() > 0) {
-                    if (cur.moveToFirst()) {
-                        do {
-
-                            if (arrayList_order_date.get(4)
-                                    .equalsIgnoreCase(cur.getString(2))
-                                    && arrayList_date5_salesman.get(i)
-                                    .equalsIgnoreCase(cur.getString(1))) {
-                                arrayList_ispdf_generate5.set(i, true);
-                            }
-                        } while (cur.moveToNext());
-                    }
-                }
-                cur.close();
-            }
-            db.close();
-        }
-
-        initializeAdapters();
 
     }
 
@@ -613,6 +531,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                         arrayList_bit_orders = new ArrayList<>();
                         arrayList_salesman_dates = new ArrayList<>();
+                        arrayList_salesman_pdf_dates = new ArrayList<>();
 
                         for (int i = 0; i < data_array.length(); i++) {
 
@@ -630,6 +549,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                                         salesman_object.getString("tot_order"),
                                         salesman_object.getString("tot_amount"),
                                         salesman_object.getString("entry_date"),
+                                        salesman_object.getString("bit_id"),
+                                        salesman_object.getString("is_pdf_generated"),
                                         false);
                                 arrayList_bit_salesman.add(undeliveredOrdersSalesmanModel);
                             }
@@ -681,9 +602,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 Log.i(TAG, "set pattern res..>" + response.body());
 
                 if (response.body() != null && response.body().contains("Pattern set sucessfully")) {
-                    Toast.makeText(getApplicationContext(), "Pattern set sucessfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(1), Toast.LENGTH_SHORT).show();
                 } else
-                    Toast.makeText(getApplicationContext(), "something went wrong...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(2), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -881,7 +802,6 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         selectionBinding.imgCancelSelection.setOnClickListener(v -> dialog.dismiss());
 
         selectionBinding.btnDone.setOnClickListener(v -> {
-            checkIsPdfGenerated();
             initializeAdapters();
             setTickSelection();
             dialog.dismiss();
@@ -894,25 +814,25 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 && checkIsAvailable(arrayList_date4_salesman, salesman)
                 && checkIsAvailable(arrayList_date5_salesman, salesman)
                 && arrayList_order_date.size() == 5)
-            Toast.makeText(getApplicationContext(), "Selected In All Dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(3), Toast.LENGTH_SHORT).show();
         else if (checkIsAvailable(arrayList_date1_salesman, salesman)
                 && checkIsAvailable(arrayList_date2_salesman, salesman)
                 && checkIsAvailable(arrayList_date3_salesman, salesman)
                 && checkIsAvailable(arrayList_date4_salesman, salesman)
                 && arrayList_order_date.size() == 4)
-            Toast.makeText(getApplicationContext(), "Selected In All Dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(3), Toast.LENGTH_SHORT).show();
         else if (checkIsAvailable(arrayList_date1_salesman, salesman)
                 && checkIsAvailable(arrayList_date2_salesman, salesman)
                 && checkIsAvailable(arrayList_date3_salesman, salesman)
                 && arrayList_order_date.size() == 3)
-            Toast.makeText(getApplicationContext(), "Selected In All Dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(3), Toast.LENGTH_SHORT).show();
         else if (checkIsAvailable(arrayList_date1_salesman, salesman)
                 && checkIsAvailable(arrayList_date2_salesman, salesman)
                 && arrayList_order_date.size() == 2)
-            Toast.makeText(getApplicationContext(), "Selected In All Dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(3), Toast.LENGTH_SHORT).show();
         else if (checkIsAvailable(arrayList_date1_salesman, salesman)
                 && arrayList_order_date.size() == 1)
-            Toast.makeText(getApplicationContext(), "Selected In All Dates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(3), Toast.LENGTH_SHORT).show();
         else
             dialog.show();
     }
@@ -937,95 +857,85 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     @SuppressLint("NotifyDataSetChanged")
     public void initializeAdapters() {
 
-        Log.i(TAG, "arrayList_ispdf_generate1..>" + arrayList_ispdf_generate1.size());
         salesDatesAdapter1 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date1_salesman, arrayList_ispdf_generate1);
+                arrayList_date1_salesman);
         binding.rvDate1Salesman.setAdapter(salesDatesAdapter1);
         salesDatesAdapter1.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-            builder.setMessage("Do you want to remove ? ");
-            builder.setPositiveButton("remove", (dialogInterface, i) -> {
+            builder.setMessage("" + commanSuchnaList.getArrayList().get(7));
+            builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(8), (dialogInterface, i) -> {
                 if (arrayList_date1_salesman.size() > 0)
                     arrayList_date1_salesman.remove(salesman);
                 salesDatesAdapter1.notifyDataSetChanged();
                 setTickSelection();
-                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
-        Log.i(TAG, "arrayList_ispdf_generate2..>" + arrayList_ispdf_generate2.size());
         salesDatesAdapter2 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date2_salesman, arrayList_ispdf_generate2);
+                arrayList_date2_salesman);
         binding.rvDate2Salesman.setAdapter(salesDatesAdapter2);
         salesDatesAdapter2.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-            builder.setMessage("Do you want to remove ? ");
-            builder.setPositiveButton("remove", (dialogInterface, i) -> {
+            builder.setMessage("" + commanSuchnaList.getArrayList().get(7));
+            builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(8), (dialogInterface, i) -> {
                 if (arrayList_date2_salesman.size() > 0)
                     arrayList_date2_salesman.remove(salesman);
                 salesDatesAdapter2.notifyDataSetChanged();
                 setTickSelection();
-                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
-        Log.i(TAG, "arrayList_ispdf_generate3..>" + arrayList_ispdf_generate3.size());
         salesDatesAdapter3 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date3_salesman, arrayList_ispdf_generate3);
+                arrayList_date3_salesman);
         binding.rvDate3Salesman.setAdapter(salesDatesAdapter3);
         salesDatesAdapter3.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-            builder.setMessage("Do you want to remove ? ");
-            builder.setPositiveButton("remove", (dialogInterface, i) -> {
+            builder.setMessage("" + commanSuchnaList.getArrayList().get(7));
+            builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(8), (dialogInterface, i) -> {
                 if (arrayList_date3_salesman.size() > 0)
                     arrayList_date3_salesman.remove(salesman);
                 salesDatesAdapter3.notifyDataSetChanged();
                 setTickSelection();
-                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
-        Log.i(TAG, "arrayList_ispdf_generate4..>" + arrayList_ispdf_generate4.size());
         salesDatesAdapter4 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date4_salesman, arrayList_ispdf_generate4);
+                arrayList_date4_salesman);
         binding.rvDate4Salesman.setAdapter(salesDatesAdapter4);
         salesDatesAdapter4.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-            builder.setMessage("Do you want to remove ? ");
-            builder.setPositiveButton("remove", (dialogInterface, i) -> {
+            builder.setMessage("" + commanSuchnaList.getArrayList().get(7));
+            builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(8), (dialogInterface, i) -> {
                 if (arrayList_date4_salesman.size() > 0)
                     arrayList_date4_salesman.remove(salesman);
                 salesDatesAdapter4.notifyDataSetChanged();
                 setTickSelection();
-                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
 
         });
 
-        Log.i(TAG, "arrayList_ispdf_generate5..>" + arrayList_ispdf_generate5.size());
         salesDatesAdapter5 = new UndeliveredOrdersDatesAdapter(UndeliveredOrdersNewActivity.this,
-                arrayList_date5_salesman, arrayList_ispdf_generate5);
+                arrayList_date5_salesman);
         binding.rvDate5Salesman.setAdapter(salesDatesAdapter5);
         salesDatesAdapter5.setOnItemClickListener(salesman -> {
             builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-            builder.setMessage("Do you want to remove ? ");
-            builder.setPositiveButton("remove", (dialogInterface, i) -> {
+            builder.setMessage("" + commanSuchnaList.getArrayList().get(7));
+            builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(8), (dialogInterface, i) -> {
                 if (arrayList_date5_salesman.size() > 0)
                     arrayList_date5_salesman.remove(salesman);
                 salesDatesAdapter5.notifyDataSetChanged();
                 setTickSelection();
-                checkIsPdfGenerated();
             });
             alertDialog = builder.create();
             alertDialog.show();
@@ -1071,6 +981,18 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         return 0;
     }
 
+    public int getPosition(String sId, String pdfdate, String bit_id) {
+
+        for (int i = 0; i < arrayList_salesman_pdf_dates.size(); i++) {
+
+            if (sId.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getSalesman_id())
+                    && bit_id.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getBit_id())
+                    && pdfdate.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getPdf_date()))
+                return i;
+        }
+        return 0;
+    }
+
     public int getPosition(String sId) {
 
         for (int i = 0; i < arrayList_salesman_id.size(); i++) {
@@ -1090,11 +1012,23 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                 arrayList_salesman_dates.add(new GroupDatesOfSalesmanPOJO(model.getSalesman_id(),
                         gDateTime.dmyToymd(model.getEntry_date())));
+
+                arrayList_salesman_pdf_dates.add(new SalesmanPDFGenerateModel(
+                        model.getSalesman_id(),
+                        model.getSalesman(),
+                        model.getEntry_date(),
+                        model.getBit_id()));
             }
         } else {
             if (arrayList_salesman_dates.size() > 0)
                 arrayList_salesman_dates.remove(getPosition(model.getSalesman_id(),
                         gDateTime.dmyToymd(model.getEntry_date())));
+
+            if (arrayList_salesman_pdf_dates.size() > 0)
+                arrayList_salesman_pdf_dates.remove(getPosition(
+                        model.getSalesman_id(),
+                        model.getEntry_date(),
+                        model.getBit_id()));
         }
 
     }
@@ -1112,7 +1046,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     }
 
     /*-----------------code for get sales orders for PDF--------*/
-    public void getSalesOrdersByGroupDates(String sales_dates, String action, String pdf_name) {
+    public void getSalesOrdersByGroupDates(String sales_dates, String sales_pdf_dates, String action, String pdf_name) {
 
         pdialog = new ProgressDialog(UndeliveredOrdersNewActivity.this);
         pdialog.setMessage("Loading...");
@@ -1122,9 +1056,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         Call<String> call;
 
         if (action.equalsIgnoreCase("merge shop"))
-            call = api.getMergeShop_SalesOrderpdf_by_group_dates(dist_id, sales_dates);
+            call = api.getMergeShop_SalesOrderpdf_by_group_dates(dist_id, sales_dates, sales_pdf_dates);
         else
-            call = api.getSalesOrderpdf_by_group_dates(dist_id, sales_dates);
+            call = api.getSalesOrderpdf_by_group_dates(dist_id, sales_dates, sales_pdf_dates);
 
 
         call.enqueue(new Callback<String>() {
@@ -2237,7 +2171,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Toast.makeText(getApplicationContext(), "No Application Available For PDF View", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(4), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -2276,25 +2210,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         customPdfNameBinding.btnDone.setOnClickListener(v1 -> {
             if (customPdfNameBinding.edtPdfName.getText().toString().isEmpty())
-                Toast.makeText(getApplicationContext(), "please enter PDF name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(5), Toast.LENGTH_SHORT).show();
             else {
-
-                db.open();
-
-                for (int i = 0; i < arrayList_salesman_dates.size(); i++) {
-
-                    db.addSalesPdf(arrayList_salesman_dates.get(i).getSalesman_id(),
-                            arrayList_salesmanSelection
-                                    .get(getPosition(arrayList_salesman_dates.get(i).getSalesman_id()))
-                                    .getSalesman_name(),
-                            arrayList_salesman_dates.get(i).getDate());
-                }
-
-                db.close();
-
-                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), s, customPdfNameBinding.edtPdfName.getText().toString());
-
-                checkIsPdfGenerated();
+                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), new Gson().toJson(arrayList_salesman_pdf_dates), s, customPdfNameBinding.edtPdfName.getText().toString());
                 dialog.dismiss();
             }
         });
@@ -2347,5 +2265,84 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     }
 
+    @SuppressLint("SetTextI18n")
+    public void setLanguage(String key) {
+
+        Language language = new Language(key, UndeliveredOrdersNewActivity.this, setLang(key));
+        Language.CommanList commanList = language.getData();
+        if (setLang(key).size() > 0) {
+
+            if (commanList.getArrayList() != null && commanList.getArrayList().size() > 0) {
+
+                binding.tvScreenHeadingEditshop.setText("" + commanList.getArrayList().get(0));
+                binding.btnApply.setText("" + commanList.getArrayList().get(1));
+                binding.btnClearlist.setText("" + commanList.getArrayList().get(2));
+                binding.btnSetDefault.setText("" + commanList.getArrayList().get(3));
+                binding.btnOrderSummery.setText("" + commanList.getArrayList().get(4));
+                binding.btnShopLocation.setText("" + commanList.getArrayList().get(5));
+                binding.btnGeneratePdfMergedshop.setText("" + commanList.getArrayList().get(6));
+            }
+        }
+    }
+
+    public ArrayList<String> setLang(String key) {
+
+        arrayList_lang_desc = new ArrayList<>();
+        db.open();
+        Cursor cur = db.viewLanguage(key, "66");
+
+        if (cur.getCount() > 0) {
+
+            if (cur.moveToFirst()) {
+
+                do {
+                    if (key.equalsIgnoreCase("ENG"))
+                        arrayList_lang_desc.add(cur.getString(3));
+                    else if (key.equalsIgnoreCase("GUJ"))
+                        arrayList_lang_desc.add(cur.getString(4));
+                    else if (key.equalsIgnoreCase("HINDI"))
+                        arrayList_lang_desc.add(cur.getString(5));
+
+                } while (cur.moveToNext());
+
+            }
+        }
+        cur.close();
+        db.close();
+
+        return arrayList_lang_desc;
+
+    }
+
+    public ArrayList<String> setLangSuchna(String key) {
+
+        arrayList_lang_desc = new ArrayList<>();
+        db.open();
+        Cursor cur = db.viewMultiLangSuchna("66");
+
+        if (cur.getCount() > 0) {
+
+            if (cur.moveToFirst()) {
+
+                do {
+
+                    if (key.equalsIgnoreCase("ENG"))
+                        arrayList_lang_desc.add(cur.getString(4));
+                    else if (key.equalsIgnoreCase("GUJ"))
+                        arrayList_lang_desc.add(cur.getString(5));
+                    else if (key.equalsIgnoreCase("HINDI"))
+                        arrayList_lang_desc.add(cur.getString(6));
+
+                }
+                while (cur.moveToNext());
+
+            }
+        }
+        cur.close();
+        db.close();
+
+        return arrayList_lang_desc;
+
+    }
 
 }

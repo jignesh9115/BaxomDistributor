@@ -46,15 +46,6 @@ public class Database {
             " suchna_desc_hindi TEXT ,\n" +
             " timestamp TEXT \n" + ")";
 
-    public static final String TABLE_NAME_SALES_PDF_TABLE = "sales_pdf_table";
-    public static final String SALESMAN_ID = "salesman_id";
-    public static final String SALESMAN_NAME = "salesman_name";
-    public static final String PDF_DATE = "pdf_date";
-    public static final String CREATE_SALES_PDF_TABLE = "CREATE TABLE sales_pdf_table (\n" +
-            " salesman_id  INTEGER ,\n" +
-            " salesman_name TEXT ,\n" +
-            " pdf_date TEXT \n" + ")";
-
 
     private Context context;
     SQLiteDatabase db;    // manipulation with database
@@ -78,7 +69,6 @@ public class Database {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_MULTI_LANGUAGE_TABLE);
             db.execSQL(CREATE_MULTI_LANGUAGE_SUCHNA_TABLE);
-            db.execSQL(CREATE_SALES_PDF_TABLE);
             Log.i("Database", "Table is creted...");
         }
 
@@ -171,21 +161,5 @@ public class Database {
     public void deleteMultiLangSuchna() {
         db.delete(TABLE_NAME_MULTI_LANGUAGE_SUCHNA_TABLE, null, null);
         //Log.i("Database", "delete query==>" + query_id);
-    }
-
-
-    /*-------------for sales pdf date----*/
-    public long addSalesPdf(String salesman_id, String salesman_name, String date) {
-        ContentValues values = new ContentValues();
-        values.put(SALESMAN_ID, salesman_id);
-        values.put(SALESMAN_NAME, salesman_name);
-        values.put(PDF_DATE, date);
-        return db.insert(TABLE_NAME_SALES_PDF_TABLE, null, values);
-    }
-
-    public Cursor viewSalesPdfDate() {
-        String query = "select * from " + TABLE_NAME_SALES_PDF_TABLE;
-        Cursor cur = db.rawQuery(query, null);
-        return cur;
     }
 }

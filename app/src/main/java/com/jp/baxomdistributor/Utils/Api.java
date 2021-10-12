@@ -115,13 +115,15 @@ public interface Api {
     @GET("undeliverOrderByDist.php")
     Call<String> getUndeliveredOrdersByDist(@Query("salesman_arr") JSONArray salesmans);
 
-    @GET("viewsalesorderpdf_by_group_dates.php")
+    @GET("view_salesorder_pdf_by_group_dates_new.php")
     Call<String> getSalesOrderpdf_by_group_dates(@Query("dist_id") String dist_id,
-                                                 @Query("salesdate_arr") String salesdate_arr);
+                                                 @Query("salesdate_arr") String salesdate_arr,
+                                                 @Query("sales_pdf_date_arr") String sales_pdf_date_arr);
 
-    @GET("merge_shop_salesorderpdf_by_group_dates.php")
+    @GET("merge_shop_salesorderpdf_by_group_dates_new.php")
     Call<String> getMergeShop_SalesOrderpdf_by_group_dates(@Query("dist_id") String dist_id,
-                                                           @Query("salesdate_arr") String salesdate_arr);
+                                                           @Query("salesdate_arr") String salesdate_arr,
+                                                           @Query("sales_pdf_date_arr") String sales_pdf_date_arr);
 
     @GET("set_dist_pattern.php")
     Call<String> set_dist_pattern(@Query("dist_id") String dist_id,

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:maxLines="1"
+        android:lines="1"
         android:paddingStart="2dp"
         android:text="salesman name"
         android:textColor="@color/white"

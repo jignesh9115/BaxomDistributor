@@ -21,14 +21,12 @@ public class UndeliveredOrdersDatesAdapter extends RecyclerView.Adapter<Undelive
 
     Context context;
     ArrayList<String> arrayList;
-    ArrayList<Boolean> arrayList_is_gerated;
 
     private UndeliveredOrdersDatesAdapter.OnItemClickListener mListener;
 
-    public UndeliveredOrdersDatesAdapter(Context context, ArrayList<String> arrayList, ArrayList<Boolean> arrayList_is_gerated) {
+    public UndeliveredOrdersDatesAdapter(Context context, ArrayList<String> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        this.arrayList_is_gerated = arrayList_is_gerated;
     }
 
     public void setOnItemClickListener(UndeliveredOrdersDatesAdapter.OnItemClickListener listener) {
@@ -45,10 +43,6 @@ public class UndeliveredOrdersDatesAdapter extends RecyclerView.Adapter<Undelive
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
-        if (arrayList_is_gerated.get(position))
-            holder.binding.imgPdf.setVisibility(View.VISIBLE);
-        else
-            holder.binding.imgPdf.setVisibility(View.INVISIBLE);
 
         holder.binding.tvSalesman.setText("" + arrayList.get(position));
 
