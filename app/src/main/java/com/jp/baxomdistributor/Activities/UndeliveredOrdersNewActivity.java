@@ -13,7 +13,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -167,6 +166,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     Database db;
     Language.CommanList commanSuchnaList;
 
+    boolean isRefresh = false;
 
     @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
@@ -251,9 +251,27 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         binding.btnApply.setOnClickListener(v -> {
 
             Log.i(TAG, "listToJarray..>" + listToJarray());
-            if (listToJarray().length() > 0)
-                getBitlist(listToJarray());
-            else
+            if (listToJarray().length() > 0) {
+
+                if (binding.llDate1.getVisibility() == View.VISIBLE
+                        && arrayList_date1_salesman.size() < arrayList_salesmanSelection.size())
+                    showSelectionWarnig(arrayList_date1_salesman);
+                else if (binding.llDate2.getVisibility() == View.VISIBLE
+                        && arrayList_date2_salesman.size() < arrayList_salesmanSelection.size())
+                    showSelectionWarnig(arrayList_date2_salesman);
+                else if (binding.llDate3.getVisibility() == View.VISIBLE
+                        && arrayList_date3_salesman.size() < arrayList_salesmanSelection.size())
+                    showSelectionWarnig(arrayList_date3_salesman);
+                else if (binding.llDate4.getVisibility() == View.VISIBLE
+                        && arrayList_date4_salesman.size() < arrayList_salesmanSelection.size())
+                    showSelectionWarnig(arrayList_date4_salesman);
+                else if (binding.llDate5.getVisibility() == View.VISIBLE
+                        && arrayList_date5_salesman.size() < arrayList_salesmanSelection.size())
+                    showSelectionWarnig(arrayList_date5_salesman);
+                else
+                    getBitlist(listToJarray());
+
+            } else
                 Toast.makeText(getApplicationContext(), "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
         });
 
@@ -279,58 +297,15 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             Log.i(TAG, "pdf_date : " + new Gson().toJson(arrayList_salesman_pdf_dates));
 
             if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0) {
-                if (arrayList_salesmanSelection.size() > arrayList_salesman_dates.size()) {
-                    builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-                    builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
-
-                    if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("ENG"))
-                        builder.setMessage("There are still " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " salesmen left to select whether you want to make a PDF ? ");
-                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("GUJ"))
-                        builder.setMessage("તમે પીડીએફ બનાવવા માંગો છો કે કેમ તે પસંદ કરવા માટે હજી " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " સેલ્સમેન બાકી છે?");
-                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("HINDI"))
-                        builder.setMessage("क्या आप पीडीएफ बनाना चाहते हैं या नहीं, यह चुनने के लिए अभी भी " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " सेल्समैन बचे हैं?");
-
-                    builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(9), (dialogInterface, i) -> {
-                        ad_show_info.dismiss();
-                        showPDFNameDialog("");
-                    });
-                    builder.setNegativeButton("" + commanSuchnaList.getArrayList().get(10), (dialogInterface, i) -> ad_show_info.dismiss());
-
-                    ad_show_info = builder.create();
-                    ad_show_info.show();
-                } else
-                    showPDFNameDialog("");
+                showPDFNameDialog("");
             } else
                 Toast.makeText(UndeliveredOrdersNewActivity.this, "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
         });
 
         binding.btnGeneratePdfMergedshop.setOnClickListener(v -> {
             Log.i(TAG, "arrayList_salesman_dates..>" + new Gson().toJson(arrayList_salesman_dates));
-            /*if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                getSalesOrdersByGroupDates(new Gson().toJson(arrayList_salesman_dates), "merge shop");*/
-
             if (arrayList_salesman_dates != null && arrayList_salesman_dates.size() > 0)
-                if (arrayList_salesmanSelection.size() > arrayList_salesman_dates.size()) {
-                    builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
-                    builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
-
-                    if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("ENG"))
-                        builder.setMessage("There are still " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " salesmen left to select whether you want to make a PDF ? ");
-                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("GUJ"))
-                        builder.setMessage("તમે પીડીએફ બનાવવા માંગો છો કે કેમ તે પસંદ કરવા માટે હજી " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " સેલ્સમેન બાકી છે?");
-                    else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("HINDI"))
-                        builder.setMessage("क्या आप पीडीएफ बनाना चाहते हैं या नहीं, यह चुनने के लिए अभी भी " + (arrayList_salesmanSelection.size() - arrayList_salesman_dates.size()) + " सेल्समैन बचे हैं?");
-
-                    builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(9), (dialogInterface, i) -> {
-                        ad_show_info.dismiss();
-                        showPDFNameDialog("merge shop");
-                    });
-                    builder.setNegativeButton("" + commanSuchnaList.getArrayList().get(10), (dialogInterface, i) -> ad_show_info.dismiss());
-
-                    ad_show_info = builder.create();
-                    ad_show_info.show();
-                } else
-                    showPDFNameDialog("merge shop");
+                showPDFNameDialog("merge shop");
             else
                 Toast.makeText(UndeliveredOrdersNewActivity.this, "" + commanSuchnaList.getArrayList().get(0), Toast.LENGTH_SHORT).show();
 
@@ -503,7 +478,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     /*------------get bit list code -----------*/
     private void getBitlist(JSONArray jsonArray) {
-
+        isRefresh = false;
         pdialog = new ProgressDialog(UndeliveredOrdersNewActivity.this);
         pdialog.setMessage("Loading...");
         pdialog.setCancelable(false);
@@ -1046,7 +1021,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
     }
 
     /*-----------------code for get sales orders for PDF--------*/
-    public void getSalesOrdersByGroupDates(String sales_dates, String sales_pdf_dates, String action, String pdf_name) {
+    public void getSalesOrdersByGroupDates(String sales_dates, String sales_pdf_dates, String
+            action, String pdf_name) {
 
         pdialog = new ProgressDialog(UndeliveredOrdersNewActivity.this);
         pdialog.setMessage("Loading...");
@@ -1272,13 +1248,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                         arrayList_all_order_schemes.add(schemeListPDFPOJO);
 
                     }
-
-
-                    //createPDF(data_array.length());
-                    //if (!memoryInfo.lowMemory)
                     createPDFUtils(data_array.length(), pdf_name);
-            /*else
-                Toast.makeText(this, "low memory", Toast.LENGTH_SHORT).show();*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1311,7 +1281,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         //try {
 
-
+        isRefresh = true;
         PdfUtils.initializeDoc();
 
         //===========code for Distributor table starts==
@@ -2345,4 +2315,33 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isRefresh)
+            if (listToJarray().length() > 0)
+                getBitlist(listToJarray());
+    }
+
+    public void showSelectionWarnig(ArrayList<String> arrayList_salesman) {
+
+        builder = new AlertDialog.Builder(UndeliveredOrdersNewActivity.this);
+        builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+
+        if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("ENG"))
+            builder.setMessage("There are still " + (arrayList_salesmanSelection.size() - arrayList_salesman.size()) + " salesmen left to select whether you want to make a PDF ? ");
+        else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("GUJ"))
+            builder.setMessage("તમે પીડીએફ બનાવવા માંગો છો કે કેમ તે પસંદ કરવા માટે હજી " + (arrayList_salesmanSelection.size() - arrayList_salesman.size()) + " સેલ્સમેન બાકી છે?");
+        else if (sp_multi_lang.getString("lang", "").equalsIgnoreCase("HINDI"))
+            builder.setMessage("क्या आप पीडीएफ बनाना चाहते हैं या नहीं, यह चुनने के लिए अभी भी " + (arrayList_salesmanSelection.size() - arrayList_salesman.size()) + " सेल्समैन बचे हैं?");
+
+        builder.setPositiveButton("" + commanSuchnaList.getArrayList().get(9), (dialogInterface, i) -> {
+            ad_show_info.dismiss();
+            getBitlist(listToJarray());
+        });
+        builder.setNegativeButton("" + commanSuchnaList.getArrayList().get(10), (dialogInterface, i) -> ad_show_info.dismiss());
+
+        ad_show_info = builder.create();
+        ad_show_info.show();
+    }
 }
