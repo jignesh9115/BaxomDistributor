@@ -881,7 +881,6 @@ public class MyPurchaseOrderFragment extends Fragment {
                 holder.binding.tvShippingDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(arrayList_purchase_order.get(position).getShipping_date()));
             }*/
 
-
             if (arrayList_purchase_order.get(position).getNo_of_article().length() > 1)
                 holder.binding.edtNoofarticlePurchaseOrder.setText("" + arrayList_purchase_order.get(position).getNo_of_article());
 
@@ -908,12 +907,10 @@ public class MyPurchaseOrderFragment extends Fragment {
 
                 if (ispacking.equalsIgnoreCase("1")) {
 
-
                     holder.binding.edtCartoonQtyPurchaseOrder.setEnabled(true);
                     holder.binding.btnGeneratePdf.setVisibility(View.VISIBLE);
                     holder.binding.imgProductPlusQtyAddPurchaseOrder.setEnabled(true);
                     holder.binding.imgProductMinusQtyAddPurchaseOrder.setEnabled(true);
-
 
                 } else {
 
@@ -974,7 +971,6 @@ public class MyPurchaseOrderFragment extends Fragment {
 
                 }
             });
-
 
             holder.binding.tvNextOrderStatusPurchaseOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1073,7 +1069,6 @@ public class MyPurchaseOrderFragment extends Fragment {
 
                 }
             });
-
 
             holder.binding.edtCartoonQtyPurchaseOrder.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -1177,7 +1172,6 @@ public class MyPurchaseOrderFragment extends Fragment {
                 }
             });
 
-
             holder.binding.btnGeneratePdf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1212,7 +1206,6 @@ public class MyPurchaseOrderFragment extends Fragment {
                         Toast.makeText(context, commanSuchnaList.getArrayList().get(5) + "", Toast.LENGTH_SHORT).show();
                 }
             });
-
 
             holder.binding.tvLrSymbol.setOnClickListener(new View.OnClickListener() {
                 @Override

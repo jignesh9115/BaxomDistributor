@@ -945,6 +945,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         return false;
     }
 
+    public boolean isSalesmanAvailable(String salesman_id, String bit_id, String date) {
+
+        for (int i = 0; i < arrayList_salesman_pdf_dates.size(); i++) {
+            if (salesman_id.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getSalesman_id())
+                    && bit_id.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getBit_id())
+                    && date.equalsIgnoreCase(arrayList_salesman_pdf_dates.get(i).getPdf_date()))
+                return true;
+        }
+        return false;
+    }
+
     public int getPosition(String sId, String date) {
 
         for (int i = 0; i < arrayList_salesman_dates.size(); i++) {
@@ -983,17 +994,18 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         if (b) {
             if (!isSalesmanAvailable(model.getSalesman_id(),
-                    gDateTime.dmyToymd(model.getEntry_date()))) {
-
+                    gDateTime.dmyToymd(model.getEntry_date())))
                 arrayList_salesman_dates.add(new GroupDatesOfSalesmanPOJO(model.getSalesman_id(),
                         gDateTime.dmyToymd(model.getEntry_date())));
 
+            if (!isSalesmanAvailable(model.getSalesman_id(), model.getBit_id(),
+                    gDateTime.dmyToymd(model.getEntry_date())))
                 arrayList_salesman_pdf_dates.add(new SalesmanPDFGenerateModel(
                         model.getSalesman_id(),
                         model.getSalesman(),
                         model.getEntry_date(),
                         model.getBit_id()));
-            }
+
         } else {
             if (arrayList_salesman_dates.size() > 0)
                 arrayList_salesman_dates.remove(getPosition(model.getSalesman_id(),
