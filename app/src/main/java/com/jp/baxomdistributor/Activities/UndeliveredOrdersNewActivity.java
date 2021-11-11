@@ -1188,7 +1188,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                                 details_object.getString("salesman"),
                                 details_object.getString("order_amt"),
                                 details_object.getString("del_order_amt"),
-                                details_object.getString("coll_order_amt"));
+                                details_object.getString("coll_order_amt"),
+                                details_object.getString("order_date"));
 
                         arrayList_delivery_summery_detail.add(deliverySummeryDetailPOJO);
 
@@ -1915,8 +1916,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         PdfUtils.drawLine(544, 80, 544, 112);
 
 
-        PdfUtils.drawLine(95, 80, 98, 940);
-        PdfUtils.drawLine(280, 80, 280, 940);
+        PdfUtils.drawLine(90, 80, 90, 940);
+        PdfUtils.drawLine(260, 80, 250, 940);
+        PdfUtils.drawLine(315, 112, 315, 940);
         PdfUtils.drawLine(400, 112, 400, 940);
         PdfUtils.drawLine(475, 112, 475, 940);
         PdfUtils.drawLine(544, 112, 544, 940);
@@ -1924,8 +1926,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         PdfUtils.drawText("NAME OF DELIVERY MAN", 180, 75);
         PdfUtils.drawLine(40, 80, 620, 80);
         PdfUtils.drawText("DATE : ", 450, 75);
-        PdfUtils.drawText(" TOTAL", 45, 93);
-        PdfUtils.drawText("ORDERS", 45, 108);
+        PdfUtils.drawText("TOTAL", 45, 93);
+        PdfUtils.drawText("ORDER", 45, 108);
         PdfUtils.drawText(" ORDER", 153, 93);
         PdfUtils.drawText("AMOUNT", 150, 108);
         PdfUtils.drawText("DELIVERY", 302, 93);
@@ -1937,7 +1939,10 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         //PdfUtils.drawText("ORDER", 45, 125);
         PdfUtils.drawText("NO.", 53, 130);
         PdfUtils.drawText("NAME OF SHOP", 100, 130);
-        PdfUtils.drawText("SALESMAN NAME", 283, 130);
+        PdfUtils.drawText("ORDER", 270, 125);
+        PdfUtils.drawText("DATE", 275, 137);
+        PdfUtils.drawText("SALESMAN", 330, 125);
+        PdfUtils.drawText("NAME", 340, 137);
         PdfUtils.drawText("ORDER", 415, 125);
         PdfUtils.drawText("AMOUNT", 410, 137);
         PdfUtils.drawText("DELIVERY", 480, 125);
@@ -1952,7 +1957,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             /*PdfUtils.drawText(arrayList_delivery_summery.get(0).getTotal_orders(), 105, 100);
             PdfUtils.drawText(String.format("%.2f", Double.parseDouble(arrayList_delivery_summery.get(0).getOrder_amt())), 203, 100);*/
 
-        int orderno_top = 155, shopname_top = 155, salesman_top = 155, orderamt_top = 155, total_orders = 0;
+        int orderno_top = 155, shopname_top = 155, salesman_top = 155,order_date_top = 155, orderamt_top = 155, total_orders = 0;
         double tot_order_amount = 0.0;
 
         int draw_line_top = 160, draw_line_top1 = 160;
@@ -1969,15 +1974,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                     PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_no(), 45, orderno_top);
 
-                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 28)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 28) + "...", 102, shopname_top);
+                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top);
                     else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 102, shopname_top);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top);
 
-                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 15)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 14) + "...", 283, salesman_top);
+                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top);
+
+                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top);
                     else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 283, salesman_top);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top);
 
                     PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top);
 
@@ -2000,15 +2007,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                     PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_no(), 45, orderno_top += 20);
 
-                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 28)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 28) + "...", 102, shopname_top += 20);
+                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top += 20);
                     else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 102, shopname_top += 20);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top += 20);
 
-                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 15)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 14) + "...", 283, salesman_top += 20);
+                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top+= 20);
+
+                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top += 20);
                     else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 283, salesman_top += 20);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top += 20);
 
                     PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top += 20);
                 }
