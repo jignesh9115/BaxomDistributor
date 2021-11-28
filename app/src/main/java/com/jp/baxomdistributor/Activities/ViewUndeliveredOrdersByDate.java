@@ -662,6 +662,7 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
                     intent.putExtra("distributor_name", distributor_name);
                     intent.putExtra("salesman_id", arrayList_Order_by_date.get(position).getSalesman_id());
                     intent.putExtra("salesman_name", arrayList_Order_by_date.get(position).getSalesman());
+                    intent.putExtra("action", "all_orders");
                     startActivity(intent);
                 }
             });

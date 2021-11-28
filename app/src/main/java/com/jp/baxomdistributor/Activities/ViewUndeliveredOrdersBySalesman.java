@@ -53,7 +53,9 @@ public class ViewUndeliveredOrdersBySalesman extends AppCompatActivity {
 
     String TAG = getClass().getSimpleName();
 
-    String entry_date, distributor_name, distributor_id, salesman_id = "", salesman_name = "", url = "", response = "", deliver_all_url = "", deliver_all_response = "", complete_order_url = "", complete_order_response = "";
+    String entry_date, distributor_name, distributor_id, salesman_id = "", salesman_name = "", url = "",
+            response = "", deliver_all_url = "", deliver_all_response = "", complete_order_url = "",
+            complete_order_response = "", bit_id;
 
     ArrayList<UndeliveredOrderbySalesmanPOJO> arrayList_orders_by_salesman;
     UndeliveredOrderbySalesmanPOJO orderbySalesmanPOJO;
@@ -174,8 +176,10 @@ public class ViewUndeliveredOrdersBySalesman extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            if (distributor_name.equalsIgnoreCase("")) {
-                url = getString(R.string.Base_URL) + getString(R.string.UndeliveredOrders_Bydistid_date_salmanid_url) + distributor_id + "&order_date=" + entry_date + "&salesman_id=" + salesman_id + "&daily_status=1,2,3,4,5";
+            if (getIntent().getStringExtra("action").equalsIgnoreCase("ordersbybit")) {
+                url = getString(R.string.Base_URL) + "salesorderbybits.php?dist_id="
+                        + distributor_id + "&order_date=" + entry_date + "&salesman_id=" + salesman_id
+                        + "&daily_status=1&bit_id=" + getIntent().getStringExtra("bit_id");
             } else {
                 url = getString(R.string.Base_URL) + getString(R.string.UndeliveredOrders_Bydistid_date_salmanid_url) + distributor_id + "&order_date=" + entry_date + "&salesman_id=" + salesman_id + "&daily_status=1";
             }

@@ -682,6 +682,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         intent.putExtra("distributor_name", sp_distributor_detail.getString("name", ""));
         intent.putExtra("salesman_id", model.getSalesman_id());
         intent.putExtra("salesman_name", model.getSalesman());
+        intent.putExtra("bit_id", model.getBit_id());
+        intent.putExtra("action", "ordersbybit");
         startActivity(intent);
 
     }
@@ -1957,7 +1959,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             /*PdfUtils.drawText(arrayList_delivery_summery.get(0).getTotal_orders(), 105, 100);
             PdfUtils.drawText(String.format("%.2f", Double.parseDouble(arrayList_delivery_summery.get(0).getOrder_amt())), 203, 100);*/
 
-        int orderno_top = 155, shopname_top = 155, salesman_top = 155,order_date_top = 155, orderamt_top = 155, total_orders = 0;
+        int orderno_top = 155, shopname_top = 155, salesman_top = 155, order_date_top = 155, orderamt_top = 155, total_orders = 0;
         double tot_order_amount = 0.0;
 
         int draw_line_top = 160, draw_line_top1 = 160;
@@ -2012,7 +2014,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                     else
                         PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top += 20);
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top+= 20);
+                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top += 20);
 
                     if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
                         PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top += 20);
