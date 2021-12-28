@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_order_detail"
+        style="@style/Theme.nopeningstock">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="0.9"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_order_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:src="@drawable/icon_telephone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1.1"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tv_sodacool_nm"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:gravity="center"
+                    android:text="SODACOOL NM"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_hanger"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_below="@id/tv_sodacool_nm"
+                    android:background="@drawable/bg_order"
+                    android:gravity="center"
+                    android:text="HANGER"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_hanger"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_order_ptr_rs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="PTR Rs."
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/magenta" />
+
+                        <TextView
+                            android:id="@+id/tv_ptr_rs"
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="300/-"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_order_ptr_rs"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="TP Rs."
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/magenta" />
+
+                        <TextView
+                            android:id="@+id/tv_tp_rs"
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="300/-"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_order_ptr_rs"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="MRP Rs."
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/magenta" />
+
+                        <TextView
+                            android:id="@+id/tv_mrp_rs"
+                            android:layout_width="0dp"
+                            android:layout_height="22dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_order"
+                            android:gravity="center"
+                            android:text="480/-"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Order Quantity"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="2.00"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Order Rs."
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_rs"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="600.00"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1.1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Delivery Quantity"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="@color/magenta"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/img_add_delivery_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_add_order" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_delivery_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_weight="4.4"
+                        android:background="@drawable/bg_order"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="2.00"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="@color/magenta"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/img_min_delivery_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_minus"
+                            app:tint="@color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:background="@drawable/bg_order"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Delivery Rs."
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_delivery_rs"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="600.00"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
