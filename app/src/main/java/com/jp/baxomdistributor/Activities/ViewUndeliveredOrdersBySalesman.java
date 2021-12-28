@@ -397,6 +397,10 @@ public class ViewUndeliveredOrdersBySalesman extends AppCompatActivity {
 
                     Log.i(TAG, "isUpdate=>" + isUpdate);
 
+                    /*Intent intent = new Intent(context, SalesOrderDeliveryScreen.class);
+                    startActivity(intent);*/
+
+
                 }
             });
 

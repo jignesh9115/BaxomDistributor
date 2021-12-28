@@ -9,10 +9,10 @@
             android:icon="@drawable/home_black"
             android:title="@string/menu_home" />
 
-        <item
-            android:id="@+id/nav_undelivered_sales_orders"
-            android:icon="@drawable/undelivered_order_icon"
-            android:title="Undelivered Sales Orders" />
+        <!--  <item
+              android:id="@+id/nav_undelivered_sales_orders"
+              android:icon="@drawable/undelivered_order_icon"
+              android:title="Undelivered Sales Orders" />-->
 
         <item
             android:id="@+id/nav_undelivered_sales_orders_new"
@@ -20,9 +20,14 @@
             android:title="Undelivered Sales Orders New" />
 
         <item
+            android:id="@+id/nav_undelivered_sales_orders_3_1_0"
+            android:icon="@drawable/undelivered_order_icon"
+            android:title="Undelivered Orders v3.1" />
+
+        <!--<item
             android:id="@+id/nav_delivered_sales_orders"
             android:icon="@drawable/delivered_order"
-            android:title="Delivered Sales Orders" />
+            android:title="Delivered Sales Orders" />-->
 
         <!-- <item
              android:id="@+id/nav_my_sales_orders_dist"
@@ -44,10 +49,10 @@
              android:icon="@drawable/add_new_order"
              android:title="Add New Purchase Orders" />-->
 
-        <item
+        <!--<item
             android:id="@+id/nav_my_purchase_order"
             android:icon="@drawable/icon_purchase_order"
-            android:title="My Purchase Order" />
+            android:title="My Purchase Order" />-->
 
         <!-- <item
              android:id="@+id/nav_my_fullfilled_purchase_orders"
@@ -59,10 +64,10 @@
              android:icon="@drawable/stock_management_icon"
              android:title="Stock Statement" />-->
 
-        <item
-            android:id="@+id/nav_my_stock_statement"
-            android:icon="@drawable/stock_management_icon"
-            android:title="Stock Statement" />
+        <!--  <item
+              android:id="@+id/nav_my_stock_statement"
+              android:icon="@drawable/stock_management_icon"
+              android:title="Stock Statement" />-->
 
         <item
             android:id="@+id/nav_change_lang"

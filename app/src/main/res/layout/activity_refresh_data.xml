@@ -119,6 +119,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
                 android:text="@string/activityrefresh_btn_title_update_photos"
+                android:visibility="gone"
                 android:textSize="14sp" />
 
             <androidx.cardview.widget.CardView

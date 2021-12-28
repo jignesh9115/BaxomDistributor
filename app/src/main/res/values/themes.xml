@@ -63,4 +63,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--delivery screen-->
+    <style name="Theme.nopeningstock" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:background">@drawable/img_border</item>
+        <item name="android:textColor">@color/magenta</item>
+    </style>
+
 </resources>

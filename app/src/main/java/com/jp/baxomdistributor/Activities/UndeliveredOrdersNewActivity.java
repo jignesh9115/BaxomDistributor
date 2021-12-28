@@ -484,7 +484,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         pdialog.setCancelable(false);
         pdialog.show();
 
-        Call<String> call = api.getUndeliveredOrdersByDist(jsonArray);
+        Call<String> call = api.getUndeliveredOrdersByDist(jsonArray, dist_id);
 
         call.enqueue(new Callback<String>() {
             @Override

@@ -19,4 +19,7 @@
     <color name="color_navy_blue">#2196F3</color>
     <color name="light_blue">#B8DEF8</color>
     <color name="D8DFF1">#D8DFF1</color>
+
+    <color name="magenta">#dd157b</color>
+
 </resources>

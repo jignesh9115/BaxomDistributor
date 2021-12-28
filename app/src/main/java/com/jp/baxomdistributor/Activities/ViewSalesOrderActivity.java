@@ -800,7 +800,7 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
 
                     arrayList_sales_order_product.add(salesOrderProductPOJO);
 
-                 /*   arrayList_order_product_list.add(new OrderProductListPOJO(prod_detail_object.getString("product_id"),
+                    /*   arrayList_order_product_list.add(new OrderProductListPOJO(prod_detail_object.getString("product_id"),
                             prod_detail_object.getString("product_qty"),
                             prod_detail_object.getString("product_price"),"" ,""));*/
 
@@ -817,7 +817,6 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
 
                 if (setActivity.equalsIgnoreCase("DelFailConfirm")) {
 
-
                     if (order_detail_object.getString("del_fail_confirm").equalsIgnoreCase("1")) {
 
                         binding.llConfirmButtons.setVisibility(View.GONE);
@@ -826,11 +825,8 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
 
                         binding.llConfirmButtons.setVisibility(View.VISIBLE);
 
-
                     }
-
                 }
-
 
                 binding.tvOrderDatetimeSalesOrder.setText("" + order_detail_object.getString("order_date"));
 
@@ -842,13 +838,10 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
 
                 total_discount = order_detail_object.getDouble("total_discount");
 
-
                 //binding.tvDeliveryRsSalesOrder.setText("" + order_detail_object.getDouble("delivery_rs"));
-
 
                 binding.tvTotalOrderRsSalesOrder.setText("" + order_detail_object.getDouble("total_order_rs"));
                 binding.tvDelFailReason.setText("" + order_detail_object.getString("del_fail_reason"));
-
 
                 JSONArray fail_remarks_array = data_object.getJSONArray("fail_remarks");
 
@@ -866,7 +859,6 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
                 arrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview1, arrayList_delivery_fail_reasons);
                 binding.spnDeliveryFailReason.setAdapter(arrayAdapter);
 
-
                 JSONObject shop_detail_object = data_object.getJSONObject("shop_detail");
 
                 shop_id = shop_detail_object.getString("shop_id");
@@ -878,7 +870,6 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
                 binding.tvShopLastOrderRsSalesOrder.setText("" + (int) Double.parseDouble(data_object.getString("last_order_rs")));
                 binding.tvShopLast3VisitAvgSalesOrder.setText("" + (int) Double.parseDouble(data_object.getString("last_visit_ave")));
                 binding.tvShopLast10VisitAvgSalesOrder.setText("" + (int) Double.parseDouble(data_object.getString("last_10visit_ave")));
-
 
                 shop_latitude = shop_detail_object.getString("latitude");
                 shop_longitude = shop_detail_object.getString("longitude");

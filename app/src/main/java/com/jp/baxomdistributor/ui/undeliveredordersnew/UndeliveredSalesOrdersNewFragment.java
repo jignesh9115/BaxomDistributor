@@ -103,6 +103,7 @@ public class UndeliveredSalesOrdersNewFragment extends Fragment {
                 intent.putExtra("distributor_name", distributor_name);
                 intent.putExtra("action", "multiple");
                 startActivity(intent);
+
             } else
                 Toast.makeText(getActivity(), "please select date", Toast.LENGTH_SHORT).show();
 

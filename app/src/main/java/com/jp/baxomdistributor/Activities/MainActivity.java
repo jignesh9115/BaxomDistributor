@@ -31,6 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -61,6 +62,7 @@ import com.jp.baxomdistributor.ui.home.HomeFragment;
 import com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment;
 import com.jp.baxomdistributor.ui.mypurchaseorder.MyPurchaseOrderFragment;
 import com.jp.baxomdistributor.ui.undelivered_sales_orders.UndeliveredSalesOrdersFragment;
+import com.jp.baxomdistributor.ui.undeliveredorders_3_1_0.UndeliveredSalesOrders_3_1_0Fragment;
 import com.jp.baxomdistributor.ui.undeliveredordersnew.UndeliveredSalesOrdersNewFragment;
 
 import java.io.File;
@@ -110,16 +112,17 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home,
-                R.id.nav_undelivered_sales_orders,
+                //R.id.nav_undelivered_sales_orders,
                 R.id.nav_undelivered_sales_orders_new,
-                R.id.nav_delivered_sales_orders,
+                R.id.nav_undelivered_sales_orders_3_1_0,
+                //R.id.nav_delivered_sales_orders,
                 //R.id.nav_my_sales_orders_dist,
                 //R.id.nav_delivery_fail_sales_orders,
                 //R.id.nav_my_pending_purchase_orders,
                 //R.id.nav_add_new_purchase_orders,
-                R.id.nav_my_purchase_order,
+                //R.id.nav_my_purchase_order,
                 //R.id.nav_my_fullfilled_purchase_orders,
-                R.id.nav_my_stock_statement,
+                //R.id.nav_my_stock_statement,
                 R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
@@ -169,16 +172,17 @@ public class MainActivity extends AppCompatActivity {
             commanList = language.getData();
 
             drawer_menu.findItem(R.id.nav_home).setTitle("" + commanList.getArrayList().get(0));
-            drawer_menu.findItem(R.id.nav_undelivered_sales_orders).setTitle("" + commanList.getArrayList().get(1));
+            //drawer_menu.findItem(R.id.nav_undelivered_sales_orders).setTitle("" + commanList.getArrayList().get(1));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders_new).setTitle("" + commanList.getArrayList().get(12));
-            drawer_menu.findItem(R.id.nav_delivered_sales_orders).setTitle("" + commanList.getArrayList().get(2));
+            drawer_menu.findItem(R.id.nav_undelivered_sales_orders_3_1_0).setTitle("" + commanList.getArrayList().get(13));
+            //drawer_menu.findItem(R.id.nav_delivered_sales_orders).setTitle("" + commanList.getArrayList().get(2));
             //drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setTitle("" + commanList.getArrayList().get(11));
             //drawer_menu.findItem(R.id.nav_delivery_fail_sales_orders).setTitle("" + commanList.getArrayList().get(3));
             //drawer_menu.findItem(R.id.nav_my_pending_purchase_orders).setTitle("" + commanList.getArrayList().get(4));
             //drawer_menu.findItem(R.id.nav_add_new_purchase_orders).setTitle("" + commanList.getArrayList().get(5));
-            drawer_menu.findItem(R.id.nav_my_purchase_order).setTitle("" + commanList.getArrayList().get(6));
+            //drawer_menu.findItem(R.id.nav_my_purchase_order).setTitle("" + commanList.getArrayList().get(6));
             //drawer_menu.findItem(R.id.nav_my_fullfilled_purchase_orders).setTitle("" + commanList.getArrayList().get(7));
-            drawer_menu.findItem(R.id.nav_my_stock_statement).setTitle("" + commanList.getArrayList().get(8));
+            //drawer_menu.findItem(R.id.nav_my_stock_statement).setTitle("" + commanList.getArrayList().get(8));
             drawer_menu.findItem(R.id.nav_logout).setTitle("" + commanList.getArrayList().get(9));
             drawer_menu.findItem(R.id.nav_change_lang).setTitle("" + commanList.getArrayList().get(10));
 
@@ -197,35 +201,42 @@ public class MainActivity extends AppCompatActivity {
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(0) + "");
                     drawer.close();
 
-                } else if (item.getItemId() == R.id.nav_undelivered_sales_orders) {
+                }/* else if (item.getItemId() == R.id.nav_undelivered_sales_orders) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new UndeliveredSalesOrdersFragment()).commit();
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(1) + "");
                     drawer.close();
 
-                } else if (item.getItemId() == R.id.nav_undelivered_sales_orders_new) {
+                } */ else if (item.getItemId() == R.id.nav_undelivered_sales_orders_new) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new UndeliveredSalesOrdersNewFragment()).commit();
                     binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(12));
                     drawer.close();
 
-                } else if (item.getItemId() == R.id.nav_delivered_sales_orders) {
+                } else if (item.getItemId() == R.id.nav_undelivered_sales_orders_3_1_0) {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new UndeliveredSalesOrders_3_1_0Fragment()).commit();
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(13));
+                    drawer.close();
+
+                } /*else if (item.getItemId() == R.id.nav_delivered_sales_orders) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DeliveredSalesOrdersFragment()).commit();
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(2) + "");
                     drawer.close();
 
-                }/* else if (item.getItemId() == R.id.nav_my_sales_orders_dist) {
+                }*//* else if (item.getItemId() == R.id.nav_my_sales_orders_dist) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new MySalesOrderDistFragment()).commit();
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(11) + "");
                     drawer.close();
 
-                }*/ else if (item.getItemId() == R.id.nav_my_purchase_order) {
+                }*/ /*else if (item.getItemId() == R.id.nav_my_purchase_order) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new MyPurchaseOrderFragment()).commit();
@@ -239,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(8) + "");
                     drawer.close();
 
-                }
+                }*/
 
 
                 return false;
@@ -269,7 +280,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+
+
+        Language language = new Language(sp_multi_lang.getString("lang", ""), MainActivity.this, setLangActionMenu(sp_multi_lang.getString("lang", "")));
+        Language.CommanList commanList = language.getData();
+        if (commanList != null && commanList.getArrayList().size() > 0)
+            menu.findItem(R.id.action_refresh_data).setTitle("" + commanList.getArrayList().get(0));
+
         return true;
     }
 
@@ -278,6 +296,22 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
+        if (item.getItemId() == R.id.action_refresh_data) {
+
+            Intent intent = new Intent(MainActivity.this, RefreshDataActivity.class);
+            intent.putExtra("action", "Salesman");
+            startActivity(intent);
+            finish();
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void logoutdistributor(MenuItem item) {
@@ -509,7 +543,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -619,15 +652,23 @@ public class MainActivity extends AppCompatActivity {
                 boolean isdiff_suchana = false, isdiff_lang = false;
                 db.open();
                 Cursor tot_local_suchana = db.viewMultiLangSuchna();
+                if (tot_local_suchana.getCount() > 0) {
+                    if (!sp_login.getString("tot_suchna", "")
+                            .equalsIgnoreCase(String.valueOf(tot_local_suchana.getCount())))
+                        isdiff_suchana = true;
+                }
+                tot_local_suchana.close();
+                db.close();
+
+
+                db.open();
                 Cursor tot_local_lang = db.viewAllLanguage();
-                if (!sp_login.getString("tot_suchna", "")
-                        .equalsIgnoreCase(String.valueOf(tot_local_suchana.getCount())))
-                    isdiff_suchana = true;
-
-                if (!sp_login.getString("tot_lang", "")
-                        .equalsIgnoreCase(String.valueOf(tot_local_lang.getCount())))
-                    isdiff_lang = true;
-
+                if (tot_local_lang.getCount() > 0) {
+                    if (!sp_login.getString("tot_lang", "")
+                            .equalsIgnoreCase(String.valueOf(tot_local_lang.getCount())))
+                        isdiff_lang = true;
+                    tot_local_lang.close();
+                }
                 db.close();
 
                 if (isdiff_lang) {

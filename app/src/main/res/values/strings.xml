@@ -13,12 +13,15 @@
     <!--  AIzaSyBombwoKL7S3_uFcbUtg6fLxulOnMSCRD8 -->
     <!--<string name="Google_map_key">AIzaSyBombwoKL7S3_uFcbUtg6fLxulOnMSCRD8</string>-->
     <string name="Google_map_key">AIzaSyAMhXV5wOSgo02HRr9ynMtUK0PLnRmGvHA</string>
-    <string name="Base_URL">http://projects.drbbagpks.org/Baxom/API_TESTING/</string>
+
+    <!--<string name="Base_URL">http://projects.drbbagpks.org/Baxom/Baxom_Dist_Testing_Api/</string>-->
+    <string name="Base_URL">http://projects.drbbagpks.org/Baxom/Baxom_Dist_Api_v1.0/</string>
     <string name="Local_URL">http://192.168.43.193/baxom/API/</string>
     <string name="URL_TESTING">http://projects.drbbagpks.org/Baxom/Tesing_DB_API/</string>
 
 
     <string name="UndeliveredOrders_ByDistid_url">salesorderbydate.php?dist_id=</string>
+    <string name="UndeliveredOrders_ByDistid_v310_url">salesorderbydate_v3.1.0.php?dist_id=</string>
     <string name="UndeliveredOrder_ByDistid_date_url">salesorderbysalesman.php?dist_id=</string>
     <string name="UndeliveredOrders_Bydistid_date_salmanid_url">salesorderbyshop.php?dist_id=</string>
     <string name="DeliveredOrders_ByDistid_url">salesorderdelbydate.php?dist_id=</string>
@@ -252,4 +255,49 @@
     <string name="activityChooseLang_rb_title_gujarati">ગુજરાતી</string>
     <string name="activityChooseLang_rb_title_hindi">हिन्दी</string>
     <string name="activityChooseLang_btn_title_next">Next</string>
+
+
+    <!--layout shop detail-->
+    <string name="shop_detail">Shop Detail</string>
+    <string name="order_detail">Order Detail</string>
+    <string name="replacement_goods_detail">Replacement Goods Detail</string>
+    <string name="scheme_detail">Scheme Detail</string>
+    <string name="mobile_no">Mobile No.</string>
+    <string name="whatsapp_no">Whatsapp No.</string>
+    <string name="shop_address">Shop Address</string>
+    <string name="sodacool_24">SODACOOL 24\nHANGER+\n3 HANGER FREE</string>
+    <string name="business_summery">Business Summery</string>
+    <string name="payment_reciept_detail">Payment Reciept Detail</string>
+
+    <!--layout add new delivery person-->
+    <string name="first_name">\tFirst Name\t</string>
+    <string name="middle_name">\tMiddle Name\t</string>
+    <string name="last_name">\tLast Name\t</string>
+    <string name="voter_id">\tVoter ID\t</string>
+    <string name="other_kyc_documents">\tOther KYC Documents\t</string>
+    <string name="gender">\tGender\t</string>
+    <string name="date_ob_birth">\tDate of Birth\t</string>
+    <string name="pan">\tPan\t</string>
+    <string name="adhar_no">\tAadhar No.\t</string>
+    <string name="mobile1">\tMobile-1\t</string>
+    <string name="mobile2">\tMobile-2\t</string>
+    <string name="whatsappno">\tWhatsapp No.\t</string>
+    <string name="employee_person">\tEmployer of this Person\t</string>
+    <string name="default_bits">\tDefault Bits\t</string>
+    <string name="address_type">\tAddress Type\t</string>
+    <string name="address_line1">\tAddress Line 1\t</string>
+    <string name="address_line2">\tAddress Line 2\t</string>
+    <string name="address_line3">\tAddress Line 3\t</string>
+    <string name="address_line4">\tAddress Line 4\t</string>
+    <string name="pincode">\tPIN CODE\t</string>
+    <string name="country">\tCountry\t</string>
+    <string name="state">\tState\t</string>
+    <string name="district">\tDistrict\t</string>
+    <string name="city">\tCity\t</string>
+    <string name="activation_status">\tActivation Status\t</string>
+    <string name="address_detail">Address Detail</string>
+
+    <!--default bits of delivery person-->
+    <string name="default_bits_of_delivery_person">Default Bits of Delivery Person</string>
+    <string name="partial_selected">Partial\nSelected</string>
 </resources>

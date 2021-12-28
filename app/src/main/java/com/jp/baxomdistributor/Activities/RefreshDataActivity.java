@@ -302,17 +302,8 @@ public class RefreshDataActivity extends AppCompatActivity {
         binding.btnChangeLang.setOnClickListener(v -> changeLanguage());
 
         binding.imgBackRefreshdata.setOnClickListener(v -> {
-            if (action.equalsIgnoreCase("Distributor")) {
-
-                startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
-                finish();
-
-            }/* else {
-
-                startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
-                finish();
-            }*/
-
+            startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
+            finish();
         });
     }
 

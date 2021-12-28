@@ -12,11 +12,11 @@
         tools:layout="@layout/fragment_home" />
 
 
-    <fragment
-        android:id="@+id/nav_undelivered_sales_orders"
-        android:name="com.jp.baxomdistributor.ui.undelivered_sales_orders.UndeliveredSalesOrdersFragment"
-        android:label="Undelivered Sales Orders"
-        tools:layout="@layout/fragment_undelivered_sales_orders" />
+    <!-- <fragment
+         android:id="@+id/nav_undelivered_sales_orders"
+         android:name="com.jp.baxomdistributor.ui.undelivered_sales_orders.UndeliveredSalesOrdersFragment"
+         android:label="Undelivered Sales Orders"
+         tools:layout="@layout/fragment_undelivered_sales_orders" />-->
 
 
     <fragment
@@ -25,7 +25,7 @@
         android:label="Undelivered Sales Orders"
         tools:layout="@layout/fragment_undelivered_sales_orders_new" />
 
-    <fragment
+    <!--<fragment
         android:id="@+id/nav_delivered_sales_orders"
         android:name="com.jp.baxomdistributor.ui.delivered_sales_orders.DeliveredSalesOrdersFragment"
         android:label="Delivered Sales Orders"
@@ -42,5 +42,5 @@
         android:id="@+id/nav_my_stock_statement"
         android:name="com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment"
         android:label="Stock Statement"
-        tools:layout="@layout/fragment_my_stock_statement" />
+        tools:layout="@layout/fragment_my_stock_statement" />-->
 </navigation>

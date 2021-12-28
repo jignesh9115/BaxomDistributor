@@ -29,7 +29,19 @@
         android:theme="@style/Theme.BaxomDistributor"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.SalesOrderDeliveryScreen"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Activities.UndeliveredOrdersNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".Activities.UndeliveredOrdersv3_1_0Activity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             tools:ignore="LockedOrientationActivity" />
@@ -50,6 +62,11 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.ViewUndeliveredOrdersBySalesman"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activities.ViewUndeliveredOrdersBySalesmanV3_1_0"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             tools:ignore="LockedOrientationActivity" />
