@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     LayoutBotttomSheetBinding binding1;
 
-    String[] permissionsRequired = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
+    String[] permissionsRequired = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CAMERA};

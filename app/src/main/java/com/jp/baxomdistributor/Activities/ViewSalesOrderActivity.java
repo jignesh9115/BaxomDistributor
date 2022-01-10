@@ -400,7 +400,6 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
             }
         });
 
-
         binding.btnSubmitUpdateOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

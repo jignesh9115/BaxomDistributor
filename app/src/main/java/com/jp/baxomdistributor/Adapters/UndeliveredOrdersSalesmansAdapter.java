@@ -45,7 +45,7 @@ public class UndeliveredOrdersSalesmansAdapter extends RecyclerView.Adapter<Unde
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
 
-        holder.binding.llSalesman.setBackground(context.getDrawable(R.drawable.salesman_bg_select));
+        holder.binding.llSalesman.setBackground(context.getDrawable(R.drawable.salesman_bg_select_green));
 
         if (arrayList.get(position).getTicks().equalsIgnoreCase("0")) {
             holder.binding.tvTicks.setText("");

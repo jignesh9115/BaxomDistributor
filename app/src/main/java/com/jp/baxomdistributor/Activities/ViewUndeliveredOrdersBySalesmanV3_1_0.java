@@ -384,7 +384,7 @@ public class ViewUndeliveredOrdersBySalesmanV3_1_0 extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, ViewSalesOrderActivity.class);
+                    /*Intent intent = new Intent(context, ViewSalesOrderActivity.class);
                     intent.putExtra("order_id", arrayList_orders_by_salesman.get(position).getID());
                     intent.putExtra("distributor_name", distributor_name);
                     intent.putExtra("salesman_name", salesman_name);
@@ -395,10 +395,11 @@ public class ViewUndeliveredOrdersBySalesmanV3_1_0 extends AppCompatActivity {
                     editor.putBoolean("isUpdate", false);
                     editor.apply();
 
-                    Log.i(TAG, "isUpdate=>" + isUpdate);
+                    Log.i(TAG, "isUpdate=>" + isUpdate);*/
 
-                  /*  Intent intent = new Intent(context, SalesOrderDeliveryScreen.class);
-                    startActivity(intent);*/
+                    Intent intent = new Intent(context, SalesOrderDeliveryScreen.class);
+                    intent.putExtra("order_id", arrayList_orders_by_salesman.get(position).getID());
+                    startActivity(intent);
 
 
                 }

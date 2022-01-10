@@ -7,26 +7,26 @@
 
     <RelativeLayout
         android:id="@+id/rl_order_detail"
-        style="@style/Theme.nopeningstock">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/img_border">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="4">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_prod"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_height="match_parent"
                 android:layout_weight="0.9"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/img_order_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:src="@drawable/icon_telephone" />
-            </LinearLayout>
+                android:paddingStart="5dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="3dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/icon_telephone" />
 
             <View
                 android:layout_width="3dp"
@@ -40,7 +40,7 @@
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/tv_sodacool_nm"
+                    android:id="@+id/tv_prod_name"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:background="@drawable/bg_order"
@@ -50,10 +50,10 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/tv_hanger"
+                    android:id="@+id/tv_prod_unit"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:layout_below="@id/tv_sodacool_nm"
+                    android:layout_below="@id/tv_prod_name"
                     android:background="@drawable/bg_order"
                     android:gravity="center"
                     android:text="HANGER"
@@ -63,7 +63,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_hanger"
+                    android:layout_below="@id/tv_prod_unit"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -74,6 +74,7 @@
                         android:weightSum="2">
 
                         <TextView
+                            android:id="@+id/tv_ptr_rs_title"
                             android:layout_width="0dp"
                             android:layout_height="22dp"
                             android:layout_weight="1"
@@ -109,12 +110,13 @@
                         android:weightSum="2">
 
                         <TextView
+                            android:id="@+id/tv_tp_rs_title"
                             android:layout_width="0dp"
                             android:layout_height="22dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_order"
                             android:gravity="center"
-                            android:text="TP Rs."
+                            android:text="BIZ Rs."
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
@@ -144,6 +146,7 @@
                         android:weightSum="2">
 
                         <TextView
+                            android:id="@+id/tv_mrp_rs_title"
                             android:layout_width="0dp"
                             android:layout_height="22dp"
                             android:layout_weight="1"
@@ -189,39 +192,54 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:background="@drawable/bg_order"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="Order Quantity"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="9sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/magenta" />
+
 
                 <TextView
                     android:id="@+id/tv_order_quantity"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:background="@drawable/bg_order"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="2.00"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/magenta" />
+
                 <TextView
+                    android:id="@+id/tv_order_rs_title"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:background="@drawable/bg_order"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="Order Rs."
                     android:textColor="@color/black"
                     android:textSize="10sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/magenta" />
+
+
                 <TextView
                     android:id="@+id/tv_order_rs"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:background="@drawable/bg_order"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="600.00"
@@ -243,79 +261,90 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="22dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
                     android:background="@drawable/bg_order"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="Delivery Quantity"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="9sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:background="@color/magenta"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/img_add_delivery_quantity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="44dp"
-                            android:src="@drawable/ic_add_order" />
-
-                    </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight=".4"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_delivery_quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:layout_weight="4.4"
-                        android:background="@drawable/bg_order"
-                        android:fontFamily="@font/roboto_regular"
+                        android:id="@+id/img_product_plus_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
                         android:gravity="center"
-                        android:text="2.00"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:background="@color/magenta"
-                        android:gravity="center">
+                    <EditText
+                        android:id="@+id/edt_prod_del_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:digits="0123456789."
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:text="0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11dp" />
 
-                        <ImageView
-                            android:id="@+id/img_min_delivery_quantity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="44dp"
-                            android:src="@drawable/ic_minus"
-                            app:tint="@color/white" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/img_product_minus_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:background="@drawable/bg_order"
+                    android:layout_height="1dp"
+                    android:background="@color/magenta" />
+
+                <TextView
+                    android:id="@+id/tv_delivery_rs_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="Delivery Rs."
                     android:textColor="@color/black"
                     android:textSize="10sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/magenta" />
+
                 <TextView
                     android:id="@+id/tv_delivery_rs"
                     android:layout_width="match_parent"
-                    android:layout_height="22dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="600.00"

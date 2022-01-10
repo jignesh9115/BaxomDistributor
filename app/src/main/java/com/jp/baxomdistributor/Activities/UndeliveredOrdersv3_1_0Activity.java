@@ -103,8 +103,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
     ArrayList<UdeliveredOrdersSalesmanSelectionModel> arrayList_salesmanSelection;
     UdeliveredOrdersSalesmanSelectionModel salesmanSelectionModel;
 
-    SharedPreferences sp_distributor_detail;
-
+    SharedPreferences sp_distributor_detail, sp_update;
     String dist_id;
 
     GDateTime gDateTime = new GDateTime();
@@ -192,6 +191,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
         sp_distributor_detail = getSharedPreferences("distributor_detail", MODE_PRIVATE);
         dist_id = sp_distributor_detail.getString("distributor_id", "");
+        sp_update = getSharedPreferences("update_data", Context.MODE_PRIVATE);
 
         db = new Database(getApplicationContext());
         sp_multi_lang = getSharedPreferences("Language", Context.MODE_PRIVATE);
@@ -2344,6 +2344,14 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         if (isRefresh)
             if (listToJarray().length() > 0)
                 getBitlist(listToJarray());
+
+        if (arrayList_date1_salesman != null)
+            if (sp_update.getBoolean("isUpdate", false)) {
+                if (listToJarray().length() > 0)
+                    getBitlist(listToJarray());
+
+            }
+
     }
 
     public void showSelectionWarnig(ArrayList<String> arrayList_salesman) {

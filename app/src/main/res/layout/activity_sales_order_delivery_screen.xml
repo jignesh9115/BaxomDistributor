@@ -29,6 +29,7 @@
             android:text="Delivery of Order"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -51,7 +52,7 @@
                 android:gravity="center"
                 android:text="@string/shop_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
 
@@ -101,6 +102,7 @@
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:singleLine="true"
@@ -168,13 +170,14 @@
                                 android:background="@color/magenta" />
 
                             <EditText
-                                android:id="@+id/edt_mobile_no"
+                                android:id="@+id/edt_shop_mobile_no"
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_margin="1dp"
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:inputType="number"
@@ -245,13 +248,14 @@
                                 android:background="@color/magenta" />
 
                             <EditText
-                                android:id="@+id/edt_whatsapp_no"
+                                android:id="@+id/edt_shop_whatsapp_no"
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_margin="1dp"
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:inputType="number"
@@ -297,7 +301,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
@@ -333,6 +336,7 @@
                                 android:layout_marginBottom="1dp"
                                 android:layout_weight="3.29"
                                 android:background="@null"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|left"
                                 android:inputType="text|textMultiLine"
@@ -409,6 +413,7 @@
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:singleLine="true"
@@ -483,6 +488,7 @@
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:singleLine="true"
@@ -557,6 +563,7 @@
                                 android:layout_weight="2.92"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
                                 android:singleLine="true"
@@ -627,6 +634,7 @@
                             android:layout_weight="2.92"
                             android:backgroundTint="@color/transparent"
                             android:ellipsize="end"
+                            android:enabled="false"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="top|center_vertical"
                             android:singleLine="true"
@@ -675,6 +683,7 @@
                             android:layout_weight="2.92"
                             android:backgroundTint="@color/transparent"
                             android:ellipsize="end"
+                            android:enabled="false"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="top|center_vertical"
                             android:singleLine="true"
@@ -740,6 +749,7 @@
                             android:layout_weight="2.92"
                             android:backgroundTint="@color/transparent"
                             android:ellipsize="end"
+                            android:enabled="false"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="top|center_vertical"
                             android:singleLine="true"
@@ -764,9 +774,25 @@
                 android:gravity="center"
                 android:text="@string/order_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_order_prods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                tools:itemCount="1"
+                tools:listitem="@layout/entity_delivery_order_prod_detail" />
+
+            <ImageView
+                android:id="@+id/img_empty_order_prods"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/empty_list_icon"
+                android:visibility="gone" />
 
 
             <TextView
@@ -779,332 +805,24 @@
                 android:gravity="center"
                 android:text="@string/replacement_goods_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/rl_replacement_goods_detail"
-                style="@style/Theme.nopeningstock"
-                android:layout_marginHorizontal="10dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_replacement_goods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                tools:itemCount="1"
+                tools:listitem="@layout/entity_delivery_order_prod_detail" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="4">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="0.9"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/img_replacement_goods_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:src="@drawable/icon_telephone" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="1.1"
-                        android:gravity="center_horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_replacement_sodacool_nm"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:gravity="center"
-                            android:text="SODACOOL NM"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_replacement_hanger"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:layout_below="@id/tv_replacement_sodacool_nm"
-                            android:background="@drawable/bg_order"
-                            android:gravity="center"
-                            android:text="HANGER"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_replacement_hanger"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:id="@+id/layout_replacement_ptr_rs"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="PTR Rs."
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/magenta" />
-
-                                <TextView
-                                    android:id="@+id/tv_replacemnt_goods_ptr_rs"
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="300/-"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_replacement_ptr_rs"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="TP Rs."
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/magenta" />
-
-                                <TextView
-                                    android:id="@+id/tv_replacemnt_goods_tp_rs"
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="300/-"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_replacement_ptr_rs"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="MRP Rs."
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/magenta" />
-
-                                <TextView
-                                    android:id="@+id/tv_replacemnt_goods_mrp_rs"
-                                    android:layout_width="0dp"
-                                    android:layout_height="22dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="480/-"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="0.9"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Order Quantity"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_replacemnt_goods_order_quantity"
-                            android:layout_width="match_parent"
-                            android:layout_height="44dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="2.00"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Order Rs."
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_replacemnt_goods_order_rs"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="600.00"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="1.1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Delivery Quantity"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="5">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
-                                android:background="@color/magenta"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/img_add_replacemnt_goods_delivery_quantity"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="44dp"
-                                    android:src="@drawable/ic_add_order" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_replacemnt_goods_delivery_quantity"
-                                android:layout_width="wrap_content"
-                                android:layout_height="44dp"
-                                android:layout_weight="4.4"
-                                android:background="@drawable/bg_order"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="2.00"
-                                android:textColor="@color/black"
-                                android:textSize="10sp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
-                                android:background="@color/magenta"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/img_min_replacemnt_goods_delivery_quantity"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="44dp"
-                                    android:src="@drawable/ic_minus"
-                                    app:tint="@color/white" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Delivery Rs."
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_replacemnt_goods_delivery_rs"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="600.00"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/img_empty_replacement_goods"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/empty_list_icon" />
 
             <TextView
                 android:id="@+id/tv_scheme_detail_title"
@@ -1116,240 +834,25 @@
                 android:gravity="center"
                 android:text="@string/scheme_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/rl_scheme_detail"
-                style="@style/Theme.nopeningstock"
-                android:layout_marginHorizontal="10dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_order_schemes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                tools:itemCount="1"
+                tools:listitem="@layout/entity_delivery_order_scheme_detail" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="4">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="0.9"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/img_scheme_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:src="@drawable/icon_telephone" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/tv_scheme_sodacool_nm"
-                            android:layout_width="match_parent"
-                            android:layout_height="44dp"
-                            android:background="@drawable/bg_order"
-                            android:gravity="center"
-                            android:padding="1dp"
-                            android:text="@string/sodacool_24"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_scheme_sodacool_nm"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:id="@+id/layout_scheme_ptr_rs"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/tv_scheme_detail_ptr_rs"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="Rs. 7200/-"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_scheme_ptr_rs"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/tv_scheme_detail_tp_rs"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="0.0/7200.0"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_scheme_ptr_rs"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/tv_scheme_detail_mrp_rs"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp"
-                                    android:background="@drawable/bg_order"
-                                    android:gravity="center"
-                                    android:text="Rs.900/-"
-                                    android:textColor="@color/black"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="0.9"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/img_scheme_order"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:src="@drawable/icon_telephone" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/magenta" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_weight="1.1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Scheme Order Qty"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_scheme_detail_order_qty"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="2.00"
-                            android:textColor="@color/black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/bg_order"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:text="Scheme Delivery Qty."
-                            android:textColor="@color/black"
-                            android:textSize="9sp" />
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="5">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
-                                android:background="@color/magenta"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/img_add_scheme_detail_delivery_qty"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="44dp"
-                                    android:src="@drawable/ic_add_order" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_scheme_detail_delivery_qty"
-                                android:layout_width="wrap_content"
-                                android:layout_height="44dp"
-                                android:layout_weight="4.4"
-                                android:background="@drawable/bg_order"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="2.00"
-                                android:textColor="@color/black"
-                                android:textSize="10sp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
-                                android:background="@drawable/bg_ordder2"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/img_min_scheme_detail_delivery_qty"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="44dp"
-                                    android:src="@drawable/ic_minus"
-                                    app:tint="@color/white" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/img_empty_order_schemes"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/empty_list_icon"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/layout_total_scheme"
@@ -1361,6 +864,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_total_scheme_value_title"
                     android:layout_width="0dp"
                     android:layout_height="44dp"
                     android:layout_weight="1"
@@ -1382,7 +886,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
-                    android:text="Rs.600.00"
+                    android:text="Rs. 0/-"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 
@@ -1392,6 +896,7 @@
                     android:background="@color/magenta" />
 
                 <TextView
+                    android:id="@+id/tv_total_discount_value_title"
                     android:layout_width="0dp"
                     android:layout_height="44dp"
                     android:layout_weight="1"
@@ -1413,7 +918,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
-                    android:text="Rs. 25.00"
+                    android:text="Rs. 0/-"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 
@@ -1429,7 +934,7 @@
                 android:gravity="center"
                 android:text="@string/business_summery"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -1441,44 +946,59 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/rl_oder_value_rs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+
+                        <TextView
+                            android:id="@+id/tv_oder_value_rs_title"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center"
+                            android:text="Order Value Rs."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/magenta" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TextView
-                                android:id="@+id/tv_oder_value_rs"
-                                android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
                                 android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Order Value Rs."
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:gravity="center_vertical|end"
+                                android:text="Rs. "
+                                android:textColor="@color/magenta"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="55dp"
-                                android:background="@color/magenta" />
 
                             <EditText
                                 android:id="@+id/edt_oder_value_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginHorizontal="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
+                                android:text="0"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
                                 android:textColorHint="@color/magenta"
@@ -1486,106 +1006,130 @@
 
                         </LinearLayout>
 
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/magenta" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+
+                        <TextView
+                            android:id="@+id/tv_delivery_value_rs_title"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center"
+                            android:text="Delivery Value Rs."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
                         <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="45dp"
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
                             android:background="@color/magenta" />
 
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_delivery_value_rs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TextView
-                                android:id="@+id/tv_delivery_value_rs"
-                                android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
                                 android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Delivery Value Rs."
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:gravity="center_vertical|end"
+                                android:text="Rs. "
+                                android:textColor="@color/magenta"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="55dp"
-                                android:background="@color/magenta" />
 
                             <EditText
                                 android:id="@+id/edt_delivery_value_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginHorizontal="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
+                                android:text="0"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
                                 android:textColorHint="@color/magenta"
                                 android:textSize="14sp" />
-
                         </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/magenta" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp">
+
+                        <TextView
+                            android:id="@+id/tv_delivery_bizz_rs_title"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center"
+                            android:text="Delivery Bizz Rs."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="45dp"
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
                             android:background="@color/magenta" />
 
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_delivery_tp_rs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
                             <TextView
-                                android:id="@+id/tv_delivery_tp_rs"
-                                android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_weight="1"
+                                android:layout_width="25dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
                                 android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Delivery TP Rs."
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:gravity="center_vertical|end"
+                                android:text="Rs. "
+                                android:textColor="@color/magenta"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="55dp"
-                                android:background="@color/magenta" />
 
                             <EditText
                                 android:id="@+id/edt_delivery_tp_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginHorizontal="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1594,8 +1138,7 @@
 
                         </LinearLayout>
 
-
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -1612,7 +1155,7 @@
                 android:gravity="center"
                 android:text="@string/payment_reciept_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -1645,31 +1188,26 @@
                             <TextView
                                 android:id="@+id/tv_cash_collection_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:text="Cash Collection Rs."
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
-
-                            <!--                             <View-->
-                            <!--                                 android:layout_width="3dp"-->
-                            <!--                                 android:layout_height="55dp"-->
-                            <!--                                 android:background="@color/magenta" />-->
 
                             <EditText
                                 android:id="@+id/edt_cash_collection_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1683,7 +1221,6 @@
                             android:layout_height="2dp"
                             android:layout_marginTop="45dp"
                             android:background="@color/magenta" />
-
 
                     </RelativeLayout>
 
@@ -1705,31 +1242,27 @@
                             <TextView
                                 android:id="@+id/tv_debilt_value_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:text="Debilt Value Rs."
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
-                            <!--                             <View-->
-                            <!--                                 android:layout_width="3dp"-->
-                            <!--                                 android:layout_height="55dp"-->
-                            <!--                                 android:background="@color/magenta" />-->
 
                             <EditText
                                 android:id="@+id/edt_debilt_value_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1765,31 +1298,27 @@
                             <TextView
                                 android:id="@+id/tv_cheque_collection_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:text="Cheque Collection Rs."
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
-                            <!--                             <View-->
-                            <!--                                 android:layout_width="3dp"-->
-                            <!--                                 android:layout_height="55dp"-->
-                            <!--                                 android:background="@color/magenta" />-->
 
                             <EditText
                                 android:id="@+id/edt_cheque_collection_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1820,37 +1349,29 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:weightSum="3">
+                            android:layout_height="45dp">
 
                             <TextView
-                                android:id="@+id/tv_debit_due_date"
+                                android:id="@+id/tv_debit_due_date_title"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1.5"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:text="Debit Due Date"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
-                            <!--                             <View-->
-                            <!--                                 android:layout_width="3dp"-->
-                            <!--                                 android:layout_height="55dp"-->
-                            <!--                                 android:background="@color/magenta" />-->
-
-                            <EditText
-                                android:id="@+id/edt_debit_due_date"
+                            <TextView
+                                android:id="@+id/tv_debit_due_date"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1.1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/roboto_regular"
-                                android:gravity="top|center_vertical"
+                                android:gravity="center"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1909,31 +1430,27 @@
                             <TextView
                                 android:id="@+id/tv_kasar_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:text="Kasar Rs."
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
-
-                            <!--                             <View-->
-                            <!--                                 android:layout_width="3dp"-->
-                            <!--                                 android:layout_height="55dp"-->
-                            <!--                                 android:background="@color/magenta" />-->
 
                             <EditText
                                 android:id="@+id/edt_kasar_rs"
                                 android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:backgroundTint="@color/transparent"
                                 android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textColor="@color/magenta"
                                 android:textColorHighlight="@color/magenta"
@@ -1959,121 +1476,236 @@
                 android:gravity="center"
                 android:text="Delivery Fail Reasons"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="195dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:weightSum="2">
+                    android:layout_height="45dp">
 
-                    <TextView
-                        android:id="@+id/tv_shop_close"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_shop_close_selection"
                         android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="Shop Close"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_photo_of_closed_shop"
+                        <LinearLayout
+                            android:id="@+id/ll_selection_shop_close"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
+
+                            <TextView
+                                android:id="@+id/tv_shop_close"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Shop Close"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_photo_of_shop_close_selection"
                         android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="Photo of Closed Shop +"
-                        android:textColor="@color/colorDivider"
-                        android:textSize="12sp" />
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
-                </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/ll_selection_shop_close_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:weightSum="2">
+                            <TextView
+                                android:id="@+id/tv_photo_of_closed_shop"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Photo of Closed Shop +"
+                                android:textColor="@color/colorDivider"
+                                android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_want_debit"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="Want Debit"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                            <LinearLayout
+                                android:id="@+id/ll_photo_of_shopclose"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_del_fail_unselected"
+                                android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_no_order_given"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="No Order Given"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                                <ImageView
+                                    android:id="@+id/img_photoof_closeshop"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="4dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@color/color_orange" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
                     android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/tv_forcefully_order"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_want_debit_selection"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="Forcefully Order"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_not_required_now"
+                        <LinearLayout
+                            android:id="@+id/ll_selection_want_debit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
+
+                            <TextView
+                                android:id="@+id/tv_want_debit"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Want Debit"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_noorder_given_selection"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/img_border"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center"
-                        android:text="Not Required Now"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_selection_noorder_given"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
+
+                            <TextView
+                                android:id="@+id/tv_no_order_given"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="No Order Given"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_forcefully_order_selection"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_selection_forcefully_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
+
+                            <TextView
+                                android:id="@+id/tv_forcefully_order"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:background="@drawable/img_border"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Forcefully Order"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_not_required_now_selection"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_selection_not_required_now"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_del_fail_unselected">
+
+                            <TextView
+                                android:id="@+id/tv_not_required_now"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Not Required Now"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -2083,301 +1715,133 @@
                 android:id="@+id/tv_delivery_attempt_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/magenta"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
                 android:text="Delivery Attempt of This Order"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <RelativeLayout
-                style="@style/Theme.nopeningstock"
-                android:layout_marginHorizontal="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/img_border"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_attempt_title"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_attempt"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Attempt"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_date_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.6"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
+                        android:layout_weight="1.3"
+                        android:background="@color/magenta"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Date"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/bg_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:padding="3dp"
-                                android:paddingHorizontal="2dp"
-                                android:text="Attempt"
-                                android:textColor="@color/white"
-                                android:textSize="9sp" />
-
-                            <TextView
-                                android:id="@+id/tv_attempt"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="2"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="3"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_time_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.1">
+                        android:layout_gravity="center"
+                        android:layout_weight="1.2"
+                        android:background="@color/magenta"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Time"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:background="@color/magenta"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Date"
-                                android:textColor="@color/white"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tv_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="08-12-2021"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="09-12-2021"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="10-12-2021"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_distance_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.1">
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@color/magenta"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Distance From Shop Location"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:background="@color/magenta"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Time"
-                                android:textColor="@color/white"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tv_time"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="11:50 AM"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="10:15 AM"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="03:15 PM"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_delivery_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.1">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:background="@color/magenta"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Distance From Shop Location"
-                                android:textColor="@color/white"
-                                android:textSize="8sp" />
-
-                            <TextView
-                                android:id="@+id/tv_distence_from_shop_location"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="11.5 km"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="8.5 km"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="2.5 km"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.1">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:background="@drawable/bg_deliveryman"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Deliveryman"
-                                android:textColor="@color/white"
-                                android:textSize="10sp" />
-
-                            <TextView
-                                android:id="@+id/tv_deliveryman"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Harshilbhai"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Pravinbhai"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_below="@id/tv_attempt"
-                                android:fontFamily="@font/roboto_regular"
-                                android:gravity="center"
-                                android:text="Harshilbhai"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:layout_gravity="center"
+                        android:layout_weight="1.2"
+                        android:background="@drawable/bg_deliveryman"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Deliveryman"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_delivery_attempt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/entity_delivery_order_delivery_attempt" />
 
-            </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_empty_delivery_attempt"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/empty_list_icon" />
+
+            </LinearLayout>
+
 
             <Button
-                android:id="@+id/btn_delivery_order_submit"
+                android:id="@+id/btn_del_order_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -2388,7 +1852,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_delivery_order_submit_share_delivery_fail_report"
+                android:id="@+id/btn_del_order_submit_share_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -2400,7 +1864,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_delivery_order_submit_share_invoice_to_shopkeeper"
+                android:id="@+id/btn_del_order_submit_share_invoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

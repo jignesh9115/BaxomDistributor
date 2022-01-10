@@ -49,7 +49,7 @@ public class UndeliveredSalesOrders_3_1_0Fragment extends Fragment {
     ArrayList<UndeliveredOrderByDistIdPOJO> arrayList_group_dates_list;
     UndeliveredOrderByDistIdPOJO groupDatesPOJO;
 
-    SharedPreferences sp_distributor_detail, sp_multi_lang;
+    SharedPreferences sp_distributor_detail, sp_multi_lang, sp_update;
     ArrayList<String> arrayList_lang_desc;
     Database db;
     Language.CommanList commanList, commanSuchnaList;
@@ -428,4 +428,17 @@ public class UndeliveredSalesOrders_3_1_0Fragment extends Fragment {
             pdialog.dismiss();
     }
 
+    /*@Override
+    public void onResume() {
+        super.onResume();
+
+        sp_update = getActivity().getSharedPreferences("update_data", Context.MODE_PRIVATE);
+        Log.i(TAG, "sp_update...>" + sp_update.getBoolean("isUpdate", false));
+
+        if (sp_update.getBoolean("isUpdate", false)) {
+            arrayList_group_dates_list = new ArrayList<>();
+            arrayList_order_date = new ArrayList<>();
+            new getUndeliveredOrderListTask().execute();
+        }
+    }*/
 }

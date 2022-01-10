@@ -3,9 +3,13 @@ package com.jp.baxomdistributor.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -13,6 +17,7 @@ import androidx.core.content.FileProvider;
 import com.jp.baxomdistributor.BuildConfig;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,12 +60,41 @@ public class AppUtils {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "IMG_" + timeStamp + "_";
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        //File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        File image = new File(Environment.getExternalStorageDirectory() + "/Baxom Distribution/" + System.currentTimeMillis() + ".jpg");
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        /*File image = new File(Environment.getExternalStorageDirectory() + "/Baxom Health Care/"
+                + System.currentTimeMillis() + ".jpg");*/
 
         AppUtils.imageFilePath = image.getAbsolutePath();
         return image;
     }
 
 
+    public static String comrpess_50(String ref_path, File file) {
+
+        File imgfile = new File(ref_path);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgfile.getAbsolutePath(), options);
+        // Bitmap compressed_bitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 5, myBitmap.getHeight() / 5, true);
+        Bitmap compressed_bitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), null, true);
+
+        Log.i("file=", file + "");
+        Log.i("file size=", Integer.parseInt(String.valueOf(file.length() / 1024)) + "");
+        Log.i("file size conpress=", Integer.parseInt(String.valueOf(file.length() / 1024)) / 80 + "");
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            compressed_bitmap.compress(Bitmap.CompressFormat.JPEG, Integer.parseInt(String.valueOf(file.length() / 1024)) / 80, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
+    }
 }

@@ -2,11 +2,14 @@ package com.jp.baxomdistributor.Utils;
 
 import org.json.JSONArray;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
@@ -143,6 +146,13 @@ public interface Api {
     @GET("set_dist_pattern.php")
     Call<String> set_dist_pattern(@Query("dist_id") String dist_id,
                                   @Query("dates_arr") String salesdate_arr);
+
+    @GET("viewsalesdeliveryorder.php")
+    Call<String> view_sales_delivery_order(@Query("order_id") String dist_id);
+
+
+    @GET("salesorder_delivery.php")
+    Call<String> salesorder_delivery(@Query("orderdata") String orderdata);
 
 }
 
