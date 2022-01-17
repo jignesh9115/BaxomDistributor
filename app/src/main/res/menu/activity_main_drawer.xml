@@ -24,6 +24,11 @@
             android:icon="@drawable/undelivered_order_icon"
             android:title="Undelivered Orders v3.1" />
 
+        <item
+            android:id="@+id/nav_bussiness_summery"
+            android:icon="@drawable/delivered_order"
+            android:title="Bussiness Summery" />
+
         <!--<item
             android:id="@+id/nav_delivered_sales_orders"
             android:icon="@drawable/delivered_order"

@@ -57,6 +57,7 @@ import com.jp.baxomdistributor.Utils.FileUtils;
 import com.jp.baxomdistributor.databinding.ActivityMainBinding;
 import com.jp.baxomdistributor.databinding.DialogNetworkErrorBinding;
 import com.jp.baxomdistributor.databinding.LayoutBotttomSheetBinding;
+import com.jp.baxomdistributor.ui.bussiness_summery.BussinessSummeryFragment;
 import com.jp.baxomdistributor.ui.delivered_sales_orders.DeliveredSalesOrdersFragment;
 import com.jp.baxomdistributor.ui.home.HomeFragment;
 import com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment;
@@ -70,32 +71,99 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+    private static final int REQUEST_UPDATE_APP = 1001;
     Toolbar toolbar;
     LayoutBotttomSheetBinding binding1;
-
     String[] permissionsRequired = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CAMERA};
-
-
     SharedPreferences sp, sp_distributor_detail, sp_login, sp_multi_lang;
     Database db;
     ArrayList<String> arrayList_lang_desc;
     Menu drawer_menu;
     Language.CommanList commanList;
-
     BottomSheetDialog bottomSheetDialog;
-
     AppUpdateManager appUpdateManager;
-    private static final int REQUEST_UPDATE_APP = 1001;
     AlertDialog ad_net_connection;
     AlertDialog.Builder builder;
-    private IntentFilter minIntentFilter;
+    public BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals(ConstantVariables.BroadcastStringForAction)) {
+
+                if (intent.getStringExtra("online_status").equals("false")) {
+                    connctionDialog();
+                } else {
+                    if (ad_net_connection != null && ad_net_connection.isShowing()) {
+                        ad_net_connection.dismiss();
+                        ad_net_connection = null;
+                    }
+                }
+
+
+                boolean isdiff_suchana = false, isdiff_lang = false;
+                db.open();
+                Cursor tot_local_suchana = db.viewMultiLangSuchna();
+                if (tot_local_suchana.getCount() > 0) {
+                    if (!sp_login.getString("tot_suchna", "")
+                            .equalsIgnoreCase(String.valueOf(tot_local_suchana.getCount())))
+                        isdiff_suchana = true;
+                }
+                tot_local_suchana.close();
+                db.close();
+
+
+                db.open();
+                Cursor tot_local_lang = db.viewAllLanguage();
+                if (tot_local_lang.getCount() > 0) {
+                    if (!sp_login.getString("tot_lang", "")
+                            .equalsIgnoreCase(String.valueOf(tot_local_lang.getCount())))
+                        isdiff_lang = true;
+                    tot_local_lang.close();
+                }
+                db.close();
+
+                if (isdiff_lang) {
+
+                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
+                    intent1.putExtra("action", "Update_Lang");
+                    startActivity(intent1);
+
+                } else if (isdiff_suchana) {
+
+                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
+                    intent1.putExtra("action", "Update_Suchana");
+                    startActivity(intent1);
+
+                } else if (isdiff_suchana && isdiff_lang) {
+
+                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
+                    intent1.putExtra("action", "Update_Lang_Suchana");
+                    startActivity(intent1);
+
+                }
+
+            }
+        }
+    };
     NetConnetionService mservice;
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
+    private IntentFilter minIntentFilter;
+
+    public static boolean AskPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 //R.id.nav_undelivered_sales_orders,
                 R.id.nav_undelivered_sales_orders_new,
                 R.id.nav_undelivered_sales_orders_3_1_0,
+                R.id.nav_bussiness_summery,
                 //R.id.nav_delivered_sales_orders,
                 //R.id.nav_my_sales_orders_dist,
                 //R.id.nav_delivery_fail_sales_orders,
@@ -176,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
             //drawer_menu.findItem(R.id.nav_undelivered_sales_orders).setTitle("" + commanList.getArrayList().get(1));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders_new).setTitle("" + commanList.getArrayList().get(12));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders_3_1_0).setTitle("" + commanList.getArrayList().get(13));
+            drawer_menu.findItem(R.id.nav_bussiness_summery).setTitle("Bussiness Summery");
             //drawer_menu.findItem(R.id.nav_delivered_sales_orders).setTitle("" + commanList.getArrayList().get(2));
             //drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setTitle("" + commanList.getArrayList().get(11));
             //drawer_menu.findItem(R.id.nav_delivery_fail_sales_orders).setTitle("" + commanList.getArrayList().get(3));
@@ -221,6 +291,13 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new UndeliveredSalesOrders_3_1_0Fragment()).commit();
                     binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(13));
+                    drawer.close();
+
+                } else if (item.getItemId() == R.id.nav_bussiness_summery) {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new BussinessSummeryFragment()).commit();
+                    binding.appBarMain.toolbar.setTitle("Bussiness Summery");
                     drawer.close();
 
                 } /*else if (item.getItemId() == R.id.nav_delivered_sales_orders) {
@@ -335,6 +412,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //================================make directory  code start ============================
+
     public void changeLanguage(MenuItem item) {
 
 
@@ -397,19 +476,7 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
-
-    public static boolean AskPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    //================================make directory  code start ============================
+    //================================make directory  code ends ============================
 
     public void MakeDirectory() {
 
@@ -447,8 +514,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    //================================make directory  code ends ============================
 
     public ArrayList<String> setLang(String key) {
 
@@ -633,68 +698,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
 
     }
-
-    public BroadcastReceiver myReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if (intent.getAction().equals(ConstantVariables.BroadcastStringForAction)) {
-
-                if (intent.getStringExtra("online_status").equals("false")) {
-                    connctionDialog();
-                } else {
-                    if (ad_net_connection != null && ad_net_connection.isShowing()) {
-                        ad_net_connection.dismiss();
-                        ad_net_connection = null;
-                    }
-                }
-
-
-                boolean isdiff_suchana = false, isdiff_lang = false;
-                db.open();
-                Cursor tot_local_suchana = db.viewMultiLangSuchna();
-                if (tot_local_suchana.getCount() > 0) {
-                    if (!sp_login.getString("tot_suchna", "")
-                            .equalsIgnoreCase(String.valueOf(tot_local_suchana.getCount())))
-                        isdiff_suchana = true;
-                }
-                tot_local_suchana.close();
-                db.close();
-
-
-                db.open();
-                Cursor tot_local_lang = db.viewAllLanguage();
-                if (tot_local_lang.getCount() > 0) {
-                    if (!sp_login.getString("tot_lang", "")
-                            .equalsIgnoreCase(String.valueOf(tot_local_lang.getCount())))
-                        isdiff_lang = true;
-                    tot_local_lang.close();
-                }
-                db.close();
-
-                if (isdiff_lang) {
-
-                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
-                    intent1.putExtra("action", "Update_Lang");
-                    startActivity(intent1);
-
-                } else if (isdiff_suchana) {
-
-                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
-                    intent1.putExtra("action", "Update_Suchana");
-                    startActivity(intent1);
-
-                } else if (isdiff_suchana && isdiff_lang) {
-
-                    Intent intent1 = new Intent(MainActivity.this, RefreshDataActivity.class);
-                    intent1.putExtra("action", "Update_Lang_Suchana");
-                    startActivity(intent1);
-
-                }
-
-            }
-        }
-    };
 
     @Override
     protected void onRestart() {

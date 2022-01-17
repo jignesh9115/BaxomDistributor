@@ -539,6 +539,8 @@ public class SplashActivity extends AppCompatActivity {
                     editor.putString("address", object.getString("address"));
                     editor.putString("email_address", object.getString("email_address"));
                     editor.putString("parent_id", object.getString("parent_id"));
+                    editor.putString("last_week_start", jsonObject.getString("last_week_start"));
+                    editor.putString("last_week_end", jsonObject.getString("last_week_end"));
                     editor.apply();
 
 

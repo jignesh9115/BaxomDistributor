@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,10 +46,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.jp.baxomdistributor.Adapters.DeliveryOrderFailReasonAdapter;
 import com.jp.baxomdistributor.Adapters.DeliveryOrderProdAdapter;
 import com.jp.baxomdistributor.Adapters.DeliveryOrderSchemeAdapter;
+import com.jp.baxomdistributor.Interfaces.DelFailSelectionListener;
 import com.jp.baxomdistributor.Interfaces.DeliveryProdQtyListener;
 import com.jp.baxomdistributor.Interfaces.DeliverySchemeQtyListener;
+import com.jp.baxomdistributor.Models.DelFailReasonModel;
 import com.jp.baxomdistributor.Models.DeliveryOrderProdModel;
 import com.jp.baxomdistributor.Models.MatchShemePOJO;
 import com.jp.baxomdistributor.Models.OrderProductListPOJO;
@@ -92,7 +96,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class SalesOrderDeliveryScreen extends AppCompatActivity implements DeliveryProdQtyListener, DeliverySchemeQtyListener {
+public class SalesOrderDeliveryScreen extends AppCompatActivity implements DeliveryProdQtyListener,
+        DeliverySchemeQtyListener, DelFailSelectionListener {
 
     ActivitySalesOrderDeliveryScreenBinding binding;
     Retrofit retrofit;
@@ -143,6 +148,9 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
     SharedPreferences sp_distributor_detail, sp_update;
     String upload_url, update_sales_order_url = "", update_sales_order_response = "";
+
+    DeliveryOrderFailReasonAdapter deliveryOrderFailReasonAdapter;
+    ArrayList<DelFailReasonModel> arrayList_del_fail_reasons;
 
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
@@ -233,7 +241,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
             startActivity(intent);
         });
 
-        delivery_fail_selection();
+        //delivery_fail_selection();
 
         cal_payment_receipt();
 
@@ -270,11 +278,14 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                     } else {
                         if (arrayList_order_prods.get(i).getIs_nline().equalsIgnoreCase("yes"))
                             fail_nline++;
+                    }
 
+                    if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del())
+                            < Double.parseDouble(arrayList_update_order_product.get(i).getP_qty())) {
                         fail_purchase_rs = fail_purchase_rs +
-                                (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty()) *
+                                ((Double.parseDouble(arrayList_update_order_product.get(i).getP_qty())
+                                        - Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del())) *
                                         Double.parseDouble(arrayList_order_prods.get(i).getPtr_rs()));
-
                     }
 
                     order_product_list.put("prod_list", prod_jArray);
@@ -441,7 +452,11 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                     e.getMessage();
                 }
                 Log.i(TAG, "order_jArray==>" + order_jArray);
+
                 salesOrderDelivery(order_jArray + "");
+
+                if (!path.isEmpty())
+                    new salesOrderDeliveryTask().execute(binding.edtOrderNo.getText().toString().trim());
 
                 SharedPreferences.Editor editor = sp_update.edit();
                 editor.putBoolean("isUpdate", true);
@@ -449,6 +464,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
                 Log.i(TAG, "isUpdate=>" + sp_update.getBoolean("isUpdate", false));
             }
+
         });
 
     }
@@ -531,7 +547,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
         binding.edtKasarRs.setText("" + kasar_rs);
     }
 
-    private void delivery_fail_selection() {
+    /*private void delivery_fail_selection() {
 
         PushDownAnim.setPushDownAnimTo(binding.cardShopCloseSelection)
                 .setScale(PushDownAnim.MODE_STATIC_DP, 3)
@@ -721,7 +737,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
         });
 
-    }
+    }*/
 
     public void view_sales_delivery_order(String order_id) {
 
@@ -956,6 +972,30 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                             } else {
                                 binding.rvOrderSchemes.setVisibility(View.GONE);
                                 binding.imgEmptyOrderSchemes.setVisibility(View.VISIBLE);
+                            }
+                            JSONArray del_fail_reason_arr = object.getJSONArray("del_fail_reason");
+                            if (del_fail_reason_arr.length() > 0) {
+                                arrayList_del_fail_reasons = new ArrayList<>();
+                                arrayList_del_fail_reasons.add(
+                                        new DelFailReasonModel(
+                                                "Shop Close Photo",
+                                                false, null));
+                                for (int i = 0; i < del_fail_reason_arr.length(); i++) {
+                                    arrayList_del_fail_reasons.add(
+                                            new DelFailReasonModel(
+                                                    del_fail_reason_arr.getJSONObject(i).getString("fail_resion"),
+                                                    false, null));
+                                }
+
+                                deliveryOrderFailReasonAdapter = new DeliveryOrderFailReasonAdapter(
+                                        arrayList_del_fail_reasons,
+                                        SalesOrderDeliveryScreen.this,
+                                        SalesOrderDeliveryScreen.this);
+                                binding.rvFailReasons.setLayoutManager(new GridLayoutManager(
+                                        SalesOrderDeliveryScreen.this, 2
+                                ));
+                                binding.rvFailReasons.setAdapter(deliveryOrderFailReasonAdapter);
+
                             }
                         }
 
@@ -1213,8 +1253,10 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
             imgfile = new File(AppUtils.imageFilePath);
             if (imgfile.exists()) {
                 Uri uri = Uri.fromFile(imgfile);
-                binding.llPhotoOfShopclose.setVisibility(View.VISIBLE);
-                binding.imgPhotoofCloseshop.setImageURI(uri);
+                //binding.llPhotoOfShopclose.setVisibility(View.VISIBLE);
+                //binding.imgPhotoofCloseshop.setImageURI(uri);
+                arrayList_del_fail_reasons.get(0).setUri(uri);
+                deliveryOrderFailReasonAdapter.notifyDataSetChanged();
             }
 
             path = AppUtils.comrpess_50(AppUtils.imageFilePath, AppUtils.file);
@@ -1344,18 +1386,8 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
     //=============================== ends logic get current location ============================================
 
+
     public void salesOrderDelivery(String order_data) {
-
-        /*File file;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-            file = new File(new FileUriUtils().getUriRealPathAboveKitkat(Uri.parse(del_fail_shop_path)));
-        } else {
-            file = new File(del_fail_shop_path);
-        }
-
-        Log.i(TAG, "getName___>" + file.getName());
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part image_body = MultipartBody.Part.createFormData("uploadedfile", file.getName(), requestFile);*/
 
         Call<String> call = api.salesorder_delivery(order_data);
         call.enqueue(new Callback<String>() {
@@ -1381,7 +1413,23 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
     }
 
-    public class salesOrderDeliveryTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void delFailselection(int pos) {
+        del_fail_reason = arrayList_del_fail_reasons.get(pos).getReason();
+        deliveryOrderFailReasonAdapter.notifyDataSetChanged();
+
+        if (pos == 0) {
+            del_fail_reason = "Shop Close Photo";
+            path = "";
+            AppUtils.openCameraIntent(SalesOrderDeliveryScreen.this);
+        } else {
+            arrayList_del_fail_reasons.get(0).setUri(null);
+            path = "";
+        }
+
+    }
+
+    public class salesOrderDeliveryTask extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -1389,13 +1437,13 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
 
             Log.i(TAG, "File Path==>" + path);
 
-            upload_url = getResources().getString(R.string.Base_URL) + "salesorder_delivery_img_demo.php";
+            upload_url = getResources().getString(R.string.Base_URL) + "salesorder_delivery_close_shop_img.php";
             Log.i(TAG, "Image Upload Url==>" + upload_url);
 
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... strings) {
 
             try {
 
@@ -1403,7 +1451,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                 new MultipartUploadRequest(SalesOrderDeliveryScreen.this, upload_url)
                         .setMethod("POST")
                         .addFileToUpload(path, "uploadedfile")
-                        //.addParameter("billing_amount", billing_rs)
+                        .addParameter("order_id", strings[0])
                         .setMaxRetries(2)
                         .setDelegate(new UploadStatusDelegate() {
                             @Override
@@ -1423,6 +1471,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                                     pdialog.dismiss();
                                 }
                                 Toast.makeText(context, commanSuchnaList.getArrayList().get(14) + "", Toast.LENGTH_SHORT).show();*/
+
                                 Log.i(TAG, "Error serverResponse=>" + serverResponse.getBody() + "");
                                 Log.i(TAG, "Error serverResponse=>" + exception);
                                 //Toast.makeText(context, "Error serverResponse=>" + serverResponse.getBodyAsString(), Toast.LENGTH_LONG).show();

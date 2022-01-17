@@ -3,6 +3,7 @@ package com.jp.baxomdistributor.Utils;
 import org.json.JSONArray;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -154,5 +155,9 @@ public interface Api {
     @GET("salesorder_delivery.php")
     Call<String> salesorder_delivery(@Query("orderdata") String orderdata);
 
+    @GET("bussiness_summery_by_dist.php")
+    Call<String> bussiness_summery_by_dist(@Query("dist_id") String dist_id,
+                                           @Query("from_date") String from_date,
+                                           @Query("to_date") String to_date);
 }
 
