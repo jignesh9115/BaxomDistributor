@@ -461,8 +461,7 @@
             <LinearLayout
                 android:id="@+id/layout_title_date_wise_total"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="20dp">
+                android:layout_height="30dp">
 
                 <TextView
                     android:id="@+id/tv_title_prod_wise_total"
@@ -526,6 +525,165 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="0/- "
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title_scheme_summery"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/magenta"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="Scheme Wise Summery"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/layout_title_scheme_wise_summery"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_title_scheme_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Scheme Detail"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_title_scheme_wise_quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Qty."
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_title_scheme_biz"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="BIZ Rs."
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_title_scheme_disc_pts"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Disc. PTS"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_title_scheme_disc_biz"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Disc. BIZ"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_scheme_wise_summery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/entity_buss_summery_scheme_summery" />
+
+            <LinearLayout
+                android:id="@+id/layout_title_scheme_wise_total"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_wise_qty_total"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_biz_total"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_disc_pts_total"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_disc_biz_total"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/magenta"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

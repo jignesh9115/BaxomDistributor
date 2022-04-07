@@ -3,6 +3,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\jignesh\\Desktop\\Android desktop\\Baxom Distributor\\keystore\\keystore.jks')
+            storePassword 'Baxomd@123'
+            keyAlias 'key0'
+            keyPassword 'Baxomd@123'
+        }
+    }
     compileSdk 30
 
     defaultConfig {

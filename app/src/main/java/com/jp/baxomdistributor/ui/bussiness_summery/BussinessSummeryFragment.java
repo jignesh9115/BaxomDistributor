@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jp.baxomdistributor.Adapters.DateWiseSummeryAdapter;
 import com.jp.baxomdistributor.Adapters.ProdWiseSummeryAdapter;
+import com.jp.baxomdistributor.Adapters.SchemeWiseBussSummeryAdapter;
 import com.jp.baxomdistributor.Models.DateWiseSummeryModel;
 import com.jp.baxomdistributor.Models.ProdWiseSummeryModel;
+import com.jp.baxomdistributor.Models.SchemeWiseBussSummeryModel;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
 import com.jp.baxomdistributor.Utils.GDateTime;
@@ -65,6 +67,10 @@ public class BussinessSummeryFragment extends Fragment {
     ArrayList<ProdWiseSummeryModel> arrayList_prod_wise;
     ProdWiseSummeryModel prodWiseSummeryModel;
     ProdWiseSummeryAdapter prodWiseSummeryAdapter;
+
+    ArrayList<SchemeWiseBussSummeryModel> arrayList_scheme_wise;
+    SchemeWiseBussSummeryModel schemeWiseBussSummeryModel;
+    SchemeWiseBussSummeryAdapter schemeWiseBussSummeryAdapter;
 
     Retrofit retrofit = null;
     Api api;
@@ -216,7 +222,6 @@ public class BussinessSummeryFragment extends Fragment {
             }
         });
 
-
         binding.btnApply.setOnClickListener(v -> {
 
             pdialog = new ProgressDialog(getActivity());
@@ -307,6 +312,36 @@ public class BussinessSummeryFragment extends Fragment {
                             binding.tvProdWisePtrTotal.setText("" + prod_wise_tot_obj.getString("p_tot_ptr_rs") + " /-");
                             binding.tvProdWisePtsTotal.setText("" + prod_wise_tot_obj.getString("p_tot_pts_rs") + " /-");
                         }
+
+                        JSONArray scheme_wise_arr = jsonObject.getJSONArray("scheme_wise_arr");
+                        if (scheme_wise_arr.length() > 0) {
+                            arrayList_scheme_wise = new ArrayList<>();
+                            for (int i = 0; i < scheme_wise_arr.length(); i++) {
+                                JSONObject object = scheme_wise_arr.getJSONObject(i);
+                                schemeWiseBussSummeryModel = new SchemeWiseBussSummeryModel(
+                                        object.getString("scheme_id"),
+                                        object.getString("scheme_name_sort"),
+                                        object.getString("result_product_name"),
+                                        object.getString("result_product_qty"),
+                                        object.getString("scheme_biz"),
+                                        object.getString("discount_pts"),
+                                        object.getString("discount_biz"));
+                                arrayList_scheme_wise.add(schemeWiseBussSummeryModel);
+                            }
+
+                            schemeWiseBussSummeryAdapter = new SchemeWiseBussSummeryAdapter(arrayList_scheme_wise, requireActivity());
+                            binding.rvSchemeWiseSummery.setLayoutManager(new LinearLayoutManager(requireActivity(),
+                                    LinearLayoutManager.VERTICAL, false));
+                            binding.rvSchemeWiseSummery.setAdapter(schemeWiseBussSummeryAdapter);
+
+                            JSONObject scheme_wise_tot_obj = jsonObject.getJSONObject("scheme_wise_tot_arr");
+                            binding.tvSchemeWiseQtyTotal.setText("" + scheme_wise_tot_obj.getString("tot_scheme_qty") + " /-");
+                            binding.tvSchemeBizTotal.setText("" + scheme_wise_tot_obj.getString("tot_scheme_biz") + " /-");
+                            binding.tvSchemeDiscPtsTotal.setText("" + scheme_wise_tot_obj.getString("tot_discount_pts") + " /-");
+                            binding.tvSchemeDiscBizTotal.setText("" + scheme_wise_tot_obj.getString("tot_discount_biz") + " /-");
+
+                        }
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
