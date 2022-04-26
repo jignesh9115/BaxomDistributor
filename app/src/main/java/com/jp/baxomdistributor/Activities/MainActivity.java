@@ -59,6 +59,7 @@ import com.jp.baxomdistributor.databinding.DialogNetworkErrorBinding;
 import com.jp.baxomdistributor.databinding.LayoutBotttomSheetBinding;
 import com.jp.baxomdistributor.ui.bussiness_summery.BussinessSummeryFragment;
 import com.jp.baxomdistributor.ui.delivered_sales_orders.DeliveredSalesOrdersFragment;
+import com.jp.baxomdistributor.ui.distbutor_stock.DistributorStockFragment;
 import com.jp.baxomdistributor.ui.home.HomeFragment;
 import com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment;
 import com.jp.baxomdistributor.ui.mypurchaseorder.MyPurchaseOrderFragment;
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 //R.id.nav_add_new_purchase_orders,
                 //R.id.nav_my_purchase_order,
                 //R.id.nav_my_fullfilled_purchase_orders,
-                //R.id.nav_my_stock_statement,
+                R.id.nav_dist_stock,
                 R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
@@ -328,7 +329,14 @@ public class MainActivity extends AppCompatActivity {
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(8) + "");
                     drawer.close();
 
-                }*/
+                }*/ else if (item.getItemId() == R.id.nav_dist_stock) {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DistributorStockFragment()).commit();
+                    binding.appBarMain.toolbar.setTitle("Distributor Stock");
+                    drawer.close();
+
+                }
 
 
                 return false;
@@ -338,13 +346,13 @@ public class MainActivity extends AppCompatActivity {
             e.getMessage();
         }
 
-        if (SDK_INT >= Build.VERSION_CODES.R) {
+       /* if (SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                 startActivity(intent);
             }
-        }
+        }*/
 
         if (!AskPermissions(MainActivity.this, permissionsRequired)) {
             ActivityCompat.requestPermissions(MainActivity.this, permissionsRequired, 1);
@@ -716,13 +724,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(myReceiver, minIntentFilter);
         updateApp();
-        if (SDK_INT >= Build.VERSION_CODES.R) {
+        /*if (SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                 startActivity(intent);
             }
-        }
+        }*/
         MakeDirectory();
     }
 }

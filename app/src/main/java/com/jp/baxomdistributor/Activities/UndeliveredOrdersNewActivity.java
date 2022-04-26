@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
@@ -1365,7 +1366,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
         createPDFUtiltGoodSummeryTable();
 
         try {
-            file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + pdf_name + ".pdf");
+            //file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + pdf_name + ".pdf");
+            file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + pdf_name + ".pdf");
             //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/Invoice.pdf");
             file.getParentFile().mkdirs();
             file.createNewFile();

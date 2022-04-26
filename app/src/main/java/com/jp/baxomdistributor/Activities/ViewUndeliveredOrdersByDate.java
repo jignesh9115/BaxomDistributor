@@ -1262,7 +1262,8 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
                 //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/" + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
-                file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
+                //file = new File(FileUtils.ORDER_PDF_FOLDER_PATH + "OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
+                file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/OrderList-" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf");
                 //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/Invoice.pdf");
                 file.getParentFile().mkdirs();
                 file.createNewFile();
@@ -1858,7 +1859,7 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
             /*PdfUtils.drawText(arrayList_delivery_summery.get(0).getTotal_orders(), 105, 100);
             PdfUtils.drawText(String.format("%.2f", Double.parseDouble(arrayList_delivery_summery.get(0).getOrder_amt())), 203, 100);*/
 
-        int orderno_top = 155, shopname_top = 155, salesman_top = 155,order_date_top = 155, orderamt_top = 155, total_orders = 0;
+        int orderno_top = 155, shopname_top = 155, salesman_top = 155, order_date_top = 155, orderamt_top = 155, total_orders = 0;
         double tot_order_amount = 0.0;
 
         int draw_line_top = 160, draw_line_top1 = 160;
@@ -1913,7 +1914,7 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
                     else
                         PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top += 20);
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top+= 20);
+                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top += 20);
 
                     if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
                         PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top += 20);

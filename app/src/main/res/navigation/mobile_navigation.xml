@@ -49,4 +49,9 @@
         android:name="com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment"
         android:label="Stock Statement"
         tools:layout="@layout/fragment_my_stock_statement" />-->
+    <fragment
+        android:id="@+id/nav_dist_stock"
+        android:name="com.jp.baxomdistributor.ui.distbutor_stock.DistributorStockFragment"
+        android:label="Distributor Stock"
+        tools:layout="@layout/fragment_dist_stock" />
 </navigation>

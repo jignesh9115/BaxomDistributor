@@ -159,5 +159,18 @@ public interface Api {
     Call<String> bussiness_summery_by_dist(@Query("dist_id") String dist_id,
                                            @Query("from_date") String from_date,
                                            @Query("to_date") String to_date);
+
+    @GET("distributor_list.php")
+    Call<String> get_distributor_list();
+
+    @GET("get_distributor_stock_by_id.php")
+    Call<String> get_distributor_stock_by_id(@Query("dist_id") String dist_id);
+
+    @GET("distributor_stock_update.php")
+    Call<String> update_distributor_stock();
+
+    @POST("distributor_stock_callibrate.php")
+    Call<String> update_distributor_stock(@Query("dist_id") String dist_id,
+                                          @Query("callibrate_prods_arr") JSONArray callibrate_prods_arr);
 }
 
