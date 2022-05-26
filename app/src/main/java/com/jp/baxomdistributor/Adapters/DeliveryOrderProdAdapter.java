@@ -119,7 +119,6 @@ public class DeliveryOrderProdAdapter extends RecyclerView.Adapter<DeliveryOrder
             }
         });
 
-
         holder.binding.imgProductPlusQty.setOnClickListener(view -> {
 
             double qty = 0.0;

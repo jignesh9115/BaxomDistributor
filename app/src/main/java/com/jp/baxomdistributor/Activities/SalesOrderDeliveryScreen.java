@@ -973,6 +973,7 @@ public class SalesOrderDeliveryScreen extends AppCompatActivity implements Deliv
                                 binding.rvOrderSchemes.setVisibility(View.GONE);
                                 binding.imgEmptyOrderSchemes.setVisibility(View.VISIBLE);
                             }
+
                             JSONArray del_fail_reason_arr = object.getJSONArray("del_fail_reason");
                             if (del_fail_reason_arr.length() > 0) {
                                 arrayList_del_fail_reasons = new ArrayList<>();

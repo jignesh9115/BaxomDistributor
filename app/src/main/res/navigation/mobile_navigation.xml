@@ -54,4 +54,10 @@
         android:name="com.jp.baxomdistributor.ui.distbutor_stock.DistributorStockFragment"
         android:label="Distributor Stock"
         tools:layout="@layout/fragment_dist_stock" />
+
+    <fragment
+        android:id="@+id/nav_order_against_sales"
+        android:name="com.jp.baxomdistributor.ui.order_against_sales.OrderAgainstSalesFragment"
+        android:label="Order Against Sales"
+        tools:layout="@layout/fragment_order_against_sales" />
 </navigation>

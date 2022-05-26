@@ -172,5 +172,9 @@ public interface Api {
     @POST("distributor_stock_callibrate.php")
     Call<String> update_distributor_stock(@Query("dist_id") String dist_id,
                                           @Query("callibrate_prods_arr") JSONArray callibrate_prods_arr);
+
+    @GET("load_order_against_sales.php")
+    Call<String> load_order_against_sales(@Query("dist_id") String dist_id);
+
 }
 

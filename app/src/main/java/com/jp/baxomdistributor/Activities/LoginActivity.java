@@ -248,6 +248,10 @@ public class LoginActivity extends AppCompatActivity {
                     editor1.putString("isshipping", authrights_object.getString("isshipping"));
                     editor1.putString("isshipped", authrights_object.getString("isshipped"));
                     editor1.putString("isupdateshop", authrights_object.getString("isupdateshop"));
+                    editor1.putString("is_add_scheme_qty_oas", authrights_object.getString("is_add_scheme_qty_oas"));
+                    editor1.putString("is_add_replace_qty_oas", authrights_object.getString("is_add_replace_qty_oas"));
+                    editor1.putString("is_add_shortage_qty_oas", authrights_object.getString("is_add_shortage_qty_oas"));
+                    editor1.putString("is_add_scheme_detail_oas", authrights_object.getString("is_add_scheme_detail_oas"));
                     editor1.putString("recess_time", jsonObject.getString("recess_time"));
                     JSONObject check_lang_update_object = jsonObject.getJSONObject("check_lang_update");
                     editor1.putString("tot_suchna", check_lang_update_object.getString("tot_suchna"));

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ViewSchemesOrderPOJO {
 
-    String scheme_id,scheme_name_sort,scheme_name_long,scheme_type_id,scheme_type_name,scheme_image,scheme_qty,scheme_qty_del,scheme_price,result_product_id,result_product_qty,result_product_price,total_result_prod_value,result_product_image,is_scheme_half;
+    String scheme_id, scheme_name_sort, scheme_name_long, scheme_type_id, scheme_type_name, scheme_image, scheme_qty, scheme_qty_del, scheme_price, result_product_id, result_product_qty, result_product_price, total_result_prod_value, result_product_image, is_scheme_half;
 
     ArrayList<SchemeProductPOJO> arrayList;
 

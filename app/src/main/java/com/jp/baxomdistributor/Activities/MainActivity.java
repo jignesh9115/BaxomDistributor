@@ -3,7 +3,6 @@ package com.jp.baxomdistributor.Activities;
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.Manifest;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,31 +18,28 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.Toast;
-
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
@@ -58,12 +54,9 @@ import com.jp.baxomdistributor.databinding.ActivityMainBinding;
 import com.jp.baxomdistributor.databinding.DialogNetworkErrorBinding;
 import com.jp.baxomdistributor.databinding.LayoutBotttomSheetBinding;
 import com.jp.baxomdistributor.ui.bussiness_summery.BussinessSummeryFragment;
-import com.jp.baxomdistributor.ui.delivered_sales_orders.DeliveredSalesOrdersFragment;
 import com.jp.baxomdistributor.ui.distbutor_stock.DistributorStockFragment;
 import com.jp.baxomdistributor.ui.home.HomeFragment;
-import com.jp.baxomdistributor.ui.my_stock_statement.MyStockStatementFragment;
-import com.jp.baxomdistributor.ui.mypurchaseorder.MyPurchaseOrderFragment;
-import com.jp.baxomdistributor.ui.undelivered_sales_orders.UndeliveredSalesOrdersFragment;
+import com.jp.baxomdistributor.ui.order_against_sales.OrderAgainstSalesFragment;
 import com.jp.baxomdistributor.ui.undeliveredorders_3_1_0.UndeliveredSalesOrders_3_1_0Fragment;
 import com.jp.baxomdistributor.ui.undeliveredordersnew.UndeliveredSalesOrdersNewFragment;
 
@@ -89,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     AppUpdateManager appUpdateManager;
     AlertDialog ad_net_connection;
     AlertDialog.Builder builder;
+
     public BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -192,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 //R.id.nav_my_pending_purchase_orders,
                 //R.id.nav_add_new_purchase_orders,
                 //R.id.nav_my_purchase_order,
-                //R.id.nav_my_fullfilled_purchase_orders,
+                R.id.nav_order_against_sales,
                 R.id.nav_dist_stock,
                 R.id.nav_logout)
                 .setOpenableLayout(drawer)
@@ -254,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
             //drawer_menu.findItem(R.id.nav_add_new_purchase_orders).setTitle("" + commanList.getArrayList().get(5));
             //drawer_menu.findItem(R.id.nav_my_purchase_order).setTitle("" + commanList.getArrayList().get(6));
             //drawer_menu.findItem(R.id.nav_my_fullfilled_purchase_orders).setTitle("" + commanList.getArrayList().get(7));
-            //drawer_menu.findItem(R.id.nav_my_stock_statement).setTitle("" + commanList.getArrayList().get(8));
+            drawer_menu.findItem(R.id.nav_order_against_sales).setTitle("Order Against Sales");
             drawer_menu.findItem(R.id.nav_logout).setTitle("" + commanList.getArrayList().get(9));
             drawer_menu.findItem(R.id.nav_change_lang).setTitle("" + commanList.getArrayList().get(10));
 
@@ -322,14 +316,14 @@ public class MainActivity extends AppCompatActivity {
                     binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(6) + "");
                     drawer.close();
 
-                } else if (item.getItemId() == R.id.nav_my_stock_statement) {
+                }*/ else if (item.getItemId() == R.id.nav_order_against_sales) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new MyStockStatementFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(8) + "");
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new OrderAgainstSalesFragment()).commit();
+                    binding.appBarMain.toolbar.setTitle("Order Against Sales");
                     drawer.close();
 
-                }*/ else if (item.getItemId() == R.id.nav_dist_stock) {
+                } else if (item.getItemId() == R.id.nav_dist_stock) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DistributorStockFragment()).commit();

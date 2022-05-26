@@ -80,6 +80,12 @@
             android:title="Distributor Stock" />
 
         <item
+            android:id="@+id/nav_order_against_sales"
+            android:icon="@drawable/stock_management_icon"
+            android:title="Order Against Sales" />
+
+
+        <item
             android:id="@+id/nav_change_lang"
             android:icon="@drawable/icon_change_lang"
             android:onClick="changeLanguage"

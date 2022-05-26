@@ -36,7 +36,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".Activities.UndeliveredOrdersv3_1_0Activity"
             android:screenOrientation="portrait"
