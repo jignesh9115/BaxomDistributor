@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_scheme_detail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:lines="2"
+            android:text="Scheme Detail"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_scheme_wise_qty"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Qty."
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_scheme_biz"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="BIZ Rs."
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_scheme_disc_pts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Disc. PTS"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_scheme_disc_biz"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="Disc. BIZ"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

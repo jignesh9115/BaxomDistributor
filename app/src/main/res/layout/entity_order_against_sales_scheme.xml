@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_scheme_detail"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/img_border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/img_scheme_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:paddingStart="5dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="3dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/icon_telephone" />
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_scheme_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:padding="1dp"
+                    android:text="@string/sodacool_24"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/view_1_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+
+                <TextView
+                    android:id="@+id/tv_condition_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:gravity="center"
+                    android:text="Rs. 7200/-"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/view_2_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp">
+
+                    <TextView
+                        android:id="@+id/tv_scheme_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="end|center_vertical"
+                        android:lines="1"
+                        android:text="0.0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_order_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="start|center_vertical"
+                        android:lines="1"
+                        android:text=" / 0.0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_3_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+
+                <TextView
+                    android:id="@+id/tv_result_prod_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:gravity="center"
+                    android:text="Rs.900/-"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <ImageView
+                android:id="@+id/img_result_prod_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:padding="3dp"
+                android:src="@drawable/icon_telephone" />
+
+            <View
+                android:id="@+id/view_3"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/magenta" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_scheme_del_qty_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Scheme Order Qty."
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/view_6_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_scheme_plus_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edt_scheme_del_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:digits="0123456789."
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:text="0"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tv_scheme_minus_qty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_7_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_scheme_qty_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="Scheme Del. Qty."
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <View
+                    android:id="@+id/view_4_view_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary" />
+
+
+                <TextView
+                    android:id="@+id/tv_scheme_order_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="0.00"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
