@@ -22,6 +22,7 @@ import com.jp.baxomdistributor.Adapters.DistributorStockAdapter;
 import com.jp.baxomdistributor.Models.DistributorStockModel;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
+import com.jp.baxomdistributor.Utils.ApiClient;
 import com.jp.baxomdistributor.databinding.FragmentDistStockBinding;
 
 import org.json.JSONArray;
@@ -44,7 +45,6 @@ public class DistributorStockFragment extends Fragment {
     private FragmentDistStockBinding binding;
     String TAG = getClass().getSimpleName();
 
-    Retrofit retrofit = null;
     Api api;
 
     ArrayList<String> arrayList_distributor_id, arrayList_distributor_name;
@@ -66,17 +66,7 @@ public class DistributorStockFragment extends Fragment {
         binding = FragmentDistStockBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.MINUTES)
-                .readTimeout(5, TimeUnit.MINUTES)
-                .build();
-
-        retrofit = new Retrofit.Builder()
-                .client(client)
-                .baseUrl(getResources().getString(R.string.Base_URL))
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        api = retrofit.create(Api.class);
+        api = ApiClient.getClient(requireActivity()).create(Api.class);
 
         get_distributor_list();
 

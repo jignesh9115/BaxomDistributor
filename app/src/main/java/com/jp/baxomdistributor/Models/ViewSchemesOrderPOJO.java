@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ViewSchemesOrderPOJO {
 
-    String scheme_id, scheme_name_sort, scheme_name_long, scheme_type_id, scheme_type_name, scheme_image, scheme_qty, scheme_qty_del, scheme_price, result_product_id, result_product_qty, result_product_price, total_result_prod_value, result_product_image, is_scheme_half;
+    String scheme_id, scheme_name_sort, scheme_name_long, scheme_type_id, scheme_type_name, scheme_image, scheme_qty, scheme_stock_qty, scheme_qty_del, scheme_price, result_product_id, result_product_qty, result_product_price, total_result_prod_value, result_product_image, is_scheme_half;
 
     ArrayList<SchemeProductPOJO> arrayList;
 
@@ -16,6 +16,26 @@ public class ViewSchemesOrderPOJO {
         this.scheme_type_name = scheme_type_name;
         this.scheme_image = scheme_image;
         this.scheme_qty = scheme_qty;
+        this.scheme_qty_del = scheme_qty_del;
+        this.scheme_price = scheme_price;
+        this.result_product_id = result_product_id;
+        this.result_product_qty = result_product_qty;
+        this.result_product_price = result_product_price;
+        this.total_result_prod_value = total_result_prod_value;
+        this.result_product_image = result_product_image;
+        this.is_scheme_half = is_scheme_half;
+        this.arrayList = arrayList;
+    }
+
+    public ViewSchemesOrderPOJO(String scheme_id, String scheme_name_sort, String scheme_name_long, String scheme_type_id, String scheme_type_name, String scheme_image, String scheme_qty, String scheme_stock_qty, String scheme_qty_del, String scheme_price, String result_product_id, String result_product_qty, String result_product_price, String total_result_prod_value, String result_product_image, String is_scheme_half, ArrayList<SchemeProductPOJO> arrayList) {
+        this.scheme_id = scheme_id;
+        this.scheme_name_sort = scheme_name_sort;
+        this.scheme_name_long = scheme_name_long;
+        this.scheme_type_id = scheme_type_id;
+        this.scheme_type_name = scheme_type_name;
+        this.scheme_image = scheme_image;
+        this.scheme_qty = scheme_qty;
+        this.scheme_stock_qty = scheme_stock_qty;
         this.scheme_qty_del = scheme_qty_del;
         this.scheme_price = scheme_price;
         this.result_product_id = result_product_id;
@@ -81,6 +101,14 @@ public class ViewSchemesOrderPOJO {
 
     public void setScheme_qty(String scheme_qty) {
         this.scheme_qty = scheme_qty;
+    }
+
+    public String getScheme_stock_qty() {
+        return scheme_stock_qty;
+    }
+
+    public void setScheme_stock_qty(String scheme_stock_qty) {
+        this.scheme_stock_qty = scheme_stock_qty;
     }
 
     public String getScheme_qty_del() {

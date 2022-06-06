@@ -14,7 +14,7 @@
     <!--<string name="Google_map_key">AIzaSyBombwoKL7S3_uFcbUtg6fLxulOnMSCRD8</string>-->
     <string name="Google_map_key">AIzaSyAMhXV5wOSgo02HRr9ynMtUK0PLnRmGvHA</string>
 
-    <string name="Base_URL">https://projects.drbbagpks.org/Baxom/Baxom_Dist_Api_v1.2/</string>
+    <string name="Base_URL">https://projects.drbbagpks.org/Baxom/Baxom_Dist_Api_v1.4/</string>
     <!--    <string name="Base_URL">http://projects.drbbagpks.org/Baxom/Baxom_Dist_Testing_Api/</string>-->
     <string name="Local_URL">http://192.168.43.193/baxom/API/</string>
     <string name="URL_TESTING">http://projects.drbbagpks.org/Baxom/Tesing_DB_API/</string>

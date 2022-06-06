@@ -139,7 +139,6 @@ public class MyPurchaseOrderFragment extends Fragment {
 
     ArrayList<CartoonQtyPOJO> arrayList_cartoon_qty;
     ArrayList<Integer> arrayList_qty;
-    List<List<Integer>> arrayList_main;
 
     String path = "", image_name = "", upload_url = "", purchase_id = "", no_of_article = "";
     File imgfile;
@@ -147,6 +146,7 @@ public class MyPurchaseOrderFragment extends Fragment {
     PrefManager prefManager;
     private Uri uri;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -154,17 +154,17 @@ public class MyPurchaseOrderFragment extends Fragment {
         binding = FragmentMypurchaseOrderBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
 
-        prefManager = new PrefManager(getActivity(), "sp_Image_path");
+        prefManager = new PrefManager(requireActivity(), "sp_Image_path");
 
-        sp_update = getActivity().getSharedPreferences("update_data", Context.MODE_PRIVATE);
-        sp_login = getActivity().getSharedPreferences("login_detail", Context.MODE_PRIVATE);
-        sp_distributor_detail = getActivity().getSharedPreferences("distributor_detail", Context.MODE_PRIVATE);
+        sp_update = requireActivity().getSharedPreferences("update_data", Context.MODE_PRIVATE);
+        sp_login = requireActivity().getSharedPreferences(" login_detail", Context.MODE_PRIVATE);
+        sp_distributor_detail = requireActivity().getSharedPreferences("distributor_detail", Context.MODE_PRIVATE);
 
         distributor_id = sp_distributor_detail.getString("distributor_id", null);
 
         Log.i(TAG, "distributor_id=>" + distributor_id);
 
-        sp_multi_lang = getActivity().getSharedPreferences("Language", Context.MODE_PRIVATE);
+        sp_multi_lang = requireActivity().getSharedPreferences("Language", Context.MODE_PRIVATE);
         db = new Database(getActivity());
 
         setLanguage(sp_multi_lang.getString("lang", ""));
@@ -189,13 +189,13 @@ public class MyPurchaseOrderFragment extends Fragment {
         if (path != null) {
 
             imgfile = new File(path);
-            if (imgfile.exists()) {
-                //Bitmap myBitmap = BitmapFactory.decodeFile(imgfile.getAbsolutePath());
-                //binding.imgAddShopPhoto.setImageBitmap(rotateBitmap(myBitmap, 90));
-                //binding.imgAddShopPhoto.setImageBitmap(myBitmap);
+            //if (imgfile.exists()) {
+            //Bitmap myBitmap = BitmapFactory.decodeFile(imgfile.getAbsolutePath());
+            //binding.imgAddShopPhoto.setImageBitmap(rotateBitmap(myBitmap, 90));
+            //binding.imgAddShopPhoto.setImageBitmap(myBitmap);
            /* Uri uri = Uri.fromFile(imgfile);
             binding.imgAddShopPhoto.setImageURI(uri);*/
-            }
+            //}
             image_name = imgfile.getName();
         }
 
@@ -225,452 +225,403 @@ public class MyPurchaseOrderFragment extends Fragment {
 
 
         binding.tvFromDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(from_date));
-        binding.tvFromDatePurchaseOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.tvFromDatePurchaseOrder.setOnClickListener(v -> {
 
+            y = Integer.parseInt(gDateTime.getYear());
+            m = Integer.parseInt(gDateTime.getMonth()) - 1;
+            d = Integer.parseInt(gDateTime.getDay());
 
-                y = Integer.parseInt(gDateTime.getYear());
-                m = Integer.parseInt(gDateTime.getMonth()) - 1;
-                d = Integer.parseInt(gDateTime.getDay());
+            dp = new DatePickerDialog(getActivity(), (view, year, month, dayOfMonth) -> {
+                cal = Calendar.getInstance();
+                cal.set(year, month, dayOfMonth);
+                @SuppressLint("SimpleDateFormat") DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
+                @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                from_date = df.format(cal.getTime());
+                binding.tvFromDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
+                binding.cbThisMonthPurchaseOrder.setChecked(false);
 
-                dp = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        cal = Calendar.getInstance();
-                        cal.set(year, month, dayOfMonth);
-                        DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                        from_date = df.format(cal.getTime());
-                        binding.tvFromDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
-                        binding.cbThisMonthPurchaseOrder.setChecked(false);
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                        to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                arrayList_purchase_order = new ArrayList<>();
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                        arrayList_purchase_order = new ArrayList<>();
-                        purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                        new getPurchaseOrdersTask().execute(purchase_orders_url);
+            }, y, m, d);
+            dp.show();
 
-                    }
-                }, y, m, d);
-                dp.show();
-
-            }
         });
 
 
         binding.tvToDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(to_date));
-        binding.tvToDatePurchaseOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.tvToDatePurchaseOrder.setOnClickListener(v -> {
 
-                y = Integer.parseInt(gDateTime.getYear());
-                m = Integer.parseInt(gDateTime.getMonth()) - 1;
-                d = Integer.parseInt(gDateTime.getDay());
+            y = Integer.parseInt(gDateTime.getYear());
+            m = Integer.parseInt(gDateTime.getMonth()) - 1;
+            d = Integer.parseInt(gDateTime.getDay());
 
-                dp = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        cal = Calendar.getInstance();
-                        cal.set(year, month, dayOfMonth);
-                        DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                        to_date = df.format(cal.getTime());
-                        binding.tvToDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
-                        binding.cbThisMonthPurchaseOrder.setChecked(false);
+            dp = new DatePickerDialog(getActivity(), (view, year, month, dayOfMonth) -> {
+                cal = Calendar.getInstance();
+                cal.set(year, month, dayOfMonth);
+                @SuppressLint("SimpleDateFormat") DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
+                @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                to_date = df.format(cal.getTime());
+                binding.tvToDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
+                binding.cbThisMonthPurchaseOrder.setChecked(false);
 
-                        from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
 
-                        arrayList_purchase_order = new ArrayList<>();
-                        purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                        new getPurchaseOrdersTask().execute(purchase_orders_url);
+                arrayList_purchase_order = new ArrayList<>();
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
 
-                    }
-                }, y, m, d);
-                dp.show();
+            }, y, m, d);
+            dp.show();
 
-            }
         });
 
 
-        binding.cbThisWeekPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbThisWeekPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbThisWeekPurchaseOrder.isChecked()) {
+            if (binding.cbThisWeekPurchaseOrder.isChecked()) {
 
-                    Calendar c = GregorianCalendar.getInstance();
-                    c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Calendar c = GregorianCalendar.getInstance();
+                c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                    from_date = df.format(c.getTime());
-                    c.add(Calendar.DATE, 6);
-                    to_date = df.format(c.getTime());
+                from_date = df.format(c.getTime());
+                c.add(Calendar.DATE, 6);
+                to_date = df.format(c.getTime());
 
-                    binding.tvFromDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(from_date));
-                    binding.tvToDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(to_date));
-                    binding.cbThisMonthPurchaseOrder.setChecked(false);
+                binding.tvFromDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(from_date));
+                binding.tvToDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(to_date));
+                binding.cbThisMonthPurchaseOrder.setChecked(false);
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-
-                }
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
             }
+
         });
 
-        binding.cbThisMonthPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbThisMonthPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbThisMonthPurchaseOrder.isChecked()) {
+            if (binding.cbThisMonthPurchaseOrder.isChecked()) {
 
-                    if (gDateTime.getMonth().length() == 2)
-                        from_date = gDateTime.getYear() + "-" + gDateTime.getMonth() + "-01";
-                    else
-                        from_date = gDateTime.getYear() + "-0" + gDateTime.getMonth() + "-01";
-                    to_date = gDateTime.getDateymd();
+                if (gDateTime.getMonth().length() == 2)
+                    from_date = gDateTime.getYear() + "-" + gDateTime.getMonth() + "-01";
+                else
+                    from_date = gDateTime.getYear() + "-0" + gDateTime.getMonth() + "-01";
+                to_date = gDateTime.getDateymd();
 
-                    binding.tvFromDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(from_date));
-                    binding.tvToDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(to_date));
-                    binding.cbThisWeekPurchaseOrder.setChecked(false);
+                binding.tvFromDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(from_date));
+                binding.tvToDatePurchaseOrder.setText("" + gDateTime.ymdTodmy(to_date));
+                binding.cbThisWeekPurchaseOrder.setChecked(false);
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
-        binding.cbSubmitedPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbSubmitedPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbSubmitedPurchaseOrder.isChecked()) {
+            if (binding.cbSubmitedPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("1");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("1");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
-                    order_status_list.remove("1");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+            } else {
+                order_status_list.remove("1");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
 
-        binding.cbVerificationPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbVerificationPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbVerificationPurchaseOrder.isChecked()) {
+            if (binding.cbVerificationPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("2");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("2");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
-                    order_status_list.remove("2");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+            } else {
+                order_status_list.remove("2");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
-        binding.cbAuthenticationPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbAuthenticationPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbAuthenticationPurchaseOrder.isChecked()) {
+            if (binding.cbAuthenticationPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("3");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("3");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
+            } else {
 
-                    order_status_list.remove("3");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.remove("3");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
 
-        binding.cbPackingPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbPackingPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbPackingPurchaseOrder.isChecked()) {
+            if (binding.cbPackingPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("4");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("4");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
+            } else {
 
-                    order_status_list.remove("4");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.remove("4");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
-        binding.cbShippingPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbShippingPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbShippingPurchaseOrder.isChecked()) {
+            if (binding.cbShippingPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("5");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("5");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
+            } else {
 
-                    order_status_list.remove("5");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.remove("5");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
-        binding.cbShippingPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbShippingPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbShippingPurchaseOrder.isChecked()) {
+            if (binding.cbShippingPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("5");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("5");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
+            } else {
 
-                    order_status_list.remove("5");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.remove("5");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-                }
-
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
             }
+
         });
 
 
-        binding.cbShippedPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbShippedPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbShippedPurchaseOrder.isChecked()) {
+            if (binding.cbShippedPurchaseOrder.isChecked()) {
 
-                    order_status_list.add("6");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.add("6");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                } else {
+            } else {
 
-                    order_status_list.remove("6");
-                    Log.i(TAG, "orderStatusList=>" + orderStatusList());
+                order_status_list.remove("6");
+                Log.i(TAG, "orderStatusList=>" + orderStatusList());
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
-
-                }
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=" + (!orderStatusList().isEmpty() ? orderStatusList() : "-1") + "&from_date=" + from_date + "&to_date=" + to_date + "&salesman_id=&distributor_id=" + distributor_id;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
             }
+
         });
 
         //createPDF();
 
-        binding.cbSelectAllPurchaseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbSelectAllPurchaseOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-               /* if (binding.cbSelectAllPurchaseOrder.isChecked()) {
+           /* if (binding.cbSelectAllPurchaseOrder.isChecked()) {
 
-                    binding.cbSubmitedPurchaseOrder.setChecked(true);
-                    binding.cbVerificationPurchaseOrder.setChecked(true);
-                    binding.cbAuthenticationPurchaseOrder.setChecked(true);
-                    binding.cbPackingPurchaseOrder.setChecked(true);
-                    binding.cbShippingPurchaseOrder.setChecked(true);
-                    binding.cbShippedPurchaseOrder.setChecked(true);
+                binding.cbSubmitedPurchaseOrder.setChecked(true);
+                binding.cbVerificationPurchaseOrder.setChecked(true);
+                binding.cbAuthenticationPurchaseOrder.setChecked(true);
+                binding.cbPackingPurchaseOrder.setChecked(true);
+                binding.cbShippingPurchaseOrder.setChecked(true);
+                binding.cbShippedPurchaseOrder.setChecked(true);
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=1,2,3,4,5,6&from_date=" + from_date + "&to_date=" + to_date;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=1,2,3,4,5,6&from_date=" + from_date + "&to_date=" + to_date;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
 
-                } else {
+            } else {
 
-                    binding.cbSubmitedPurchaseOrder.setChecked(false);
-                    binding.cbVerificationPurchaseOrder.setChecked(false);
-                    binding.cbAuthenticationPurchaseOrder.setChecked(false);
-                    binding.cbPackingPurchaseOrder.setChecked(false);
-                    binding.cbShippingPurchaseOrder.setChecked(false);
-                    binding.cbShippedPurchaseOrder.setChecked(false);
+                binding.cbSubmitedPurchaseOrder.setChecked(false);
+                binding.cbVerificationPurchaseOrder.setChecked(false);
+                binding.cbAuthenticationPurchaseOrder.setChecked(false);
+                binding.cbPackingPurchaseOrder.setChecked(false);
+                binding.cbShippingPurchaseOrder.setChecked(false);
+                binding.cbShippedPurchaseOrder.setChecked(false);
 
-                    from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
-                    to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
+                from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
+                to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
 
-                    purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=1&from_date=" + from_date + "&to_date=" + to_date;
-                    new getPurchaseOrdersTask().execute(purchase_orders_url);
+                purchase_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrder.php?purchase_order_status=1&from_date=" + from_date + "&to_date=" + to_date;
+                new getPurchaseOrdersTask().execute(purchase_orders_url);
 
-                }*/
+            }*/
 
-            }
         });
 
-        binding.fabAddPurchaseOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.fabAddPurchaseOrder.setOnClickListener(v -> {
 
-                Intent intent = new Intent(getActivity(), AddPurchaseOrder.class);
-                intent.putExtra("purchase_id", "");
-                startActivity(intent);
+            Intent intent = new Intent(getActivity(), AddPurchaseOrder.class);
+            intent.putExtra("purchase_id", "");
+            startActivity(intent);
 
-                SharedPreferences.Editor editor = sp_update.edit();
-                editor.putBoolean("isUpdate", false);
-                editor.apply();
+            SharedPreferences.Editor editor1 = sp_update.edit();
+            editor1.putBoolean("isUpdate", false);
+            editor1.apply();
 
-                Log.i(TAG, "isUpdate=>" + isUpdate);
+            Log.i(TAG, "isUpdate=>" + isUpdate);
 
-            }
         });
 
-        binding.btnGeneratePdfForAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnGeneratePdfForAll.setOnClickListener(v -> {
 
 
-                arrayList_qty = new ArrayList<>();
+            arrayList_qty = new ArrayList<>();
 
-                JSONObject attendance_data = new JSONObject();// main object
-                JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
+            JSONObject attendance_data = new JSONObject();// main object
+            JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
 
-                for (int i = 0; i < arrayList_cartoon_qty.size(); i++) {
-                    JSONObject jGroup = new JSONObject();// /sub Object
-                    try {
+            for (int i = 0; i < arrayList_cartoon_qty.size(); i++) {
+                JSONObject jGroup = new JSONObject();// /sub Object
+                try {
 
-                        if (arrayList_cartoon_qty.get(i).getQty() > 0) {
-                            jGroup.put("P_id", arrayList_cartoon_qty.get(i).getP_id());
-                            jGroup.put("cartoon_qty", arrayList_cartoon_qty.get(i).getQty());
-                            jArray.put(jGroup);
-                            arrayList_qty.add(arrayList_cartoon_qty.get(i).getQty());
-                        }
-
-                        attendance_data.put("cartoon_qty", jArray);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.i(TAG, "jArray=>" + jArray);
-
-                if (jArray.length() > 0) {
-
-                    String combine_order_id = "";
-                    for (int i = 0; i < arrayList_order_id.size(); i++) {
-
-                        if (arrayList_cartoon_qty.get(i).getQty() > 0) {
-
-                            if (arrayList_order_id.size() > 1) {
-                                combine_order_id = combine_order_id + arrayList_order_id.get(i) + ",";
-                            } else {
-                                combine_order_id = combine_order_id + arrayList_order_id.get(i);
-                            }
-                        }
+                    if (arrayList_cartoon_qty.get(i).getQty() > 0) {
+                        jGroup.put("P_id", arrayList_cartoon_qty.get(i).getP_id());
+                        jGroup.put("cartoon_qty", arrayList_cartoon_qty.get(i).getQty());
+                        jArray.put(jGroup);
+                        arrayList_qty.add(arrayList_cartoon_qty.get(i).getQty());
                     }
 
-                    Log.i(TAG, "combine_order_id=>" + combine_order_id.replaceAll(",$", ""));
-
-
-                    //Toast.makeText(context, "generate"+combine_order_id.replaceAll(",$", ""), Toast.LENGTH_SHORT).show();
-                    get_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrderByOrderIds.php?purchase_id=" + combine_order_id.replaceAll(",$", "");
-                    new getOrdersDetailTask().execute(get_orders_url);
-
-                } else {
-
-                    Toast.makeText(getActivity(), commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
+                    attendance_data.put("cartoon_qty", jArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-
             }
+            Log.i(TAG, "jArray=>" + jArray);
+
+            if (jArray.length() > 0) {
+
+                String combine_order_id = "";
+                for (int i = 0; i < arrayList_order_id.size(); i++) {
+
+                    if (arrayList_cartoon_qty.get(i).getQty() > 0) {
+
+                        if (arrayList_order_id.size() > 1) {
+                            combine_order_id = combine_order_id + arrayList_order_id.get(i) + ",";
+                        } else {
+                            combine_order_id = combine_order_id + arrayList_order_id.get(i);
+                        }
+                    }
+                }
+
+                Log.i(TAG, "combine_order_id=>" + combine_order_id.replaceAll(",$", ""));
+
+
+                //Toast.makeText(context, "generate"+combine_order_id.replaceAll(",$", ""), Toast.LENGTH_SHORT).show();
+                get_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrderByOrderIds.php?purchase_id=" + combine_order_id.replaceAll(",$", "");
+                new getOrdersDetailTask().execute(get_orders_url);
+
+            } else {
+
+                Toast.makeText(getActivity(), commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
+            }
+
+
         });
 
         return root;
@@ -794,22 +745,26 @@ public class MyPurchaseOrderFragment extends Fragment {
             return new MyHolder(EntityPurchaseOrderListBinding.inflate(LayoutInflater.from(context)));
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         public void selectAll() {
             isSelectedAll = true;
             notifyDataSetChanged();
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         public boolean ischeckedAll() {
             isSelectedAll = true;
             notifyDataSetChanged();
             return true;
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         public void UnselectAll() {
             isSelectedAll = false;
             notifyDataSetChanged();
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull final MyHolder holder, @SuppressLint("RecyclerView") final int position) {
 
@@ -947,29 +902,23 @@ public class MyPurchaseOrderFragment extends Fragment {
 
             shipping_date = gDateTime.getDateymd();
 
-            holder.binding.tvShippingDatePurchaseOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    y = Integer.parseInt(gDateTime.getYear());
-                    m = Integer.parseInt(gDateTime.getMonth()) - 1;
-                    d = Integer.parseInt(gDateTime.getDay());
+            holder.binding.tvShippingDatePurchaseOrder.setOnClickListener(v -> {
+                y = Integer.parseInt(gDateTime.getYear());
+                m = Integer.parseInt(gDateTime.getMonth()) - 1;
+                d = Integer.parseInt(gDateTime.getDay());
 
-                    dp = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            cal = Calendar.getInstance();
-                            cal.set(year, month, dayOfMonth);
-                            DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            shipping_date = df.format(cal.getTime());
-                            holder.binding.tvShippingDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
+                dp = new DatePickerDialog(getActivity(), (view, year, month, dayOfMonth) -> {
+                    cal = Calendar.getInstance();
+                    cal.set(year, month, dayOfMonth);
+                    @SuppressLint("SimpleDateFormat") DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
+                    @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    shipping_date = df.format(cal.getTime());
+                    holder.binding.tvShippingDatePurchaseOrder.setText("" + dff.format(cal.getTime()));
 
-                        }
-                    }, y, m, d);
-                    dp.show();
+                }, y, m, d);
+                dp.show();
 
 
-                }
             });
 
             holder.binding.tvNextOrderStatusPurchaseOrder.setOnClickListener(new View.OnClickListener() {
@@ -1053,21 +1002,18 @@ public class MyPurchaseOrderFragment extends Fragment {
                 }
             });
 
-            holder.binding.llOrderDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.binding.llOrderDetail.setOnClickListener(v -> {
 
-                    Intent intent = new Intent(getActivity(), AddPurchaseOrder.class);
-                    intent.putExtra("purchase_id", arrayList_purchase_order.get(position).getPurchase_id());
-                    startActivity(intent);
+                Intent intent = new Intent(getActivity(), AddPurchaseOrder.class);
+                intent.putExtra("purchase_id", arrayList_purchase_order.get(position).getPurchase_id());
+                startActivity(intent);
 
-                    SharedPreferences.Editor editor = sp_update.edit();
-                    editor.putBoolean("isUpdate", false);
-                    editor.apply();
+                SharedPreferences.Editor editor = sp_update.edit();
+                editor.putBoolean("isUpdate", false);
+                editor.apply();
 
-                    Log.i(TAG, "isUpdate=>" + isUpdate);
+                Log.i(TAG, "isUpdate=>" + isUpdate);
 
-                }
             });
 
             holder.binding.edtCartoonQtyPurchaseOrder.addTextChangedListener(new TextWatcher() {
@@ -1105,168 +1051,148 @@ public class MyPurchaseOrderFragment extends Fragment {
                 }
             });
 
-            holder.binding.imgProductPlusQtyAddPurchaseOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.binding.imgProductPlusQtyAddPurchaseOrder.setOnClickListener(v -> {
 
+                if (ispacking.equalsIgnoreCase("1")) {
 
-                    if (ispacking.equalsIgnoreCase("1")) {
+                    holder.binding.edtCartoonQtyPurchaseOrder.requestFocus();
+                    if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim().isEmpty()) {
+                        start = 0;
+                    } else {
+                        start = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
+                    }
 
-                        holder.binding.edtCartoonQtyPurchaseOrder.requestFocus();
-                        if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim().isEmpty()) {
-                            start = 0;
-                        } else {
-                            start = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
-                        }
+                    if (start < 0) {
+                        holder.binding.edtCartoonQtyPurchaseOrder.setText("" + start);
+                    } else {
+                        if (start >= 0) {
 
-                        if (start < 0) {
+                            start++;
                             holder.binding.edtCartoonQtyPurchaseOrder.setText("" + start);
-                        } else {
-                            if (start >= 0) {
-
-                                start++;
-                                holder.binding.edtCartoonQtyPurchaseOrder.setText("" + start);
-                            }
                         }
+                    }
 
-                        arrayList_cartoon_qty.set(position,
-                                new CartoonQtyPOJO(Integer.parseInt(arrayList_purchase_order.get(position).getPurchase_id()),
-                                        start));
-                    } else
-                        Toast.makeText(context, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_SHORT).show();
-                }
-
-
+                    arrayList_cartoon_qty.set(position,
+                            new CartoonQtyPOJO(Integer.parseInt(arrayList_purchase_order.get(position).getPurchase_id()),
+                                    start));
+                } else
+                    Toast.makeText(context, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_SHORT).show();
             });
 
-            holder.binding.imgProductMinusQtyAddPurchaseOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.binding.imgProductMinusQtyAddPurchaseOrder.setOnClickListener(v -> {
 
-                    if (ispacking.equalsIgnoreCase("1")) {
+                if (ispacking.equalsIgnoreCase("1")) {
 
-                        holder.binding.edtCartoonQtyPurchaseOrder.requestFocus();
+                    holder.binding.edtCartoonQtyPurchaseOrder.requestFocus();
 
-                        if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim().isEmpty()) {
-                            start = 0;
-                        } else {
-                            start = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
-                        }
+                    if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim().isEmpty()) {
+                        start = 0;
+                    } else {
+                        start = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
+                    }
 
-                        if (start > 0 && start != 0 && start != -1) {
-                            start--;
-                            holder.binding.edtCartoonQtyPurchaseOrder.setText("" + start);
-
-
-                        } else {
-                            holder.binding.edtCartoonQtyPurchaseOrder.setText("0");
-                            //arrayList_order_product_list.remove(arrayList_order_product_list.get(position));
-                        }
-
-                        arrayList_cartoon_qty.set(position,
-                                new CartoonQtyPOJO(Integer.parseInt(arrayList_purchase_order.get(position).getPurchase_id()),
-                                        start));
-                    } else
-                        Toast.makeText(context, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            holder.binding.btnGeneratePdf.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (ispacking.equalsIgnoreCase("1")) {
-
-                        if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().isEmpty()) {
-
-                            Toast.makeText(getActivity(), commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
-
-                        } else {
-
-                            no_of_cartoon_sleep = holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim();
-                            no_of_sleep = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
-
-                            if (no_of_cartoon_sleep.isEmpty() || no_of_cartoon_sleep.equalsIgnoreCase("0")) {
-
-                                Toast.makeText(context, commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
-
-                            } else {
-
-                                arrayList_qty = new ArrayList<>();
-
-                                arrayList_qty.add(no_of_sleep);
-
-                                get_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrderByOrderIds.php?purchase_id=" + arrayList_purchase_order.get(position).getPurchase_id();
-                                new getOrdersDetailTask().execute(get_orders_url);
-                            }
-                        }
-
-                    } else
-                        Toast.makeText(context, commanSuchnaList.getArrayList().get(5) + "", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            holder.binding.tvLrSymbol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    if (arrayList_purchase_order.get(position).getLR_symbol().isEmpty()) {
-
-                        if (arrayList_purchase_order.get(position).getPurchase_order_status().equalsIgnoreCase("4")) {
-
-                            /*Intent intent1 = new Intent(getActivity(), CameraActivity.class);
-                            intent1.putExtra("isLR_SYMBOL", "yes");
-                            startActivity(intent1);
-                            //getActivity().finish();
-                            prefManager.setPrefString("image_path", "");*/
-
-                            AppUtils.openCameraIntent(getActivity());
-
-                        } else {
-
-                            Toast.makeText(context, commanSuchnaList.getArrayList().get(12) + "", Toast.LENGTH_SHORT).show();
-
-                        }
+                    if (start > 0 && start != 0 && start != -1) {
+                        start--;
+                        holder.binding.edtCartoonQtyPurchaseOrder.setText("" + start);
 
 
                     } else {
+                        holder.binding.edtCartoonQtyPurchaseOrder.setText("0");
+                        //arrayList_order_product_list.remove(arrayList_order_product_list.get(position));
+                    }
 
-                        DialogViewLrSymbolBinding binding1;
-                        builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
-                        binding1 = DialogViewLrSymbolBinding.inflate(getLayoutInflater());
-                        builder.setView(binding1.getRoot());
+                    arrayList_cartoon_qty.set(position,
+                            new CartoonQtyPOJO(Integer.parseInt(arrayList_purchase_order.get(position).getPurchase_id()),
+                                    start));
+                } else
+                    Toast.makeText(context, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_SHORT).show();
 
-                        RequestOptions options = new RequestOptions()
-                                .fitCenter()
-                                .placeholder(R.drawable.loading)
-                                .error(R.drawable.imagenotfoundicon);
+            });
 
-                        Glide.with(getActivity()).load(arrayList_purchase_order.get(position).getLR_symbol() + "")
-                                .apply(options)
-                                .into(binding1.imgShowShopPhoto);
+            holder.binding.btnGeneratePdf.setOnClickListener(v -> {
 
-                        binding1.imgCancelLrsymbol.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ad.dismiss();
-                            }
-                        });
+                if (ispacking.equalsIgnoreCase("1")) {
 
-                        ad = builder.create();
-                        ad.show();
+                    if (holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().isEmpty()) {
 
-                        Window window = ad.getWindow();
-                        WindowManager.LayoutParams layoutParams = window.getAttributes();
-                        layoutParams.gravity = Gravity.CENTER;
-                        layoutParams.height = 1500;
-                        window.setAttributes(layoutParams);
+                        Toast.makeText(getActivity(), commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        no_of_cartoon_sleep = holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim();
+                        no_of_sleep = Integer.parseInt(holder.binding.edtCartoonQtyPurchaseOrder.getText().toString().trim());
+
+                        if (no_of_cartoon_sleep.isEmpty() || no_of_cartoon_sleep.equalsIgnoreCase("0")) {
+
+                            Toast.makeText(context, commanSuchnaList.getArrayList().get(4) + "", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            arrayList_qty = new ArrayList<>();
+
+                            arrayList_qty.add(no_of_sleep);
+
+                            get_orders_url = getString(R.string.Base_URL) + "viewPurchaseOrderByOrderIds.php?purchase_id=" + arrayList_purchase_order.get(position).getPurchase_id();
+                            new getOrdersDetailTask().execute(get_orders_url);
+                        }
+                    }
+
+                } else
+                    Toast.makeText(context, commanSuchnaList.getArrayList().get(5) + "", Toast.LENGTH_SHORT).show();
+            });
+
+            holder.binding.tvLrSymbol.setOnClickListener(v -> {
+
+
+                if (arrayList_purchase_order.get(position).getLR_symbol().isEmpty()) {
+
+                    if (arrayList_purchase_order.get(position).getPurchase_order_status().equalsIgnoreCase("4")) {
+
+                        /*Intent intent1 = new Intent(getActivity(), CameraActivity.class);
+                        intent1.putExtra("isLR_SYMBOL", "yes");
+                        startActivity(intent1);
+                        //getActivity().finish();
+                        prefManager.setPrefString("image_path", "");*/
+
+                        AppUtils.openCameraIntent(requireActivity());
+
+                    } else {
+
+                        Toast.makeText(context, commanSuchnaList.getArrayList().get(12) + "", Toast.LENGTH_SHORT).show();
 
                     }
 
 
+                } else {
+
+                    DialogViewLrSymbolBinding binding1;
+                    builder = new AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme);
+                    binding1 = DialogViewLrSymbolBinding.inflate(getLayoutInflater());
+                    builder.setView(binding1.getRoot());
+
+                    RequestOptions options = new RequestOptions()
+                            .fitCenter()
+                            .placeholder(R.drawable.loading)
+                            .error(R.drawable.imagenotfoundicon);
+
+                    Glide.with(getActivity()).load(arrayList_purchase_order.get(position).getLR_symbol() + "")
+                            .apply(options)
+                            .into(binding1.imgShowShopPhoto);
+
+                    binding1.imgCancelLrsymbol.setOnClickListener(v1 -> ad.dismiss());
+
+                    ad = builder.create();
+                    ad.show();
+
+                    Window window = ad.getWindow();
+                    WindowManager.LayoutParams layoutParams = window.getAttributes();
+                    layoutParams.gravity = Gravity.CENTER;
+                    layoutParams.height = 1500;
+                    window.setAttributes(layoutParams);
+
                 }
+
+
             });
 
 
@@ -1342,7 +1268,6 @@ public class MyPurchaseOrderFragment extends Fragment {
 
                     showDialog();
 
-                } else {
                 }
 
             } catch (Exception e) {
@@ -1355,7 +1280,7 @@ public class MyPurchaseOrderFragment extends Fragment {
 
     public void showDialog() {
 
-        builder = new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(commanSuchnaList.getArrayList().get(0) + "");
         builder.setCancelable(false);
         builder.setPositiveButton(commanSuchnaList.getArrayList().get(1) + "", new DialogInterface.OnClickListener() {
@@ -1574,7 +1499,7 @@ public class MyPurchaseOrderFragment extends Fragment {
         Log.i(TAG, "isUpdate onResume=>" + isUpdate);
 
 
-        if (isUpdate == true) {
+        if (isUpdate) {
 
             from_date = gDateTime.dmyToymd(binding.tvFromDatePurchaseOrder.getText().toString().trim());
             to_date = gDateTime.dmyToymd(binding.tvToDatePurchaseOrder.getText().toString().trim());
@@ -1635,7 +1560,7 @@ public class MyPurchaseOrderFragment extends Fragment {
             try {
 
                 //new MultipartUploadRequest(AddShopActivity.this, image_name, upload_url)
-                new MultipartUploadRequest(getActivity(), upload_url)
+                new MultipartUploadRequest(requireActivity(), upload_url)
                         .setMethod("POST")
                         .addFileToUpload(path, "uploadedfile")
                         .addParameter("purchase_id", purchaseId)
@@ -1721,6 +1646,7 @@ public class MyPurchaseOrderFragment extends Fragment {
     //=============================update purchase order task ends=================================
 
 
+    @SuppressLint("SetTextI18n")
     public void setLanguage(String key) {
 
         Language language = new Language(key, getActivity(), setLang(key));
@@ -1843,6 +1769,7 @@ public class MyPurchaseOrderFragment extends Fragment {
     //=============================create pdf using pdf utils code starts=================================
 
     File file;
+    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
 
     private void createPDFUtils(int length) {
@@ -1894,7 +1821,7 @@ public class MyPurchaseOrderFragment extends Fragment {
 
         if (length > 2) {
 
-            packing_pages = (Double.valueOf(length) / 2);
+            packing_pages = ((double) length / 2);
 
             if (!String.valueOf(packing_pages).split("\\.")[1].equals("0")) {
                 packing_pages = packing_pages + 1;
@@ -1921,7 +1848,7 @@ public class MyPurchaseOrderFragment extends Fragment {
 
         if (length > 2) {
 
-            verification_pages = (Double.valueOf(length) / 2);
+            verification_pages = ((double) length / 2);
 
             if (!String.valueOf(verification_pages).split("\\.")[1].equals("0")) {
                 verification_pages = verification_pages + 1;
@@ -1998,7 +1925,7 @@ public class MyPurchaseOrderFragment extends Fragment {
                 //new PdfWriter(new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/Order List/PurchaseOrder.pdf")));
                 for (int p = 1; p <= pdfDoc.getNumberOfPages(); p++) {
                     PdfPage page = pdfDoc.getPage(p);
-                    int rotate = page.getRotation();
+                    //int rotate = page.getRotation();
                     if (p < tot_sleep_pages) {
                         page.setRotation(-90);
                     } /*else {
@@ -2057,7 +1984,7 @@ public class MyPurchaseOrderFragment extends Fragment {
 
             if (i < length) {
 
-                if (i == (start + 0))
+                if (i == (start))
                     createLeftPackingTable(i);
                 else if (i == (start + 1))
                     createRigthPackingTable(i);
@@ -2067,10 +1994,11 @@ public class MyPurchaseOrderFragment extends Fragment {
         PdfUtils.finishPage();
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createLeftPackingTable(int pos) {
 
         //=======code for packing table left side starts
-        PdfUtils.drawImage(getActivity().getDrawable(R.drawable.packing_table), 20, 50, 457, 600);
+        PdfUtils.drawImage(requireActivity().getDrawable(R.drawable.packing_table), 20, 50, 457, 600);
         PdfUtils.drawText("" + gDateTime.ymdTodmy(arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_date()), 270, 72);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_no(), 370, 72);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getShipping_code(), 40, 89);
@@ -2152,11 +2080,12 @@ public class MyPurchaseOrderFragment extends Fragment {
         //=======code for packing table left side ends
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createRigthPackingTable(int pos) {
 
         //=======code for packing table Right side starts
         PdfUtils.setPaintBrushNormal(Color.BLACK, Paint.Align.LEFT, 12);
-        PdfUtils.drawImage(getActivity().getDrawable(R.drawable.packing_table), 477, 50, 957, 600);
+        PdfUtils.drawImage(requireActivity().getDrawable(R.drawable.packing_table), 477, 50, 957, 600);
         PdfUtils.drawText("" + gDateTime.ymdTodmy(arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_date()), 750, 72);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_no(), 850, 72);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getShipping_code(), 497, 89);
@@ -2245,13 +2174,11 @@ public class MyPurchaseOrderFragment extends Fragment {
         PdfUtils.createPdfPage(3, 975, 660);
         PdfUtils.setPaintBrushNormal(Color.BLACK, Paint.Align.LEFT, 12);
 
-        int pos = 0;
-
         for (int i = start; i < end; i++) {
 
             if (i < length) {
 
-                if (i == (start + 0))
+                if (i == (start))
                     createLeftVerificationTable(i);
                 else if (i == (start + 1))
                     createRightVerificationTable(i);
@@ -2262,10 +2189,11 @@ public class MyPurchaseOrderFragment extends Fragment {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void createLeftVerificationTable(int pos) {
 
         //===========code for verification left table starts==
-        PdfUtils.drawImage(getActivity().getDrawable(R.drawable.verification_table), 20, 50, 457, 600);
+        PdfUtils.drawImage(requireActivity().getDrawable(R.drawable.verification_table), 20, 50, 457, 600);
         PdfUtils.drawText("" + gDateTime.ymdTodmy(arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_date()), 270, 75);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_no(), 370, 75);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getShipping_code(), 35, 92);
@@ -2305,10 +2233,11 @@ public class MyPurchaseOrderFragment extends Fragment {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void createRightVerificationTable(int pos) {
 
         //===========code for verification Right table starts==
-        PdfUtils.drawImage(getActivity().getDrawable(R.drawable.verification_table), 477, 50, 957, 600);
+        PdfUtils.drawImage(requireActivity().getDrawable(R.drawable.verification_table), 477, 50, 957, 600);
         PdfUtils.drawText("" + gDateTime.ymdTodmy(arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_date()), 750, 75);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getOrder_no(), 850, 75);
         PdfUtils.drawText("" + arrayList_TotalPurchaseOrders.get(pos).getArrayList().get(0).getShipping_code(), 497, 92);

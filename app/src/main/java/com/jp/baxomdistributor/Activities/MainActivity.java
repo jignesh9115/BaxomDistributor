@@ -55,6 +55,7 @@ import com.jp.baxomdistributor.databinding.DialogNetworkErrorBinding;
 import com.jp.baxomdistributor.databinding.LayoutBotttomSheetBinding;
 import com.jp.baxomdistributor.ui.bussiness_summery.BussinessSummeryFragment;
 import com.jp.baxomdistributor.ui.distbutor_stock.DistributorStockFragment;
+import com.jp.baxomdistributor.ui.distributor_scheme_stock.DistributorSchemeStockFragment;
 import com.jp.baxomdistributor.ui.home.HomeFragment;
 import com.jp.baxomdistributor.ui.order_against_sales.OrderAgainstSalesFragment;
 import com.jp.baxomdistributor.ui.undeliveredorders_3_1_0.UndeliveredSalesOrders_3_1_0Fragment;
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 //R.id.nav_my_purchase_order,
                 R.id.nav_order_against_sales,
                 R.id.nav_dist_stock,
+                R.id.nav_dist_scheme_stock,
                 R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
@@ -248,6 +250,8 @@ public class MainActivity extends AppCompatActivity {
             //drawer_menu.findItem(R.id.nav_add_new_purchase_orders).setTitle("" + commanList.getArrayList().get(5));
             //drawer_menu.findItem(R.id.nav_my_purchase_order).setTitle("" + commanList.getArrayList().get(6));
             //drawer_menu.findItem(R.id.nav_my_fullfilled_purchase_orders).setTitle("" + commanList.getArrayList().get(7));
+            drawer_menu.findItem(R.id.nav_dist_stock).setTitle("Distributor Stock");
+            drawer_menu.findItem(R.id.nav_dist_scheme_stock).setTitle("Distributor Scheme Stock");
             drawer_menu.findItem(R.id.nav_order_against_sales).setTitle("Order Against Sales");
             drawer_menu.findItem(R.id.nav_logout).setTitle("" + commanList.getArrayList().get(9));
             drawer_menu.findItem(R.id.nav_change_lang).setTitle("" + commanList.getArrayList().get(10));
@@ -330,6 +334,13 @@ public class MainActivity extends AppCompatActivity {
                     binding.appBarMain.toolbar.setTitle("Distributor Stock");
                     drawer.close();
 
+                } else if (item.getItemId() == R.id.nav_dist_scheme_stock) {
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DistributorSchemeStockFragment()).commit();
+                    binding.appBarMain.toolbar.setTitle("Distributor Scheme Stock");
+                    drawer.close();
+
                 }
 
 
@@ -339,14 +350,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.getMessage();
         }
-
-       /* if (SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivity(intent);
-            }
-        }*/
 
         if (!AskPermissions(MainActivity.this, permissionsRequired)) {
             ActivityCompat.requestPermissions(MainActivity.this, permissionsRequired, 1);
@@ -718,13 +721,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(myReceiver, minIntentFilter);
         updateApp();
-        /*if (SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivity(intent);
-            }
-        }*/
         MakeDirectory();
     }
 }

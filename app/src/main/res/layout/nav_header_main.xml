@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="2dp"
-        android:text="version : 1.0"
+        android:text="version : 1.4"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />

@@ -243,7 +243,8 @@
             <RelativeLayout
                 android:id="@+id/rl_dist_detail"
                 style="@style/Theme.nopeningstock"
-                android:layout_marginHorizontal="10dp">
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -751,7 +752,8 @@
 
             <RelativeLayout
                 style="@style/Theme.nopeningstock"
-                android:layout_marginHorizontal="10dp">
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1003,6 +1005,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 style="@style/Theme.nopeningstock"
                 android:layout_marginHorizontal="10dp">
 
@@ -1598,6 +1601,148 @@
 
                     </RelativeLayout>
 
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/Theme.nopeningstock"
+                android:layout_marginHorizontal="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_auto_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp">
+
+                            <TextView
+                                android:id="@+id/tv_auto_order_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:background="@drawable/left_top_corner_bg"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Special Order Value Making"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="44dp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_pts_aom_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimary"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="PTS"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="44dp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/right_top_corner_bg"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorPrimary" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_required_order_aom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp">
+
+                            <TextView
+                                android:id="@+id/tv_required_order_aom_title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="Required Order"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="45dp"
+                                android:background="@color/magenta" />
+
+                            <TextView
+                                android:id="@+id/tv_required_order_pts_aom"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="45dp"
+                                android:background="@color/magenta" />
+
+                            <TextView
+                                android:id="@+id/tv_required_order_biz_aom"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

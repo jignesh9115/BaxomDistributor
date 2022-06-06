@@ -76,6 +76,15 @@ public class OrderAgainstSalesSchemeAdapter extends RecyclerView.Adapter<OrderAg
         holder.binding.tvConditionValue.setText("₹ " + arrayList.get(position).getScheme_price());
         holder.binding.tvResultProdValue.setText("₹ " + arrayList.get(position).getTotal_result_prod_value());
 
+        holder.binding.edtSchemeDelQty.setText("" + arrayList.get(position).getScheme_stock_qty());
+
+        arrayList.get(position).setScheme_qty(String.valueOf(
+                Double.parseDouble(arrayList.get(position).getScheme_stock_qty())
+                * Double.parseDouble(arrayList.get(position).getResult_product_qty())));
+
+        orderAgainstSalesSchemeQtyListener.qtyChange(position,
+                getTotalSchemeQty(arrayList.get(position).getResult_product_id()),
+                arrayList.get(position).getResult_product_id());
 
         holder.binding.tvSchemePlusQty.setOnClickListener(v -> {
 

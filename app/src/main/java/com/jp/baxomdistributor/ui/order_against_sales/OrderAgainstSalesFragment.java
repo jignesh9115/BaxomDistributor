@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.gson.Gson;
 import com.jp.baxomdistributor.Adapters.OrderAgainstSalesProdAdapter;
 import com.jp.baxomdistributor.Adapters.OrderAgainstSalesSchemeAdapter;
-import com.jp.baxomdistributor.Interfaces.DeliverySchemeQtyListener;
 import com.jp.baxomdistributor.Interfaces.OrderAgainstSalesProdQtyListener;
 import com.jp.baxomdistributor.Interfaces.OrderAgainstSalesQtyListener;
 import com.jp.baxomdistributor.Interfaces.OrderAgainstSalesSchemeQtyListener;
@@ -28,7 +27,6 @@ import com.jp.baxomdistributor.Models.OrderAgainstSalesAutoOrderModel;
 import com.jp.baxomdistributor.Models.OrderAgainstSalesOrderModel;
 import com.jp.baxomdistributor.Models.OrderAgainstSalesProdModel;
 import com.jp.baxomdistributor.Models.OrderAgainstSalesQtyModel;
-import com.jp.baxomdistributor.Models.OrderAgainstSchemeProdQtyModel;
 import com.jp.baxomdistributor.Models.SchemeProductPOJO;
 import com.jp.baxomdistributor.Models.ViewSchemesOrderPOJO;
 import com.jp.baxomdistributor.Utils.Api;
@@ -41,9 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +68,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
     ArrayList<String> ignore_prod_ids;
     private FragmentOrderAgainstSalesBinding binding;
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         OrderAgainstSalesViewModel orderAgainstSalesViewModel = new ViewModelProvider(this).get(OrderAgainstSalesViewModel.class);
@@ -355,6 +351,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
                                         scheme_detail_obj.getString("scheme_type_name"),
                                         scheme_detail_obj.getString("scheme_image"),
                                         scheme_detail_obj.getString("scheme_qty"),
+                                        scheme_detail_obj.getString("scheme_stock_qty"),
                                         scheme_detail_obj.getString("scheme_qty_del"),
                                         scheme_detail_obj.getString("scheme_price"),
                                         scheme_detail_obj.getString("result_product_id"),

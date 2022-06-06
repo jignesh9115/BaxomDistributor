@@ -514,7 +514,6 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
             //if (Double.parseDouble(qty[1]) > 0) {
             if (Double.parseDouble("." + qty[1]) >= .5) {
 
-
                 //Log.i(TAG, "inside PointValue if rount_qty______>" + String.format("%.2f", (1.0 - Double.parseDouble("." + qty[1]))));
 
                 /*holder.binding.edtProdDelQty.setText("" +
@@ -532,6 +531,9 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
             }
             //}
 
+            if (holder.binding.tvRoundQty.getText().toString().equalsIgnoreCase("-.0"))
+                holder.binding.tvRoundQty.setText("0");
+
             orderAgainstSalesProdQtyListener.qtyChange(pos,
                     (Double.parseDouble(holder.binding.edtProdDelQty.getText().toString().trim())
                             + Double.parseDouble(holder.binding.tvRoundQty.getText().toString().trim())));
@@ -542,10 +544,8 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
 
             holder.binding.tvProdOrderRs.setText("" + String.format("%.2f", ((Double.parseDouble(holder.binding.edtProdDelQty.getText().toString().trim()) * pts_rs)
                     + (Double.parseDouble(holder.binding.tvRoundQty.getText().toString().trim()) * pts_rs))));
-
-        } else {
-//            Log.i(TAG, "inside PointValue else total_qty_________>" + total_qty);
         }
+
 
     }
 

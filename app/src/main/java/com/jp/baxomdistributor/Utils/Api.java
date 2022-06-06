@@ -166,12 +166,21 @@ public interface Api {
     @GET("get_distributor_stock_by_id.php")
     Call<String> get_distributor_stock_by_id(@Query("dist_id") String dist_id);
 
+    @GET("get_distributor_scehem_stock_by_id.php")
+    Call<String> get_distributor_scehem_stock_by_id(@Query("dist_id") String dist_id);
+
     @GET("distributor_stock_update.php")
     Call<String> update_distributor_stock();
+
+    @GET("distributor_scheme_stock_update.php")
+    Call<String> update_distributor_scheme_stock();
 
     @POST("distributor_stock_callibrate.php")
     Call<String> update_distributor_stock(@Query("dist_id") String dist_id,
                                           @Query("callibrate_prods_arr") JSONArray callibrate_prods_arr);
+    @POST("distributor_scheme_stock_callibrate.php")
+    Call<String> update_distributor_scheme_stock(@Query("dist_id") String dist_id,
+                                          @Query("callibrate_scheme_arr") JSONArray callibrate_prods_arr);
 
     @GET("load_order_against_sales.php")
     Call<String> load_order_against_sales(@Query("dist_id") String dist_id);
