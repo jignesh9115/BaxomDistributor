@@ -178,12 +178,17 @@ public interface Api {
     @POST("distributor_stock_callibrate.php")
     Call<String> update_distributor_stock(@Query("dist_id") String dist_id,
                                           @Query("callibrate_prods_arr") JSONArray callibrate_prods_arr);
+
     @POST("distributor_scheme_stock_callibrate.php")
     Call<String> update_distributor_scheme_stock(@Query("dist_id") String dist_id,
-                                          @Query("callibrate_scheme_arr") JSONArray callibrate_prods_arr);
+                                                 @Query("callibrate_scheme_arr") JSONArray callibrate_prods_arr);
 
     @GET("load_order_against_sales.php")
     Call<String> load_order_against_sales(@Query("dist_id") String dist_id);
+
+    @FormUrlEncoded
+    @POST("store_sales_against_sales.php")
+    Call<String> store_sales_against_sales(@Field("order_against_sales_arr") JSONArray order_against_sales_arr);
 
 }
 

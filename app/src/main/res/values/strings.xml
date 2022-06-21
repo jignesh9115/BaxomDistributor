@@ -19,7 +19,6 @@
     <string name="Local_URL">http://192.168.43.193/baxom/API/</string>
     <string name="URL_TESTING">http://projects.drbbagpks.org/Baxom/Tesing_DB_API/</string>
 
-
     <string name="UndeliveredOrders_ByDistid_url">salesorderbydate.php?dist_id=</string>
     <string name="UndeliveredOrders_ByDistid_v310_url">salesorderbydate_v3.1.0.php?dist_id=</string>
     <string name="UndeliveredOrder_ByDistid_date_url">salesorderbysalesman.php?dist_id=</string>

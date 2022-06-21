@@ -5,12 +5,13 @@ package com.jp.baxomdistributor.Models;
  */
 public class OrderAgainstSalesQtyModel {
 
-    double scheme_qty, replace_qty, shortage_qty;
+    double scheme_qty, replace_qty, shortage_qty, round_qty;
 
-    public OrderAgainstSalesQtyModel(double scheme_qty, double replace_qty, double shortage_qty) {
+    public OrderAgainstSalesQtyModel(double scheme_qty, double replace_qty, double shortage_qty, double round_qty) {
         this.scheme_qty = scheme_qty;
         this.replace_qty = replace_qty;
         this.shortage_qty = shortage_qty;
+        this.round_qty = round_qty;
     }
 
     public double getScheme_qty() {
@@ -35,5 +36,13 @@ public class OrderAgainstSalesQtyModel {
 
     public void setShortage_qty(double shortage_qty) {
         this.shortage_qty = shortage_qty;
+    }
+
+    public double getRound_qty() {
+        return round_qty;
+    }
+
+    public void setRound_qty(double round_qty) {
+        this.round_qty = round_qty;
     }
 }

@@ -98,12 +98,19 @@ public class PdfUtils {
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));
     }
 
-    public static void setPaintBrush(int color, Paint.Align align, int size, Paint.Style style) {
+    public static void setPaintBrush(int color, Paint.Align align, int size, String font_style) {
         paint.setColor(color);
         paint.setTextAlign(align);
         paint.setTextSize(size);
         paint.setTextLocale(Locale.ENGLISH);
-        paint.setStyle(style);
+        if (font_style.equalsIgnoreCase("BOLD"))
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        if (font_style.equalsIgnoreCase("ITALIC"))
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+        if (font_style.equalsIgnoreCase("BOLD_ITALIC"))
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));
+        if (font_style.equalsIgnoreCase("NORMAL"))
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
     }
 
     public static void setPaintBrush(int color, Paint.Align align, int size, boolean underline) {

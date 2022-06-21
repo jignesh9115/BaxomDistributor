@@ -137,7 +137,6 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
     ArrayList<String> arrayList_lang_desc;
     Database db;
     Language.CommanList commanList, commanSuchnaList;
-    private Uri uri;
 
     ActivityManager.MemoryInfo memoryInfo;
     private IntentFilter minIntentFilter;
@@ -1792,6 +1791,7 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void createDelSummeryTable(int start, int end, int tot_order) {
 
         //create page
@@ -2050,6 +2050,7 @@ public class ViewUndeliveredOrdersByDate extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             //====================fileProvider ===========
 
+            Uri uri;
             if (Build.VERSION.SDK_INT >= 24) {
                 uri = FileProvider.getUriForFile(getApplicationContext(),
                         BuildConfig.APPLICATION_ID + ".provider", file);

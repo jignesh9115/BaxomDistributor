@@ -271,237 +271,113 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnCheckSchemeViewOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnCheckSchemeViewOrder.setOnClickListener(v -> {
 
-                ArrayList<OrderProductListPOJO> arrayList_match_order_product_list = new ArrayList<>();
+            ArrayList<OrderProductListPOJO> arrayList_match_order_product_list = new ArrayList<>();
 
-                JSONObject order_product_list = new JSONObject();// main object
-                JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
+            JSONObject order_product_list = new JSONObject();// main object
+            JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
 
-                for (int i = 0; i < arrayList_update_order_product.size(); i++) {
+            for (int i = 0; i < arrayList_update_order_product.size(); i++) {
 
-                    JSONObject jGroup = new JSONObject();// /sub Object
+                JSONObject jGroup = new JSONObject();// /sub Object
 
-                    try {
+                try {
 
-                        if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) > 0) {
+                    if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) > 0) {
 
-                            jGroup.put("p_id", arrayList_update_order_product.get(i).getP_id());
-                            jGroup.put("p_qty", arrayList_update_order_product.get(i).getP_qty_del());
-                            jGroup.put("p_price", arrayList_update_order_product.get(i).getP_price());
+                        jGroup.put("p_id", arrayList_update_order_product.get(i).getP_id());
+                        jGroup.put("p_qty", arrayList_update_order_product.get(i).getP_qty_del());
+                        jGroup.put("p_price", arrayList_update_order_product.get(i).getP_price());
 
-                            arrayList_match_order_product_list.add(new OrderProductListPOJO(arrayList_update_order_product.get(i).getP_id(),
-                                    arrayList_update_order_product.get(i).getP_qty_del(),
-                                    arrayList_update_order_product.get(i).getP_price(),
-                                    "", "", "", "", "", "", "", ""));
+                        arrayList_match_order_product_list.add(new OrderProductListPOJO(arrayList_update_order_product.get(i).getP_id(),
+                                arrayList_update_order_product.get(i).getP_qty_del(),
+                                arrayList_update_order_product.get(i).getP_price(),
+                                "", "", "", "", "", "", "", ""));
 
-                            jArray.put(jGroup);
-                        }
-
-                        // order_product_list Name is JsonArray Name
-                        order_product_list.put("prod_list", jArray);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        jArray.put(jGroup);
                     }
+
+                    // order_product_list Name is JsonArray Name
+                    order_product_list.put("prod_list", jArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                Log.i(TAG, "order prod list==>" + jArray);
+            Log.i(TAG, "order prod list==>" + jArray);
 
-                if (arrayList_match_order_product_list.size() > 0) {
-                    //binding.btnSubmitShopOrder.setEnabled(true);
+            if (arrayList_match_order_product_list.size() > 0) {
+                //binding.btnSubmitShopOrder.setEnabled(true);
 
-                    isSchemeCheck = true;
+                isSchemeCheck = true;
 
-                    arrayList_match_scheme_list = new ArrayList<>();
-                    arrayList_total_scheme_order_list = new ArrayList<>();
-                    arrayList_scheme_order_discount = new ArrayList<>();
+                arrayList_match_scheme_list = new ArrayList<>();
+                arrayList_total_scheme_order_list = new ArrayList<>();
+                arrayList_scheme_order_discount = new ArrayList<>();
 
-                    arrayList_schemes_order_list = new ArrayList<>();
+                arrayList_schemes_order_list = new ArrayList<>();
 
-                    double scheme_value = 0.0;
+                double scheme_value = 0.0;
 
-                    for (int j = 0; j < arrayList_view_scheme_order_list.size(); j++) {
+                for (int j = 0; j < arrayList_view_scheme_order_list.size(); j++) {
 
-                        Log.i(TAG, "<=========scheme id========>" + arrayList_view_scheme_order_list.get(j).getScheme_id());
+                    Log.i(TAG, "<=========scheme id========>" + arrayList_view_scheme_order_list.get(j).getScheme_id());
 
-                        scheme_value = 0.0;
+                    scheme_value = 0.0;
 
-                        if (arrayList_view_scheme_order_list.get(j).getArrayList().size() > 0) {
+                    if (arrayList_view_scheme_order_list.get(j).getArrayList().size() > 0) {
 
-                            for (int i = 0; i < jArray.length(); i++) {
+                        for (int i = 0; i < jArray.length(); i++) {
 
-                                for (int n = 0; n < arrayList_view_scheme_order_list.get(j).getArrayList().size(); n++) {
+                            for (int n = 0; n < arrayList_view_scheme_order_list.get(j).getArrayList().size(); n++) {
 
-                                    //Log.i(TAG, "order_product_id=>" + arrayList_match_order_product_list.get(i).getP_id());
-                                    //Log.i(TAG, "scheme_product_id=>" + arrayList_scheme_list.get(j).getArrayList().get(n).getProduct_id());
+                                //Log.i(TAG, "order_product_id=>" + arrayList_match_order_product_list.get(i).getP_id());
+                                //Log.i(TAG, "scheme_product_id=>" + arrayList_scheme_list.get(j).getArrayList().get(n).getProduct_id());
 
-                                    if (arrayList_match_order_product_list.get(i).getP_id().equalsIgnoreCase(arrayList_view_scheme_order_list.get(j).getArrayList().get(n).getProduct_id())) {
+                                if (arrayList_match_order_product_list.get(i).getP_id().equalsIgnoreCase(arrayList_view_scheme_order_list.get(j).getArrayList().get(n).getProduct_id())) {
 
-                                        //Log.i(TAG, "match product_id=>" + arrayList_match_order_product_list.get(i).getP_id());
-                                        //Log.i(TAG, "match product_qty=>" + arrayList_match_order_product_list.get(i).getP_qty());
+                                    //Log.i(TAG, "match product_id=>" + arrayList_match_order_product_list.get(i).getP_id());
+                                    //Log.i(TAG, "match product_qty=>" + arrayList_match_order_product_list.get(i).getP_qty());
 
-                                        scheme_value = scheme_value + Double.parseDouble(arrayList_match_order_product_list.get(i).getP_qty()) * Double.parseDouble(arrayList_match_order_product_list.get(i).getP_price());
+                                    scheme_value = scheme_value + Double.parseDouble(arrayList_match_order_product_list.get(i).getP_qty()) * Double.parseDouble(arrayList_match_order_product_list.get(i).getP_price());
 
-                                        // Log.i(TAG, "match product_order_value=>" + scheme_value);
+                                    // Log.i(TAG, "match product_order_value=>" + scheme_value);
 
-                                    } else {
+                                } else {
 
-                                        // Log.i(TAG, "inside else doen't match");
+                                    // Log.i(TAG, "inside else doen't match");
 
-                                    }
                                 }
                             }
                         }
-
-                        arrayList_match_scheme_list.add(new MatchShemePOJO(arrayList_view_scheme_order_list.get(j).getScheme_id(),
-                                0 + "",
-                                scheme_value + ""));
-
-                        arrayList_total_scheme_order_list.add(new MatchShemePOJO(arrayList_view_scheme_order_list.get(j).getScheme_id(),
-                                "0.0",
-                                scheme_value + ""));
-
-                        arrayList_scheme_order_discount.add(0.0);
-
                     }
 
-                    JSONArray match_scheme_array = new JSONArray();
+                    arrayList_match_scheme_list.add(new MatchShemePOJO(arrayList_view_scheme_order_list.get(j).getScheme_id(),
+                            0 + "",
+                            scheme_value + ""));
 
-                    for (int i = 0; i < arrayList_match_scheme_list.size(); i++) {
+                    arrayList_total_scheme_order_list.add(new MatchShemePOJO(arrayList_view_scheme_order_list.get(j).getScheme_id(),
+                            "0.0",
+                            scheme_value + ""));
 
-                        JSONObject jGroup = new JSONObject();// /sub Object
+                    arrayList_scheme_order_discount.add(0.0);
 
-                        try {
-
-                            jGroup.put("Scheme_id", arrayList_match_scheme_list.get(i).getScheme_id());
-                            jGroup.put("Scheme_qty", arrayList_match_scheme_list.get(i).getScheme_qty());
-                            jGroup.put("Scheme_price", arrayList_match_scheme_list.get(i).getScheme_price());
-
-                            match_scheme_array.put(jGroup);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    Log.i(TAG, "Match_Scheme_list==>" + match_scheme_array);
-
-
-                    SchemListAdapter schemListAdapter = new SchemListAdapter(arrayList_view_scheme_order_list, ViewSalesOrderActivity.this);
-                    binding.rvSchemeListViewOrder.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
-                    binding.rvSchemeListViewOrder.setAdapter(schemListAdapter);
-
-                } else {
-
-                    Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(7) + "", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        binding.btnSubmitUpdateOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                boolean check_qty = false;
-
-                purchase_rate_total_order_rs = 0.0;
-
-                JSONObject order_product_list = new JSONObject();// main object
-                JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
-
-                for (int i = 0; i < arrayList_update_order_product.size(); i++) {
-                    JSONObject jGroup = new JSONObject();// /sub Object
-
-                    try {
-
-                        //if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) > 0) {
-
-                        jGroup.put("p_id", arrayList_update_order_product.get(i).getP_id());
-                        jGroup.put("p_qty", arrayList_update_order_product.get(i).getP_qty());
-                        jGroup.put("p_qty_del", arrayList_update_order_product.get(i).getP_qty_del());
-                        jGroup.put("p_price", arrayList_update_order_product.get(i).getP_price());
-                        jGroup.put("p_purchase_price", arrayList_sales_order_product.get(i).getPurchase_rate());
-                        jArray.put(jGroup);
-                        //}
-
-
-                        purchase_rate_total_order_rs = purchase_rate_total_order_rs +
-                                (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) *
-                                        Double.parseDouble(arrayList_sales_order_product.get(i).getPurchase_rate()));
-
-                        if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) <
-                                Double.parseDouble(arrayList_update_order_product.get(i).getP_qty())) {
-                            check_qty = true;
-                        }
-
-                        // order_product_list Name is JsonArray Name
-                        order_product_list.put("prod_list", jArray);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                Log.i(TAG, "deliver_prod_list==>" + jArray);
 
                 JSONArray match_scheme_array = new JSONArray();
 
-                for (int i = 0; i < arrayList_schemes_order_list.size(); i++) {
+                for (int i = 0; i < arrayList_match_scheme_list.size(); i++) {
 
                     JSONObject jGroup = new JSONObject();// /sub Object
 
                     try {
 
-                        if (isSchemeCheck == true) {
+                        jGroup.put("Scheme_id", arrayList_match_scheme_list.get(i).getScheme_id());
+                        jGroup.put("Scheme_qty", arrayList_match_scheme_list.get(i).getScheme_qty());
+                        jGroup.put("Scheme_price", arrayList_match_scheme_list.get(i).getScheme_price());
 
-                            if (Double.parseDouble(arrayList_schemes_order_list.get(i).getScheme_qty()) > 0) {
-
-                                jGroup.put("scheme_id", arrayList_schemes_order_list.get(i).getScheme_id());
-                                //jGroup.put("Scheme_name", arrayList_schemes_order_list.get(i).getScheme_name());
-                                //jGroup.put("Scheme_long_name", arrayList_schemes_order_list.get(i).getScheme_long_name());
-                                //jGroup.put("Scheme_type_id", arrayList_schemes_order_list.get(i).getScheme_type_id());
-                                //jGroup.put("Scheme_type_name", arrayList_schemes_order_list.get(i).getScheme_type_name());
-                                //jGroup.put("Scheme_image", arrayList_schemes_order_list.get(i).getScheme_image());
-                                jGroup.put("scheme_price", arrayList_schemes_order_list.get(i).getScheme_price());
-                                //jGroup.put("Scheme_value", arrayList_schemes_order_list.get(i).getScheme_value());
-                                jGroup.put("scheme_qty", arrayList_schemes_order_list.get(i).getScheme_qty());
-                                jGroup.put("scheme_qty_del", arrayList_schemes_order_list.get(i).getScheme_qty_del());
-                                //jGroup.put("Result_product_id", arrayList_schemes_order_list.get(i).getResult_product_id());
-                                //jGroup.put("Result_product_qty", arrayList_schemes_order_list.get(i).getResult_product_qty());
-                                //jGroup.put("Result_product_price", arrayList_schemes_order_list.get(i).getResult_product_price());
-                                //jGroup.put("Result_product_total_price", arrayList_schemes_order_list.get(i).getResult_product_total_price());
-                                //jGroup.put("Result_product_image", arrayList_schemes_order_list.get(i).getResult_product_image());
-                                //jGroup.put("Is_scheme_half", arrayList_schemes_order_list.get(i).getIs_scheme_half());
-
-                                match_scheme_array.put(jGroup);
-                            }
-
-                        } else {
-
-                            if (Double.parseDouble(arrayList_schemes_order_list.get(i).getScheme_value()) > 0) {
-
-                                jGroup.put("scheme_id", arrayList_schemes_order_list.get(i).getScheme_id());
-                                //jGroup.put("Scheme_name", arrayList_schemes_order_list.get(i).getScheme_name());
-                                //jGroup.put("Scheme_long_name", arrayList_schemes_order_list.get(i).getScheme_long_name());
-                                //jGroup.put("Scheme_type_id", arrayList_schemes_order_list.get(i).getScheme_type_id());
-                                //jGroup.put("Scheme_type_name", arrayList_schemes_order_list.get(i).getScheme_type_name());
-                                //jGroup.put("Scheme_image", arrayList_schemes_order_list.get(i).getScheme_image());
-                                jGroup.put("scheme_price", arrayList_schemes_order_list.get(i).getScheme_price());
-                                //jGroup.put("Scheme_value", arrayList_schemes_order_list.get(i).getScheme_value());
-                                jGroup.put("scheme_qty", arrayList_schemes_order_list.get(i).getScheme_qty());
-                                jGroup.put("scheme_qty_del", arrayList_schemes_order_list.get(i).getScheme_qty_del());
-                                //jGroup.put("Result_product_id", arrayList_schemes_order_list.get(i).getResult_product_id());
-                                //jGroup.put("Result_product_qty", arrayList_schemes_order_list.get(i).getResult_product_qty());
-                                //jGroup.put("Result_product_price", arrayList_schemes_order_list.get(i).getResult_product_price());
-                                //jGroup.put("Result_product_total_price", arrayList_schemes_order_list.get(i).getResult_product_total_price());
-                                //jGroup.put("Result_product_image", arrayList_schemes_order_list.get(i).getResult_product_image());
-                                //jGroup.put("Is_scheme_half", arrayList_schemes_order_list.get(i).getIs_scheme_half());
-
-                                match_scheme_array.put(jGroup);
-                            }
-                        }
-
+                        match_scheme_array.put(jGroup);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -509,57 +385,175 @@ public class ViewSalesOrderActivity extends AppCompatActivity {
                 }
 
                 Log.i(TAG, "Match_Scheme_list==>" + match_scheme_array);
-                //Log.i(TAG, "Match_Scheme_list_size==>" + arrayList_schemes_order_list.size());
 
 
-                if ((Double.parseDouble(binding.tvTotalSchemeOrderValueViewOrder.getText().toString()) >
-                        Double.parseDouble(binding.tvDeliveryRsSalesOrder.getText().toString().trim()))) {
+                SchemListAdapter schemListAdapter = new SchemListAdapter(arrayList_view_scheme_order_list, ViewSalesOrderActivity.this);
+                binding.rvSchemeListViewOrder.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+                binding.rvSchemeListViewOrder.setAdapter(schemListAdapter);
 
-                    Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(8) + "", Toast.LENGTH_SHORT).show();
+            } else {
 
-                } else {
+                Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(7) + "", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                    if ((jArray.length() > 0) || Integer.parseInt(del_fail_reason_id) > 1) {
+        binding.btnSubmitUpdateOrder.setOnClickListener(v -> {
 
-                        Log.i(TAG, "check_qty===>" + check_qty);
+            boolean check_qty = false;
 
-                        if (check_qty == true && binding.spnDeliveryFailReason.getSelectedItem().toString().equalsIgnoreCase("-")) {
+            purchase_rate_total_order_rs = 0.0;
 
-                            Toast.makeText(getApplicationContext(), commanSuchnaList.getArrayList().get(9) + "", Toast.LENGTH_SHORT).show();
+            JSONObject order_product_list = new JSONObject();// main object
+            JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
 
-                        } else {
+            for (int i = 0; i < arrayList_update_order_product.size(); i++) {
+                JSONObject jGroup = new JSONObject();// /sub Object
 
-                            getTotalOrderRs();
-                            update_sales_order_url = getString(R.string.Base_URL) + getString(R.string.updateneworder_url) + jArray +
-                                    "&order_id=" + order_id + "&del_fail_reason=" + del_fail_reason + "&scheme_list=" + match_scheme_array + "&total_discount=" + total_discount;
-                            //Log.i(TAG, "update_order_url=>" + update_sales_order_url + "");
-                            new updateSalesOrderTask().execute(update_sales_order_url);
+                try {
 
-                            //Toast.makeText(ViewSalesOrderActivity.this, "complete orders", Toast.LENGTH_SHORT).show();
+                    //if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) > 0) {
+
+                    jGroup.put("p_id", arrayList_update_order_product.get(i).getP_id());
+                    jGroup.put("p_qty", arrayList_update_order_product.get(i).getP_qty());
+                    jGroup.put("p_qty_del", arrayList_update_order_product.get(i).getP_qty_del());
+                    jGroup.put("p_price", arrayList_update_order_product.get(i).getP_price());
+                    jGroup.put("p_purchase_price", arrayList_sales_order_product.get(i).getPurchase_rate());
+                    jArray.put(jGroup);
+                    //}
+
+
+                    purchase_rate_total_order_rs = purchase_rate_total_order_rs +
+                            (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) *
+                                    Double.parseDouble(arrayList_sales_order_product.get(i).getPurchase_rate()));
+
+                    if (Double.parseDouble(arrayList_update_order_product.get(i).getP_qty_del()) <
+                            Double.parseDouble(arrayList_update_order_product.get(i).getP_qty())) {
+                        check_qty = true;
+                    }
+
+                    // order_product_list Name is JsonArray Name
+                    order_product_list.put("prod_list", jArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Log.i(TAG, "deliver_prod_list==>" + jArray);
+
+            JSONArray match_scheme_array = new JSONArray();
+
+            for (int i = 0; i < arrayList_schemes_order_list.size(); i++) {
+
+                JSONObject jGroup = new JSONObject();// /sub Object
+
+                try {
+
+                    if (isSchemeCheck == true) {
+
+                        if (Double.parseDouble(arrayList_schemes_order_list.get(i).getScheme_qty()) > 0) {
+
+                            jGroup.put("scheme_id", arrayList_schemes_order_list.get(i).getScheme_id());
+                            //jGroup.put("Scheme_name", arrayList_schemes_order_list.get(i).getScheme_name());
+                            //jGroup.put("Scheme_long_name", arrayList_schemes_order_list.get(i).getScheme_long_name());
+                            //jGroup.put("Scheme_type_id", arrayList_schemes_order_list.get(i).getScheme_type_id());
+                            //jGroup.put("Scheme_type_name", arrayList_schemes_order_list.get(i).getScheme_type_name());
+                            //jGroup.put("Scheme_image", arrayList_schemes_order_list.get(i).getScheme_image());
+                            jGroup.put("scheme_price", arrayList_schemes_order_list.get(i).getScheme_price());
+                            //jGroup.put("Scheme_value", arrayList_schemes_order_list.get(i).getScheme_value());
+                            jGroup.put("scheme_qty", arrayList_schemes_order_list.get(i).getScheme_qty());
+                            jGroup.put("scheme_qty_del", arrayList_schemes_order_list.get(i).getScheme_qty_del());
+                            //jGroup.put("Result_product_id", arrayList_schemes_order_list.get(i).getResult_product_id());
+                            //jGroup.put("Result_product_qty", arrayList_schemes_order_list.get(i).getResult_product_qty());
+                            //jGroup.put("Result_product_price", arrayList_schemes_order_list.get(i).getResult_product_price());
+                            //jGroup.put("Result_product_total_price", arrayList_schemes_order_list.get(i).getResult_product_total_price());
+                            //jGroup.put("Result_product_image", arrayList_schemes_order_list.get(i).getResult_product_image());
+                            //jGroup.put("Is_scheme_half", arrayList_schemes_order_list.get(i).getIs_scheme_half());
+
+                            match_scheme_array.put(jGroup);
                         }
-
-                        //Toast.makeText(ShopOrderActivity.this, "" + jArray, Toast.LENGTH_LONG).show();
-                        //Toast.makeText(ShopOrderActivity.this, "total_rs=" + total_rs + "\ntotal_line=" + total_line + "\nlatitude=" + latitude + "\nlongitude=" + longitude, Toast.LENGTH_LONG).show();
-
 
                     } else {
 
-                        Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_LONG).show();
+                        if (Double.parseDouble(arrayList_schemes_order_list.get(i).getScheme_value()) > 0) {
 
+                            jGroup.put("scheme_id", arrayList_schemes_order_list.get(i).getScheme_id());
+                            //jGroup.put("Scheme_name", arrayList_schemes_order_list.get(i).getScheme_name());
+                            //jGroup.put("Scheme_long_name", arrayList_schemes_order_list.get(i).getScheme_long_name());
+                            //jGroup.put("Scheme_type_id", arrayList_schemes_order_list.get(i).getScheme_type_id());
+                            //jGroup.put("Scheme_type_name", arrayList_schemes_order_list.get(i).getScheme_type_name());
+                            //jGroup.put("Scheme_image", arrayList_schemes_order_list.get(i).getScheme_image());
+                            jGroup.put("scheme_price", arrayList_schemes_order_list.get(i).getScheme_price());
+                            //jGroup.put("Scheme_value", arrayList_schemes_order_list.get(i).getScheme_value());
+                            jGroup.put("scheme_qty", arrayList_schemes_order_list.get(i).getScheme_qty());
+                            jGroup.put("scheme_qty_del", arrayList_schemes_order_list.get(i).getScheme_qty_del());
+                            //jGroup.put("Result_product_id", arrayList_schemes_order_list.get(i).getResult_product_id());
+                            //jGroup.put("Result_product_qty", arrayList_schemes_order_list.get(i).getResult_product_qty());
+                            //jGroup.put("Result_product_price", arrayList_schemes_order_list.get(i).getResult_product_price());
+                            //jGroup.put("Result_product_total_price", arrayList_schemes_order_list.get(i).getResult_product_total_price());
+                            //jGroup.put("Result_product_image", arrayList_schemes_order_list.get(i).getResult_product_image());
+                            //jGroup.put("Is_scheme_half", arrayList_schemes_order_list.get(i).getIs_scheme_half());
+
+                            match_scheme_array.put(jGroup);
+                        }
                     }
 
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                //Toast.makeText(ViewSalesOrderActivity.this, "" + jArray + "\n" + order_id + "\n" + del_fail_reason, Toast.LENGTH_SHORT).show();
+            }
+
+            Log.i(TAG, "Match_Scheme_list==>" + match_scheme_array);
+            //Log.i(TAG, "Match_Scheme_list_size==>" + arrayList_schemes_order_list.size());
 
 
-                SharedPreferences.Editor editor = sp_update.edit();
-                editor.putBoolean("isUpdate", true);
-                editor.apply();
+            if ((Double.parseDouble(binding.tvTotalSchemeOrderValueViewOrder.getText().toString()) >
+                    Double.parseDouble(binding.tvDeliveryRsSalesOrder.getText().toString().trim()))) {
 
-                isUpdate = sp_update.getBoolean("isUpdate", false);
-                Log.i(TAG, "isUpdate=>" + isUpdate);
+                Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(8) + "", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                if ((jArray.length() > 0) || Integer.parseInt(del_fail_reason_id) > 1) {
+
+                    Log.i(TAG, "check_qty===>" + check_qty);
+
+                    if (check_qty == true && binding.spnDeliveryFailReason.getSelectedItem().toString().equalsIgnoreCase("-")) {
+
+                        Toast.makeText(getApplicationContext(), commanSuchnaList.getArrayList().get(9) + "", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        getTotalOrderRs();
+                        update_sales_order_url = getString(R.string.Base_URL) + getString(R.string.updateneworder_url) + jArray +
+                                "&order_id=" + order_id + "&del_fail_reason=" + del_fail_reason + "&scheme_list=" + match_scheme_array + "&total_discount=" + total_discount;
+                        //Log.i(TAG, "update_order_url=>" + update_sales_order_url + "");
+                        new updateSalesOrderTask().execute(update_sales_order_url);
+
+                        //Toast.makeText(ViewSalesOrderActivity.this, "complete orders", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //Toast.makeText(ShopOrderActivity.this, "" + jArray, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ShopOrderActivity.this, "total_rs=" + total_rs + "\ntotal_line=" + total_line + "\nlatitude=" + latitude + "\nlongitude=" + longitude, Toast.LENGTH_LONG).show();
+
+
+                } else {
+
+                    Toast.makeText(ViewSalesOrderActivity.this, commanSuchnaList.getArrayList().get(10) + "", Toast.LENGTH_LONG).show();
+
+                }
 
             }
+            //Toast.makeText(ViewSalesOrderActivity.this, "" + jArray + "\n" + order_id + "\n" + del_fail_reason, Toast.LENGTH_SHORT).show();
+
+
+            SharedPreferences.Editor editor = sp_update.edit();
+            editor.putBoolean("isUpdate", true);
+            editor.apply();
+
+            isUpdate = sp_update.getBoolean("isUpdate", false);
+            Log.i(TAG, "isUpdate=>" + isUpdate);
+
         });
 
         binding.imgShopPhotoSalesOrder.setOnClickListener(new View.OnClickListener() {

@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -63,7 +62,7 @@ public class MyStockStatementFragment extends Fragment {
 
     private MyStockStatementViewModel homeViewModel;
     FragmentMyStockStatementBinding binding;
-    private String TAG = getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
 
     GDateTime gDateTime = new GDateTime();
     int m, y, d;
@@ -285,51 +284,45 @@ public class MyStockStatementFragment extends Fragment {
 
         });
 
-        binding.cbLastMonthStock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        binding.cbLastMonthStock.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (binding.cbLastMonthStock.isChecked()) {
+            if (binding.cbLastMonthStock.isChecked()) {
 
-                    month_val = Integer.parseInt(gDateTime.getMonth()) - 1 + "";
-                    year_val = gDateTime.getYear();
+                month_val = Integer.parseInt(gDateTime.getMonth()) - 1 + "";
+                year_val = gDateTime.getYear();
 
-                    binding.tvMonthDateStock.setText("" + gDateTime.getMonth_name(Integer.parseInt(month_val)) + "-" + year_val);
+                binding.tvMonthDateStock.setText("" + gDateTime.getMonth_name(Integer.parseInt(month_val)) + "-" + year_val);
 
-                    get_stock_url = getString(R.string.Base_URL) + getString(R.string.get_stock_statement_url) + selected_dist_id +
-                            "&month_val=" + month_val + "&year_val=" + year_val;
-                    new getStockDataTask().execute(get_stock_url);
-                    binding.cbThisMonthStock.setChecked(false);
-                }
-
+                get_stock_url = getString(R.string.Base_URL) + getString(R.string.get_stock_statement_url) + selected_dist_id +
+                        "&month_val=" + month_val + "&year_val=" + year_val;
+                new getStockDataTask().execute(get_stock_url);
+                binding.cbThisMonthStock.setChecked(false);
             }
+
         });
 
-        binding.tvSignButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.tvSignButton.setOnClickListener(v -> {
 
-                if (distributor_id.equalsIgnoreCase(selected_dist_id)) {
+            if (distributor_id.equalsIgnoreCase(selected_dist_id)) {
 
-                    int curr_month_year = Integer.parseInt(gDateTime.getMonth() + gDateTime.getYear());
-                    int selected_month_year = Integer.parseInt(month_val + year_val);
+                int curr_month_year = Integer.parseInt(gDateTime.getMonth() + gDateTime.getYear());
+                int selected_month_year = Integer.parseInt(month_val + year_val);
 
-                    Log.i(TAG, "curr_month_year=>" + curr_month_year);
-                    Log.i(TAG, "selected_month_year=>" + selected_month_year);
+                Log.i(TAG, "curr_month_year=>" + curr_month_year);
+                Log.i(TAG, "selected_month_year=>" + selected_month_year);
 
-                    if (is_delivery_pending.equalsIgnoreCase("no")) {
+                if (is_delivery_pending.equalsIgnoreCase("no")) {
 
-                        if (selected_month_year < curr_month_year) {
-                            showConfirmDialog();
-                        } else
-                            showinfoDialog("" + commanSuchnaList.getArrayList().get(0));
+                    if (selected_month_year < curr_month_year) {
+                        showConfirmDialog();
                     } else
-                        showinfoDialog("" + commanSuchnaList.getArrayList().get(1));
-
+                        showinfoDialog("" + commanSuchnaList.getArrayList().get(0));
                 } else
-                    showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
+                    showinfoDialog("" + commanSuchnaList.getArrayList().get(1));
 
-            }
+            } else
+                showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
+
         });
 
         return root;
@@ -337,24 +330,16 @@ public class MyStockStatementFragment extends Fragment {
 
     private void showConfirmDialog() {
 
-        builder = new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(requireActivity());
         builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
         builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
         builder.setCancelable(false);
-        builder.setPositiveButton("" + commanList.getArrayList().get(39), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                addstock();
-                ad.dismiss();
-            }
+        builder.setPositiveButton("" + commanList.getArrayList().get(39), (dialog, which) -> {
+            addstock();
+            ad.dismiss();
         });
 
-        builder.setNegativeButton("" + commanList.getArrayList().get(40), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ad.dismiss();
-            }
-        });
+        builder.setNegativeButton("" + commanList.getArrayList().get(40), (dialog, which) -> ad.dismiss());
 
         ad = builder.create();
         ad.show();
@@ -367,15 +352,10 @@ public class MyStockStatementFragment extends Fragment {
 
     private void showinfoDialog(String m) {
 
-        builder = new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(m);
         builder.setCancelable(false);
-        builder.setPositiveButton("" + commanList.getArrayList().get(41), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ad.dismiss();
-            }
-        });
+        builder.setPositiveButton("" + commanList.getArrayList().get(41), (dialog, which) -> ad.dismiss());
 
         ad = builder.create();
         ad.show();
@@ -505,6 +485,7 @@ public class MyStockStatementFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void getStockData() {
 
         try {
@@ -718,6 +699,7 @@ public class MyStockStatementFragment extends Fragment {
             return new MyHolder(EntitySalesWiseSummeryStockBinding.inflate(LayoutInflater.from(context), parent, false));
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
@@ -761,6 +743,7 @@ public class MyStockStatementFragment extends Fragment {
             return new MyHolder(EntityProdWiseSummeryStockBinding.inflate(LayoutInflater.from(context), parent, false));
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
@@ -808,6 +791,7 @@ public class MyStockStatementFragment extends Fragment {
             return new MyHolder(EntitySchemeWiseSummeryStockBinding.inflate(LayoutInflater.from(context), parent, false));
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
@@ -876,12 +860,9 @@ public class MyStockStatementFragment extends Fragment {
             }
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-
-            //Log.i(TAG, "countParentSign==>" + countParentSign());
-            //Log.i(TAG, "count2ndParentSign==>" + count2ndParentSign());
-            //Log.i(TAG, "count3rdParentSign==>" + count3rdParentSign());
 
             if (arrayList_sign_authorities.get(position).getParent().equalsIgnoreCase("immediate")) {
                 ParentMyHolder parentMyHolder = (ParentMyHolder) holder;
@@ -917,54 +898,43 @@ public class MyStockStatementFragment extends Fragment {
                 }
 
 
-                parentMyHolder.bindingParent.tvSignButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                parentMyHolder.bindingParent.tvSignButton.setOnClickListener(v -> {
 
-                        if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
+                    if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
 
-                            builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
-                            builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("" + commanList.getArrayList().get(39), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                        builder = new AlertDialog.Builder(requireActivity());
+                        builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+                        builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("" + commanList.getArrayList().get(39), (dialog, which) -> {
 
-                                    if (countParentSign() == 1)
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=1";
-                                    else
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=0";
+                            if (countParentSign() == 1)
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=1";
+                            else
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=0";
 
-                                    new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
+                            new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
 
-                                    ad.dismiss();
-                                }
-                            });
+                            ad.dismiss();
+                        });
 
-                            builder.setNegativeButton("" + commanList.getArrayList().get(40), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ad.dismiss();
-                                }
-                            });
+                        builder.setNegativeButton("" + commanList.getArrayList().get(40), (dialog, which) -> ad.dismiss());
 
-                            ad = builder.create();
-                            ad.show();
+                        ad = builder.create();
+                        ad.show();
 
-                        } else
-                            showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
-                    }
+                    } else
+                        showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
                 });
 
 
@@ -1001,52 +971,41 @@ public class MyStockStatementFragment extends Fragment {
                 }
 
 
-                secondParentMyHolder.binding2ndParent.tvSignButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                secondParentMyHolder.binding2ndParent.tvSignButton.setOnClickListener(v -> {
 
-                        if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
+                    if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
 
-                            builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
-                            builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("" + commanList.getArrayList().get(39), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                        builder = new AlertDialog.Builder(requireActivity());
+                        builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+                        builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("" + commanList.getArrayList().get(39), (dialog, which) -> {
 
-                                    if (count2ndParentSign() == 1)
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=2";
-                                    else
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=0";
+                            if (count2ndParentSign() == 1)
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=2";
+                            else
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=0";
 
-                                    new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
-                                    ad.dismiss();
-                                }
-                            });
+                            new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
+                            ad.dismiss();
+                        });
 
-                            builder.setNegativeButton("" + commanList.getArrayList().get(40), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ad.dismiss();
-                                }
-                            });
+                        builder.setNegativeButton("" + commanList.getArrayList().get(40), (dialog, which) -> ad.dismiss());
 
-                            ad = builder.create();
-                            ad.show();
-                        } else
-                            showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
-                    }
+                        ad = builder.create();
+                        ad.show();
+                    } else
+                        showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
                 });
             } else {
                 ThirdParentMyHolder thirdParentMyHolder = (ThirdParentMyHolder) holder;
@@ -1082,52 +1041,41 @@ public class MyStockStatementFragment extends Fragment {
                 }
 
 
-                thirdParentMyHolder.binding3rdParent.tvSignButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
-                            builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
-                            builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("" + commanList.getArrayList().get(39), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                thirdParentMyHolder.binding3rdParent.tvSignButton.setOnClickListener(v -> {
+                    if (salesman_id.equalsIgnoreCase(arrayList_sign_authorities.get(position).getParent_salesman_id())) {
+                        builder = new AlertDialog.Builder(requireActivity());
+                        builder.setTitle("" + commanSuchnaList.getArrayList().get(6));
+                        builder.setMessage(commanSuchnaList.getArrayList().get(7) + " " + month_last_date + " " + commanSuchnaList.getArrayList().get(8));
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("" + commanList.getArrayList().get(39), (dialog, which) -> {
 
-                                    if (count3rdParentSign() == 1)
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=3";
-                                    else
-                                        add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
-                                                "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
-                                                "&stock_id=" + stock_id +
-                                                "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
-                                                "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
-                                                "&parent=0";
+                            if (count3rdParentSign() == 1)
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=3";
+                            else
+                                add_stock_url = getString(R.string.Base_URL) + "update_stock_statement.php?dist_id=" + selected_dist_id +
+                                        "&salesman_id=" + arrayList_sign_authorities.get(position).getParent_salesman_id() +
+                                        "&stock_id=" + stock_id +
+                                        "&salesman_name=" + arrayList_sign_authorities.get(position).getSaleman() +
+                                        "&imei_no=" + getIMEIId(getActivity()) + "&ip_address=" + getIpAddress() +
+                                        "&parent=0";
 
-                                    new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
+                            new UpdateStockTask().execute(add_stock_url.replace("%20", ""));
 
-                                    ad.dismiss();
-                                }
-                            });
+                            ad.dismiss();
+                        });
 
-                            builder.setNegativeButton("" + commanList.getArrayList().get(40), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ad.dismiss();
-                                }
-                            });
+                        builder.setNegativeButton("" + commanList.getArrayList().get(40), (dialog, which) -> ad.dismiss());
 
-                            ad = builder.create();
-                            ad.show();
+                        ad = builder.create();
+                        ad.show();
 
-                        } else
-                            showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
-                    }
+                    } else
+                        showinfoDialog("" + commanSuchnaList.getArrayList().get(2));
                 });
             }
         }
@@ -1254,18 +1202,15 @@ public class MyStockStatementFragment extends Fragment {
 
     public void showDialog(String m) {
 
-        builder = new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(m);
         builder.setCancelable(false);
-        builder.setPositiveButton("" + commanList.getArrayList().get(41), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("" + commanList.getArrayList().get(41), (dialog, which) -> {
 
-                get_stock_url = getString(R.string.Base_URL) + getString(R.string.get_stock_statement_url) + selected_dist_id +
-                        "&month_val=" + month_val + "&year_val=" + year_val;
-                new getStockDataTask().execute(get_stock_url);
-                ad.dismiss();
-            }
+            get_stock_url = getString(R.string.Base_URL) + getString(R.string.get_stock_statement_url) + selected_dist_id +
+                    "&month_val=" + month_val + "&year_val=" + year_val;
+            new getStockDataTask().execute(get_stock_url);
+            ad.dismiss();
         });
 
         ad = builder.create();
@@ -1301,7 +1246,7 @@ public class MyStockStatementFragment extends Fragment {
 
         boolean WIFI = false, MOBILE = false;
 
-        ConnectivityManager CM = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager CM = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] networkInfo = CM.getAllNetworkInfo();
 
         for (NetworkInfo netInfo : networkInfo) {
@@ -1314,11 +1259,11 @@ public class MyStockStatementFragment extends Fragment {
                     MOBILE = true;
         }
 
-        if (WIFI == true) {
+        if (WIFI) {
             IPaddress = GetDeviceipWiFiData();
         }
 
-        if (MOBILE == true) {
+        if (MOBILE) {
             IPaddress = GetDeviceipMobileData();
         }
 
@@ -1345,7 +1290,7 @@ public class MyStockStatementFragment extends Fragment {
 
     public String GetDeviceipWiFiData() {
 
-        WifiManager wm = (WifiManager) getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiManager wm = (WifiManager) requireActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
         @SuppressWarnings("deprecation")
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 

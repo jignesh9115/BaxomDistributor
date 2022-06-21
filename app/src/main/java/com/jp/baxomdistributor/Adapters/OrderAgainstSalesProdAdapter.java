@@ -115,9 +115,9 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                     Double.parseDouble(arrayList.get(position).getOrder_qty()));
 
         }
-        getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+        getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
-        holder.binding.tvSchemeTitle.setOnClickListener(v -> getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price));
+        holder.binding.tvSchemeTitle.setOnClickListener(v -> getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate())));
 
         holder.binding.edtProdDelQty.addTextChangedListener(new TextWatcher() {
             @Override
@@ -162,7 +162,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                 if (holder.binding.edtProdDelQty.getText().toString().isEmpty())
                     holder.binding.edtProdDelQty.setText("0");
 
-                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             }
         });
@@ -202,7 +202,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
             tot_order_price = qty * product_price;
             holder.binding.tvProdOrderRs.setText("" + String.format("%.2f", tot_order_price));
 
-            getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+            getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             orderAgainstSalesProdQtyListener.qtyChange(position, qty);
 
@@ -257,7 +257,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
             tot_order_price = qty * product_price;
             holder.binding.tvProdOrderRs.setText("" + String.format("%.2f", tot_order_price));
 
-            getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+            getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             orderAgainstSalesProdQtyListener.qtyChange(position, qty);
 
@@ -277,14 +277,16 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                     orderAgainstSalesQtyListener.qtyChange(position,
                             0,
                             Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
-                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()));
+                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
 
                 } else {
 
                     orderAgainstSalesQtyListener.qtyChange(position,
                             Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
                             Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
-                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()));
+                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
                 }
 
 
@@ -296,7 +298,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                 if (holder.binding.edtSchemeQty.getText().toString().isEmpty())
                     holder.binding.edtSchemeQty.setText("0");
 
-                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             }
         });
@@ -345,14 +347,16 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                     orderAgainstSalesQtyListener.qtyChange(position,
                             Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
                             0,
-                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()));
+                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
 
                 } else {
 
                     orderAgainstSalesQtyListener.qtyChange(position,
                             Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
                             Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
-                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()));
+                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
                 }
 
 
@@ -364,7 +368,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                 if (holder.binding.edtReplacementQty.getText().toString().isEmpty())
                     holder.binding.edtReplacementQty.setText("0");
 
-                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             }
         });
@@ -411,14 +415,16 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                     orderAgainstSalesQtyListener.qtyChange(position,
                             Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
                             Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
-                            0);
+                            0,
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
 
                 } else {
 
                     orderAgainstSalesQtyListener.qtyChange(position,
                             Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
                             Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
-                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()));
+                            Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                            Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
                 }
 
             }
@@ -429,7 +435,7 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
                 if (holder.binding.edtShortageQty.getText().toString().isEmpty())
                     holder.binding.edtShortageQty.setText("0");
 
-                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()), tot_order_price);
+                getPointValue(holder, position, Double.parseDouble(arrayList.get(position).getPurchase_rate()));
 
             }
         });
@@ -495,58 +501,76 @@ public class OrderAgainstSalesProdAdapter extends RecyclerView.Adapter<OrderAgai
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    public void getPointValue(MyHolder holder, int pos, double pts_rs, double tot_order_price) {
+    public void getPointValue(MyHolder holder, int pos, double pts_rs) {
 
         double total_qty = Double.parseDouble(holder.binding.edtProdDelQty.getText().toString())
                 + Double.parseDouble(holder.binding.edtSchemeQty.getText().toString())
                 + Double.parseDouble(holder.binding.edtReplacementQty.getText().toString())
                 + Double.parseDouble(holder.binding.edtShortageQty.getText().toString());
 
-        //Log.i(TAG, ".............total_qty...........>" + total_qty);
+//        Log.i(TAG, ".............total_qty...........>" + total_qty);
 
         String[] qty = Double.toString(total_qty).split("\\.");
 
         if (qty.length == 2) {
-
-            //Log.i(TAG, "inside PointValue if total_qty[0]_________>" + qty[0]);
-            //Log.i(TAG, "inside PointValue if total_qty[1]_________>" + qty[1]);
+            double round_qty = 0;
+            Log.i(TAG, "inside PointValue if edtProdDelQty_________>" + holder.binding.edtProdDelQty.getText().toString());
+            Log.i(TAG, "inside PointValue if total_qty[0]_________>" + qty[0]);
+            Log.i(TAG, "inside PointValue if total_qty[1]_________>" + qty[1]);
 
             //if (Double.parseDouble(qty[1]) > 0) {
             if (Double.parseDouble("." + qty[1]) >= .5) {
 
-                //Log.i(TAG, "inside PointValue if rount_qty______>" + String.format("%.2f", (1.0 - Double.parseDouble("." + qty[1]))));
+                Log.i(TAG, "inside PointValue if rount_qty______>" + String.format("%.2f", (1.0 - Double.parseDouble("." + qty[1]))));
 
                 /*holder.binding.edtProdDelQty.setText("" +
                         (Double.parseDouble(holder.binding.edtProdDelQty.getText().toString())
                                 + Double.parseDouble("." + qty[1])));*/
-                holder.binding.tvRoundQty.setText("" + String.format("%.2f", (1.0 - Double.parseDouble("." + qty[1]))));
+                round_qty = (1.0 - Double.parseDouble("." + qty[1]));
+                holder.binding.tvRoundQty.setText("" + String.format("%.2f", round_qty));
             } else {
 
-                //Log.i(TAG, "inside PointValue else rount_qty______>" + "-." + qty[1]);
+                Log.i(TAG, "inside PointValue else rount_qty______>" + "-." + qty[1]);
 
                 /*holder.binding.edtProdDelQty.setText("" +
                         (Double.parseDouble(holder.binding.edtProdDelQty.getText().toString())
                                 - Double.parseDouble("." + qty[1])));*/
-                holder.binding.tvRoundQty.setText("-." + qty[1]);
+                //holder.binding.tvRoundQty.setText("-." + qty[1]);
+
+                round_qty = Double.parseDouble("." + qty[1]);
+                holder.binding.tvRoundQty.setText("" + String.format("%.2f", round_qty));
             }
             //}
 
-            if (holder.binding.tvRoundQty.getText().toString().equalsIgnoreCase("-.0"))
+
+            if (holder.binding.tvRoundQty.getText().toString().equalsIgnoreCase("-.0")
+                    || holder.binding.tvRoundQty.getText().toString().equalsIgnoreCase("-0.00")) {
+
                 holder.binding.tvRoundQty.setText("0");
+                orderAgainstSalesQtyListener.qtyChange(pos,
+                        Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
+                        Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
+                        Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                        0);
+            } else {
+                orderAgainstSalesQtyListener.qtyChange(pos,
+                        Double.parseDouble(holder.binding.edtSchemeQty.getText().toString()),
+                        Double.parseDouble(holder.binding.edtReplacementQty.getText().toString()),
+                        Double.parseDouble(holder.binding.edtShortageQty.getText().toString()),
+                        Double.parseDouble(holder.binding.tvRoundQty.getText().toString()));
+            }
 
             orderAgainstSalesProdQtyListener.qtyChange(pos,
                     (Double.parseDouble(holder.binding.edtProdDelQty.getText().toString().trim())
-                            + Double.parseDouble(holder.binding.tvRoundQty.getText().toString().trim())));
+                            + round_qty));
 
 //            Log.i(TAG, "inside PointValue edtProdDelQty.....................>" + holder.binding.edtProdDelQty.getText().toString().trim());
 //            Log.i(TAG, "inside PointValue tot_order_price...................>" + tot_order_price);
 //            Log.i(TAG, "inside PointValue tot_tvRoundQty...................>" + (Double.parseDouble(holder.binding.tvRoundQty.getText().toString().trim()) * pts_rs));
 
             holder.binding.tvProdOrderRs.setText("" + String.format("%.2f", ((Double.parseDouble(holder.binding.edtProdDelQty.getText().toString().trim()) * pts_rs)
-                    + (Double.parseDouble(holder.binding.tvRoundQty.getText().toString().trim()) * pts_rs))));
+                    + (round_qty * pts_rs))));
         }
 
-
     }
-
 }

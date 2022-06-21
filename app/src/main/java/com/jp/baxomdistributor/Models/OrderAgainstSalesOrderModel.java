@@ -5,21 +5,18 @@ package com.jp.baxomdistributor.Models;
  */
 public class OrderAgainstSalesOrderModel {
 
-    String prod_id, prod_name, prod_unit, prod_ptr_rs, prod_biz_rs, prod_stock, prod_day_sale, prod_order_qty,
-            prod_scheme_qty, prod_replacement_qty, prod_shortage_qty;
+    String prod_id, prod_name, prod_unit, prod_gst, prod_ptr_rs, prod_biz_rs, prod_stock, prod_day_sale, prod_order_qty;
 
-    public OrderAgainstSalesOrderModel(String prod_id, String prod_name, String prod_unit, String prod_ptr_rs, String prod_biz_rs, String prod_stock, String prod_day_sale, String prod_order_qty, String prod_scheme_qty, String prod_replacement_qty, String prod_shortage_qty) {
+    public OrderAgainstSalesOrderModel(String prod_id, String prod_name, String prod_unit, String prod_gst, String prod_ptr_rs, String prod_biz_rs, String prod_stock, String prod_day_sale, String prod_order_qty) {
         this.prod_id = prod_id;
         this.prod_name = prod_name;
         this.prod_unit = prod_unit;
+        this.prod_gst = prod_gst;
         this.prod_ptr_rs = prod_ptr_rs;
         this.prod_biz_rs = prod_biz_rs;
         this.prod_stock = prod_stock;
         this.prod_day_sale = prod_day_sale;
         this.prod_order_qty = prod_order_qty;
-        this.prod_scheme_qty = prod_scheme_qty;
-        this.prod_replacement_qty = prod_replacement_qty;
-        this.prod_shortage_qty = prod_shortage_qty;
     }
 
     public String getProd_id() {
@@ -44,6 +41,14 @@ public class OrderAgainstSalesOrderModel {
 
     public void setProd_unit(String prod_unit) {
         this.prod_unit = prod_unit;
+    }
+
+    public String getProd_gst() {
+        return prod_gst;
+    }
+
+    public void setProd_gst(String prod_gst) {
+        this.prod_gst = prod_gst;
     }
 
     public String getProd_ptr_rs() {
@@ -84,30 +89,6 @@ public class OrderAgainstSalesOrderModel {
 
     public void setProd_order_qty(String prod_order_qty) {
         this.prod_order_qty = prod_order_qty;
-    }
-
-    public String getProd_scheme_qty() {
-        return prod_scheme_qty;
-    }
-
-    public void setProd_scheme_qty(String prod_scheme_qty) {
-        this.prod_scheme_qty = prod_scheme_qty;
-    }
-
-    public String getProd_replacement_qty() {
-        return prod_replacement_qty;
-    }
-
-    public void setProd_replacement_qty(String prod_replacement_qty) {
-        this.prod_replacement_qty = prod_replacement_qty;
-    }
-
-    public String getProd_shortage_qty() {
-        return prod_shortage_qty;
-    }
-
-    public void setProd_shortage_qty(String prod_shortage_qty) {
-        this.prod_shortage_qty = prod_shortage_qty;
     }
 
 }
