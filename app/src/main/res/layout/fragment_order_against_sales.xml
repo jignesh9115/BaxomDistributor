@@ -2533,6 +2533,17 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="submit &amp; Share Quotation to party" />
 
+
+
+            <Button
+                android:id="@+id/btn_share_on_whatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Share Quotation" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

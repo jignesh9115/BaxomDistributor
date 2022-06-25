@@ -74,7 +74,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
     ArrayList<Double> arrayList_minvalue;
     OrderAgainstSalesProdAdapter salesProdAdapter;
     ArrayList<ViewSchemesOrderPOJO> arrayList_order_schemes;
-    ArrayList<OrderAgainstSalesOrderModel> arrayList_order_prod_sales;
+    ArrayList<OrderAgainstSalesOrderModel> arrayList_order_prod_sales, arrayList_order_prod_pdf;
     ArrayList<SchemeProductPOJO> arrayList_scheme_prod;
     OrderAgainstSalesSchemeAdapter salesSchemeAdapter;
     ProgressDialog pdialog;
@@ -181,7 +181,11 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
 
         PushDownAnim.setPushDownAnimTo(binding.btnSubmitAndShare)
                 .setScale(PushDownAnim.MODE_STATIC_DP, 3)
-                .setOnClickListener(v -> createPDF());
+                .setOnClickListener(v -> createPDF("view"));
+
+        PushDownAnim.setPushDownAnimTo(binding.btnShareOnWhatsapp)
+                .setScale(PushDownAnim.MODE_STATIC_DP, 3)
+                .setOnClickListener(v -> createPDF("share"));
 
         PushDownAnim.setPushDownAnimTo(binding.btnSubmit)
                 .setScale(PushDownAnim.MODE_STATIC_DP, 3)
@@ -442,6 +446,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
                                         obj.getString("prod_name"),
                                         obj.getString("prod_unit"),
                                         obj.getString("prod_gst"),
+                                        obj.getString("prod_hsn_code"),
                                         obj.getString("purchase_rate"),
                                         obj.getString("sales_rate"),
                                         obj.getString("stock_qty"),
@@ -871,6 +876,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
                 salesProdModels.get(pos).getProd_name(),
                 salesProdModels.get(pos).getProd_unit(),
                 arrayList_order_prod_sales.get(pos).getProd_gst(),
+                arrayList_order_prod_sales.get(pos).getProd_hsn_code(),
                 salesProdModels.get(pos).getPurchase_rate(),
                 salesProdModels.get(pos).getSales_rate(),
                 salesProdModels.get(pos).getStock_qty(),
@@ -1022,12 +1028,23 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
     File file;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void createPDF() {
+    private void createPDF(String action) {
 
         PdfUtils.initializeDoc();
+        arrayList_order_prod_pdf = new ArrayList<>();
+        //arrayList_order_prod_pdf.addAll(arrayList_order_prod_sales);
+
+        for (int i = 0; i < arrayList_order_prod_sales.size(); i++) {
+
+            Log.i(TAG, "getProd_order_qty.....>" + arrayList_order_prod_sales.get(i).getProd_order_qty());
+
+            if (!arrayList_order_prod_sales.get(i).getProd_order_qty().equals("0.0"))
+                arrayList_order_prod_pdf.add(arrayList_order_prod_sales.get(i));
+        }
 
         Log.i(TAG, "arrayList_order_prod_sales.....>" + arrayList_order_prod_sales.size());
-        double tot_dist_pages = ((double) (arrayList_order_prod_sales.size() / 13) / 2);
+        Log.i(TAG, "actual_order_tot_prod.....>" + arrayList_order_prod_pdf.size());
+        double tot_dist_pages = ((double) (arrayList_order_prod_pdf.size() / 13) / 2);
 
         if (!String.valueOf(tot_dist_pages).split("\\.")[1].equals("0")) {
             tot_dist_pages = tot_dist_pages + 1;
@@ -1039,21 +1056,12 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
             Log.i(TAG, "start_dist.....>" + start_dist);
             Log.i(TAG, "end_dist.....>" + end_dist);
 
-            createQuotationTable(arrayList_order_prod_sales.size(), start_dist, end_dist);
-            if (arrayList_order_prod_sales.size() > end_dist) {
+            createQuotationTable(arrayList_order_prod_pdf.size(), start_dist, end_dist);
+            if (arrayList_order_prod_pdf.size() > end_dist) {
                 start_dist += 2;
                 end_dist += 2;
             }
         }
-
-
-
-       /* //create Top Table
-        createTopTable();
-
-        //create Bottom Table
-        createBottomTable();*/
-
 
         try {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
@@ -1062,7 +1070,8 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
             file.createNewFile();
 
             PdfUtils.getDocument().writeTo(new FileOutputStream(file));
-            openGeneratedPDF();
+
+            openGeneratedPDF(action);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -1122,7 +1131,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
         PdfUtils.drawText("Supplier GSTIN No.:" + stock_point_gstin_no, 235, 152);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 15);
-        PdfUtils.drawText("Invoice No.:" + default_prefix + "/" + last_quotation, 450, 122);
+        PdfUtils.drawText("Quotation No.:" + default_prefix + "/" + last_quotation, 450, 122);
         PdfUtils.drawText("Date            :01/11/2022", 450, 147);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 9);
@@ -1173,105 +1182,112 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
         Log.i(TAG, "...............inside top table...............>");
         Log.i(TAG, "prod_start_pos...>" + prod_start_pos);
         Log.i(TAG, "prod_end_pos...>" + prod_end_pos);
-        double tot_taxble_amount = 0, tot_net_amount = 0;
+
+        double tot_taxble_amount = 0, tot_net_amount = 0, tot_cal_gst = 0;
 
         for (int i = prod_start_pos; i <= prod_end_pos; i++) {
 
-            double rate = 0, disc = 0, taxble_amount = 0;
+            double rate, disc, taxble_amount, cal_total_gst, net_amount;
 
-            if (arrayList_order_prod_sales.size() > 0) {
+            if (i < arrayList_order_prod_pdf.size()) {
 
                 if (i == 0 || i == 13 || i == 26 || i == 39) {
 
                     PdfUtils.drawText((i + 1) + "", 34, page_y);
-                    if (arrayList_order_prod_sales.get(i).getProd_name().length() > 15)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y);
+                    if (arrayList_order_prod_pdf.get(i).getProd_name().length() > 15)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name(), 54, nm_y);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name(), 54, nm_y);
 
-                    if (arrayList_order_prod_sales.get(i).getProd_unit().length() > 10)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y);
+                    if (arrayList_order_prod_pdf.get(i).getProd_unit().length() > 10)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit(), 139, unit_y);
-                    PdfUtils.drawText("3004", 193, hsn_y);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit(), 139, unit_y);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_hsn_code(), 193, hsn_y);
                     PdfUtils.drawText("", 227, batch_y);
                     PdfUtils.drawText("", 265, mfg_dt_y);
                     PdfUtils.drawText("", 302, exp_dt_y);
-                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty())), 338, qty_y);
+                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty())), 338, qty_y);
 
-                    rate = (Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_ptr_rs()) /
-                            Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_gst()
+                    rate = (Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_ptr_rs()) /
+                            Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
                                     .replace("%", "")));
 
                     PdfUtils.drawText(String.format("%.2f", rate), 370, rate_y);
 
                     disc = (orderAgainstSalesQtyModels.get(i).getScheme_qty()
                             + orderAgainstSalesQtyModels.get(i).getReplace_qty()
-                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) / rate;
+                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) * rate;
 
                     PdfUtils.drawText(String.format("%.2f", disc), 405, disc_y);
 
-                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty()) - disc;
+                    taxble_amount = (rate * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty())) - disc;
 
                     if (String.valueOf(taxble_amount).equalsIgnoreCase("NAN"))
                         taxble_amount = 0;
 
+                    cal_total_gst = taxble_amount * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
+                            .replace("%", "")) / 100;
+                    tot_cal_gst += cal_total_gst;
                     tot_taxble_amount += taxble_amount;
 
                     PdfUtils.drawText(String.format("%.2f", taxble_amount), 440, taxble_amount_y);
-                    PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_gst().trim(), 485, gst_y);
-                    PdfUtils.drawText("", 512, cgst_y);
-                    PdfUtils.drawText("", 550, sgst_y);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_gst().trim(), 485, gst_y);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 512, cgst_y);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 550, sgst_y);
 
-                    //taxble_amount + (CGST+SGST or IGST)
-                    tot_net_amount += taxble_amount;
+                    net_amount = taxble_amount + cal_total_gst;
+                    tot_net_amount += net_amount;
 
-                    PdfUtils.drawText(String.format("%.2f", taxble_amount) + "", 590, net_amount_y);
+                    PdfUtils.drawText(String.format("%.2f", net_amount) + "", 586, net_amount_y);
                 } else {
 
                     PdfUtils.drawText((i + 1) + "", 34, page_y += 10);
-                    if (arrayList_order_prod_sales.get(i).getProd_name().length() > 15)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y += 10);
+                    if (arrayList_order_prod_pdf.get(i).getProd_name().length() > 15)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y += 10);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name(), 54, nm_y += 10);
-                    if (arrayList_order_prod_sales.get(i).getProd_unit().length() > 10)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y += 10);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name(), 54, nm_y += 10);
+                    if (arrayList_order_prod_pdf.get(i).getProd_unit().length() > 10)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y += 10);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit(), 139, unit_y += 10);
-                    PdfUtils.drawText("3004", 193, hsn_y += 10);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit(), 139, unit_y += 10);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_hsn_code(), 193, hsn_y += 10);
                     PdfUtils.drawText("", 227, batch_y += 10);
                     PdfUtils.drawText("", 265, mfg_dt_y += 10);
                     PdfUtils.drawText("", 302, exp_dt_y += 10);
-                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty())), 338, qty_y += 10);
+                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty())), 338, qty_y += 10);
 
-                    rate = (Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_ptr_rs()) /
-                            Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_gst()
+                    rate = (Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_ptr_rs()) /
+                            Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
                                     .replace("%", "")));
 
                     PdfUtils.drawText(String.format("%.2f", rate), 370, rate_y += 10);
 
                     disc = (orderAgainstSalesQtyModels.get(i).getScheme_qty()
                             + orderAgainstSalesQtyModels.get(i).getReplace_qty()
-                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) / rate;
+                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) * rate;
 
                     PdfUtils.drawText(String.format("%.2f", disc), 405, disc_y += 10);
 
-                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty()) - disc;
+                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty()) - disc;
 
                     if (String.valueOf(taxble_amount).equalsIgnoreCase("NAN"))
                         taxble_amount = 0;
 
+                    cal_total_gst = taxble_amount * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
+                            .replace("%", "")) / 100;
+                    tot_cal_gst += cal_total_gst;
                     tot_taxble_amount += taxble_amount;
 
                     PdfUtils.drawText(String.format("%.2f", taxble_amount), 440, taxble_amount_y += 10);
-                    PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_gst().trim(), 485, gst_y += 10);
-                    PdfUtils.drawText("", 512, cgst_y += 10);
-                    PdfUtils.drawText("", 550, sgst_y += 10);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_gst().trim(), 485, gst_y += 10);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 512, cgst_y += 10);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 550, sgst_y += 10);
 
-                    //taxble_amount + (CGST+SGST or IGST)
-                    tot_net_amount += taxble_amount;
+                    net_amount = taxble_amount + cal_total_gst;
+                    tot_net_amount += net_amount;
 
-                    PdfUtils.drawText(String.format("%.2f", taxble_amount) + "", 590, net_amount_y += 10);
+                    PdfUtils.drawText(String.format("%.2f", net_amount) + "", 586, net_amount_y += 10);
 
                 }
             }
@@ -1279,13 +1295,16 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 11);
         PdfUtils.drawText(String.format("%.2f", tot_taxble_amount), 140, 330);
-        PdfUtils.drawText("189.00", 250, 330);
-        PdfUtils.drawText("189.00", 340, 330);
-        PdfUtils.drawText("(-)0.00", 440, 330);
-        PdfUtils.drawText(String.format("%.2f", tot_net_amount), 560, 330);
+        PdfUtils.drawText(String.format("%.2f", (tot_cal_gst / 2)) + "", 245, 330);
+        PdfUtils.drawText(String.format("%.2f", (tot_cal_gst / 2)) + "", 330, 330);
+
+        String[] net_amount_round = String.format("%.2f", tot_net_amount).split("\\.");
+
+        PdfUtils.drawText("(-)0." +net_amount_round[1], 440, 330);
+        PdfUtils.drawText(net_amount_round[0], 560, 330);
 
         PdfUtils.drawText(Currency.convertToIndianCurrency(String.valueOf(tot_taxble_amount)), 140, 349);
-        PdfUtils.drawText(Currency.convertToIndianCurrency(String.valueOf(tot_net_amount)), 175, 366);
+        PdfUtils.drawText(Currency.convertToIndianCurrency(net_amount_round[0]), 175, 366);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 12);
         PdfUtils.drawText("Terms & Conditions : 1. " + terms_condition_1, 34, 386);
@@ -1325,7 +1344,7 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
         PdfUtils.drawText("Supplier GSTIN No.:" + stock_point_gstin_no, 235, 632);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 15);
-        PdfUtils.drawText("Invoice No.:" + default_prefix + "/" + last_quotation, 450, 602);
+        PdfUtils.drawText("Quotation No.:" + default_prefix + "/" + last_quotation, 450, 602);
         PdfUtils.drawText("Date            :01/11/2022", 450, 627);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 9);
@@ -1377,107 +1396,117 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
         Log.i(TAG, "prod_end_pos...>" + prod_end_pos);
 
 
-        double tot_taxble_amount = 0, tot_net_amount = 0;
+        double tot_taxble_amount = 0, tot_net_amount = 0, tot_cal_gst = 0;
 
         for (int i = prod_start_pos; i <= prod_end_pos; i++) {
 
-            double rate = 0, disc = 0, taxble_amount = 0;
+            double rate, disc, taxble_amount, cal_total_gst, net_amount;
 
-            if (i < arrayList_order_prod_sales.size()) {
+            if (i < arrayList_order_prod_pdf.size()) {
 
                 if (i == 0 || i == 13 || i == 26 || i == 39) {
 
                     PdfUtils.drawText((i + 1) + "", 34, page_y);
-                    if (arrayList_order_prod_sales.get(i).getProd_name().length() > 15)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y);
+                    if (arrayList_order_prod_pdf.get(i).getProd_name().length() > 15)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name(), 54, nm_y);
-                    if (arrayList_order_prod_sales.get(i).getProd_unit().length() > 10)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name(), 54, nm_y);
+                    if (arrayList_order_prod_pdf.get(i).getProd_unit().length() > 10)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit(), 139, unit_y);
-                    PdfUtils.drawText("3004", 193, hsn_y);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit(), 139, unit_y);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_hsn_code(), 193, hsn_y);
                     PdfUtils.drawText("", 227, batch_y);
                     PdfUtils.drawText("", 265, mfg_dt_y);
                     PdfUtils.drawText("", 302, exp_dt_y);
-                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty())), 338, qty_y);
+                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty())), 338, qty_y);
 
-                    rate = (Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_ptr_rs()) /
-                            Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_gst()
+                    rate = (Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_ptr_rs()) /
+                            Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
                                     .replace("%", "")));
 
                     PdfUtils.drawText(String.format("%.2f", rate), 370, rate_y);
 
                     disc = (orderAgainstSalesQtyModels.get(i).getScheme_qty()
                             + orderAgainstSalesQtyModels.get(i).getReplace_qty()
-                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) / rate;
+                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) * rate;
 
                     PdfUtils.drawText(String.format("%.2f", disc), 405, disc_y);
 
-                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty()) - disc;
+                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty()) - disc;
 
                     if (String.valueOf(taxble_amount).equalsIgnoreCase("NAN"))
                         taxble_amount = 0;
 
+                    cal_total_gst = taxble_amount * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
+                            .replace("%", "")) / 100;
+                    tot_cal_gst += cal_total_gst;
+
                     tot_taxble_amount += taxble_amount;
 
                     PdfUtils.drawText(String.format("%.2f", taxble_amount), 440, taxble_amount_y);
-                    PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_gst().trim(), 485, gst_y);
-                    PdfUtils.drawText("", 512, cgst_y);
-                    PdfUtils.drawText("", 550, sgst_y);
-                    //taxble_amount + (CGST+SGST or IGST)
-                    tot_net_amount += taxble_amount;
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_gst().trim(), 485, gst_y);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 512, cgst_y);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 550, sgst_y);
 
-                    PdfUtils.drawText(String.format("%.2f", taxble_amount) + "", 590, net_amount_y);
+                    net_amount = taxble_amount + cal_total_gst;
+                    tot_net_amount += net_amount;
+
+                    PdfUtils.drawText(String.format("%.2f", net_amount) + "", 586, net_amount_y);
 
                 } else {
 
                     PdfUtils.drawText((i + 1) + "", 34, page_y += 10);
-                    if (arrayList_order_prod_sales.get(i).getProd_name().length() > 15)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y += 10);
+                    if (arrayList_order_prod_pdf.get(i).getProd_name().length() > 15)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name().substring(0, 15) + "...", 54, nm_y += 10);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_name(), 54, nm_y += 10);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_name(), 54, nm_y += 10);
 
-                    if (arrayList_order_prod_sales.get(i).getProd_unit().length() > 10)
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y += 10);
+                    if (arrayList_order_prod_pdf.get(i).getProd_unit().length() > 10)
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit().substring(0, 9) + "...", 139, unit_y += 10);
                     else
-                        PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_unit(), 139, unit_y += 10);
+                        PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_unit(), 139, unit_y += 10);
 
-                    PdfUtils.drawText("3004", 193, hsn_y += 10);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_hsn_code(), 193, hsn_y += 10);
                     PdfUtils.drawText("", 227, batch_y += 10);
                     PdfUtils.drawText("", 265, mfg_dt_y += 10);
                     PdfUtils.drawText("", 302, exp_dt_y += 10);
-                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty())), 338, qty_y += 10);
+                    PdfUtils.drawText(String.format("%.1f", Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty())), 338, qty_y += 10);
 
-                    rate = (Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_ptr_rs()) /
-                            Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_gst()
+                    rate = (Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_ptr_rs()) /
+                            Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
                                     .replace("%", "")));
 
                     PdfUtils.drawText(String.format("%.2f", rate), 370, rate_y += 10);
 
                     disc = (orderAgainstSalesQtyModels.get(i).getScheme_qty()
                             + orderAgainstSalesQtyModels.get(i).getReplace_qty()
-                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) / rate;
+                            + orderAgainstSalesQtyModels.get(i).getShortage_qty()) * rate;
 
                     PdfUtils.drawText(String.format("%.2f", disc), 405, disc_y += 10);
 
-                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_sales.get(i).getProd_order_qty()) - disc;
+                    taxble_amount = rate * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_order_qty()) - disc;
 
                     if (String.valueOf(taxble_amount).equalsIgnoreCase("NAN"))
                         taxble_amount = 0;
 
+                    cal_total_gst = taxble_amount * Double.parseDouble(arrayList_order_prod_pdf.get(i).getProd_gst()
+                            .replace("%", "")) / 100;
+
+                    tot_cal_gst += cal_total_gst;
+
                     tot_taxble_amount += taxble_amount;
 
-
                     PdfUtils.drawText(String.format("%.2f", taxble_amount), 440, taxble_amount_y += 10);
-                    PdfUtils.drawText(arrayList_order_prod_sales.get(i).getProd_gst().trim(), 485, gst_y += 10);
-                    PdfUtils.drawText("", 512, cgst_y += 10);
-                    PdfUtils.drawText("", 550, sgst_y += 10);
+                    PdfUtils.drawText(arrayList_order_prod_pdf.get(i).getProd_gst().trim(), 485, gst_y += 10);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 512, cgst_y += 10);
+                    PdfUtils.drawText(String.format("%.2f", (cal_total_gst / 2)), 550, sgst_y += 10);
 
-                    //taxble_amount + (CGST+SGST or IGST)
-                    tot_net_amount += taxble_amount;
+                    net_amount = taxble_amount + cal_total_gst;
 
-                    PdfUtils.drawText(String.format("%.2f", taxble_amount) + "", 590, net_amount_y += 10);
+                    tot_net_amount += net_amount;
+
+                    PdfUtils.drawText(String.format("%.2f", net_amount) + "", 586, net_amount_y += 10);
 
                 }
             }
@@ -1485,13 +1514,16 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 11);
         PdfUtils.drawText(String.format("%.2f", tot_taxble_amount), 140, 815);
-        PdfUtils.drawText("189.00", 250, 815);
-        PdfUtils.drawText("189.00", 340, 815);
-        PdfUtils.drawText("(-)0.00", 440, 815);
-        PdfUtils.drawText(String.format("%.2f", tot_net_amount), 560, 815);
+        PdfUtils.drawText(String.format("%.2f", (tot_cal_gst / 2)) + "", 245, 815);
+        PdfUtils.drawText(String.format("%.2f", (tot_cal_gst / 2)) + "", 330, 815);
+
+        String[] net_amount_round = String.format("%.2f", tot_net_amount).split("\\.");
+
+        PdfUtils.drawText("(-)0." + net_amount_round[1], 440, 815);
+        PdfUtils.drawText(net_amount_round[0], 560, 815);
 
         PdfUtils.drawText(Currency.convertToIndianCurrency(String.valueOf(tot_taxble_amount)), 140, 835);
-        PdfUtils.drawText(Currency.convertToIndianCurrency(String.valueOf(tot_net_amount)), 175, 852);
+        PdfUtils.drawText(Currency.convertToIndianCurrency(net_amount_round[0]), 175, 852);
 
         PdfUtils.setPaintBrush(Color.BLACK, Paint.Align.LEFT, 12);
         PdfUtils.drawText("Terms & Conditions : 1. " + terms_condition_1, 34, 870);
@@ -1505,30 +1537,52 @@ public class OrderAgainstSalesFragment extends Fragment implements OrderAgainstS
     }
 
 
-    private void openGeneratedPDF() {
+    private void openGeneratedPDF(String action) {
 
         //file = new File(Environment.getExternalStorageDirectory(), "/Baxom Distribution/PurchaseOrder.pdf");
         if (file.exists()) {
 
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            //====================fileProvider ===========
-            Uri uri;
-            if (Build.VERSION.SDK_INT >= 24) {
-                uri = FileProvider.getUriForFile(requireActivity(),
-                        BuildConfig.APPLICATION_ID + ".provider", file);
+            if (action.equalsIgnoreCase("share")) {
+
+                Intent share = new Intent();
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("application/pdf");
+
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= 24) {
+                    uri = FileProvider.getUriForFile(requireActivity(),
+                            BuildConfig.APPLICATION_ID + ".provider", file);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+
+                share.putExtra(Intent.EXTRA_STREAM, uri);
+                share.setPackage("com.whatsapp");
+                startActivity(share);
+
             } else {
-                uri = Uri.fromFile(file);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= 24) {
+                    uri = FileProvider.getUriForFile(requireActivity(),
+                            BuildConfig.APPLICATION_ID + ".provider", file);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+
+                intent.setDataAndType(uri, "application/pdf");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                try {
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(requireActivity(), "No Application Available For PDF View", Toast.LENGTH_LONG).show();
+                }
             }
 
-            intent.setDataAndType(uri, "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            try {
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Toast.makeText(requireActivity(), "No Application Available For PDF View", Toast.LENGTH_LONG).show();
-            }
         }
     }
     /*----------------------ends of code for generate pdf of invoices-------------------*/

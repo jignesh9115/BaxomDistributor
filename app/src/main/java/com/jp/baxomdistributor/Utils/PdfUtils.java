@@ -56,14 +56,14 @@ public class PdfUtils {
         paint.setTextAlign(align);
         paint.setTextSize(size);
         paint.setTextLocale(Locale.ENGLISH);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
     }
 
     public static void setPaintBrushNormal(int color, Paint.Align align) {
         paint.setColor(color);
         paint.setTextAlign(align);
         paint.setTextLocale(Locale.ENGLISH);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
     }
 
     public static void setPaintBrushNormal(int color, Paint.Align align, int size) {
@@ -71,7 +71,7 @@ public class PdfUtils {
         paint.setTextAlign(align);
         paint.setTextLocale(Locale.ENGLISH);
         paint.setTextSize(size);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
     }
 
     public static void setPaintBrushBold(int color, Paint.Align align, int size) {
@@ -79,7 +79,7 @@ public class PdfUtils {
         paint.setTextAlign(align);
         paint.setTextLocale(Locale.ENGLISH);
         paint.setTextSize(size);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
     }
 
     public static void setPaintBrushItalic(int color, Paint.Align align, int size) {
@@ -87,7 +87,7 @@ public class PdfUtils {
         paint.setTextAlign(align);
         paint.setTextLocale(Locale.ENGLISH);
         paint.setTextSize(size);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
     }
 
     public static void setPaintBrushBoldItlic(int color, Paint.Align align, int size) {
@@ -95,7 +95,7 @@ public class PdfUtils {
         paint.setTextAlign(align);
         paint.setTextLocale(Locale.ENGLISH);
         paint.setTextSize(size);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));
+        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC));
     }
 
     public static void setPaintBrush(int color, Paint.Align align, int size, String font_style) {
@@ -104,13 +104,13 @@ public class PdfUtils {
         paint.setTextSize(size);
         paint.setTextLocale(Locale.ENGLISH);
         if (font_style.equalsIgnoreCase("BOLD"))
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
         if (font_style.equalsIgnoreCase("ITALIC"))
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+            paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
         if (font_style.equalsIgnoreCase("BOLD_ITALIC"))
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));
+            paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC));
         if (font_style.equalsIgnoreCase("NORMAL"))
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
     }
 
     public static void setPaintBrush(int color, Paint.Align align, int size, boolean underline) {

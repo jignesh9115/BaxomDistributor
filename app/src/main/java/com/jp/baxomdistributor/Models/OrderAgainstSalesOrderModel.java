@@ -5,13 +5,14 @@ package com.jp.baxomdistributor.Models;
  */
 public class OrderAgainstSalesOrderModel {
 
-    String prod_id, prod_name, prod_unit, prod_gst, prod_ptr_rs, prod_biz_rs, prod_stock, prod_day_sale, prod_order_qty;
+    String prod_id, prod_name, prod_unit, prod_gst, prod_hsn_code, prod_ptr_rs, prod_biz_rs, prod_stock, prod_day_sale, prod_order_qty;
 
-    public OrderAgainstSalesOrderModel(String prod_id, String prod_name, String prod_unit, String prod_gst, String prod_ptr_rs, String prod_biz_rs, String prod_stock, String prod_day_sale, String prod_order_qty) {
+    public OrderAgainstSalesOrderModel(String prod_id, String prod_name, String prod_unit, String prod_gst, String prod_hsn_code, String prod_ptr_rs, String prod_biz_rs, String prod_stock, String prod_day_sale, String prod_order_qty) {
         this.prod_id = prod_id;
         this.prod_name = prod_name;
         this.prod_unit = prod_unit;
         this.prod_gst = prod_gst;
+        this.prod_hsn_code = prod_hsn_code;
         this.prod_ptr_rs = prod_ptr_rs;
         this.prod_biz_rs = prod_biz_rs;
         this.prod_stock = prod_stock;
@@ -49,6 +50,14 @@ public class OrderAgainstSalesOrderModel {
 
     public void setProd_gst(String prod_gst) {
         this.prod_gst = prod_gst;
+    }
+
+    public String getProd_hsn_code() {
+        return prod_hsn_code;
+    }
+
+    public void setProd_hsn_code(String prod_hsn_code) {
+        this.prod_hsn_code = prod_hsn_code;
     }
 
     public String getProd_ptr_rs() {
