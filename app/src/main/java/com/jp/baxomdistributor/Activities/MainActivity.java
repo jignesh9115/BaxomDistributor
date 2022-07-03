@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_refresh_data) {
 
             Intent intent = new Intent(MainActivity.this, RefreshDataActivity.class);
-            intent.putExtra("action", "Salesman");
+            intent.putExtra("action", "Distributor");
             startActivity(intent);
             finish();
 

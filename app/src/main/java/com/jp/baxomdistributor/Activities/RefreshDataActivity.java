@@ -779,42 +779,39 @@ public class RefreshDataActivity extends AppCompatActivity {
             binding1.btnChangeLang.setText("" + commanList.getArrayList().get(4));
         }
 
-        binding1.btnChangeLang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding1.btnChangeLang.setOnClickListener(v -> {
 
-                if (binding1.rbEng.isChecked()) {
+            if (binding1.rbEng.isChecked()) {
 
-                    SharedPreferences.Editor editor1 = sp_multi_lang.edit();
-                    editor1.putString("lang", "ENG");
-                    editor1.apply();
+                SharedPreferences.Editor editor1 = sp_multi_lang.edit();
+                editor1.putString("lang", "ENG");
+                editor1.apply();
 
-                } else if (binding1.rbGuj.isChecked()) {
+            } else if (binding1.rbGuj.isChecked()) {
 
-                    SharedPreferences.Editor editor1 = sp_multi_lang.edit();
-                    editor1.putString("lang", "GUJ");
-                    editor1.apply();
+                SharedPreferences.Editor editor1 = sp_multi_lang.edit();
+                editor1.putString("lang", "GUJ");
+                editor1.apply();
 
-                } else if (binding1.rbHindi.isChecked()) {
+            } else if (binding1.rbHindi.isChecked()) {
 
-                    SharedPreferences.Editor editor1 = sp_multi_lang.edit();
-                    editor1.putString("lang", "HINDI");
-                    editor1.apply();
-
-                }
-
-                if (action.equalsIgnoreCase("Distributor")) {
-
-                    startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
-                    finish();
-
-                } /*else {
-
-                    startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
-                    finish();
-                }*/
+                SharedPreferences.Editor editor1 = sp_multi_lang.edit();
+                editor1.putString("lang", "HINDI");
+                editor1.apply();
 
             }
+
+            if (action.equalsIgnoreCase("Distributor")) {
+
+                startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
+                finish();
+
+            } /*else {
+
+                startActivity(new Intent(RefreshDataActivity.this, MainActivity.class));
+                finish();
+            }*/
+
         });
 
         bottomSheetDialog.setContentView(view);
