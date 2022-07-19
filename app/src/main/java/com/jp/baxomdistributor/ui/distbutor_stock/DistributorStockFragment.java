@@ -1,7 +1,11 @@
 package com.jp.baxomdistributor.ui.distbutor_stock;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +24,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.gson.Gson;
 import com.jp.baxomdistributor.Adapters.DistributorStockAdapter;
 import com.jp.baxomdistributor.Models.DistributorStockModel;
+import com.jp.baxomdistributor.MultiLanguageUtils.Language;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
 import com.jp.baxomdistributor.Utils.ApiClient;
+import com.jp.baxomdistributor.Utils.Database;
 import com.jp.baxomdistributor.databinding.FragmentDistStockBinding;
 
 import org.json.JSONArray;
@@ -58,6 +64,12 @@ public class DistributorStockFragment extends Fragment {
 
     ProgressDialog pdialog;
 
+    SharedPreferences sp_multi_lang;
+    Language.CommanList commanList;
+    ArrayList<String> arrayList_lang_desc;
+    Database db;
+
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         distributorStockViewModel =
@@ -65,6 +77,21 @@ public class DistributorStockFragment extends Fragment {
 
         binding = FragmentDistStockBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        sp_multi_lang = requireActivity().getSharedPreferences("Language", Context.MODE_PRIVATE);
+        db = new Database(getActivity());
+
+        Language language = new Language(sp_multi_lang.getString("lang", ""), getActivity(), setLang(sp_multi_lang.getString("lang", "")));
+        commanList = language.getData();
+        if (setLang(sp_multi_lang.getString("lang", "")).size() > 0) {
+            binding.tvNameOfDistTitle.setText("" + commanList.getArrayList().get(0));
+            binding.tvRefresh.setText("" + commanList.getArrayList().get(1));
+            binding.tvNo.setText("" + commanList.getArrayList().get(3));
+            binding.tvProdName.setText("" + commanList.getArrayList().get(4));
+            binding.tvQty1.setText("" + commanList.getArrayList().get(5));
+            binding.tvQty2.setText("" + commanList.getArrayList().get(5));
+            binding.tv21days.setText("" + commanList.getArrayList().get(6));
+        }
 
         api = ApiClient.getClient(requireActivity()).create(Api.class);
 
@@ -175,6 +202,7 @@ public class DistributorStockFragment extends Fragment {
         Call<String> call = api.get_distributor_stock_by_id(dist_id);
 
         call.enqueue(new Callback<String>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
 
@@ -190,7 +218,7 @@ public class DistributorStockFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(response.body() + "");
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        binding.tvLastUpdates.setText("Last update on : " + jsonObject.getString("last_stock_updated"));
+                        binding.tvLastUpdates.setText(commanList.getArrayList().get(2) + jsonObject.getString("last_stock_updated"));
                         if (jsonArray.length() > 0) {
                             binding.rvDistStock.setVisibility(View.VISIBLE);
                             binding.llDistStockValue.setVisibility(View.VISIBLE);
@@ -324,4 +352,37 @@ public class DistributorStockFragment extends Fragment {
         ad.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
     }
 
+
+    public ArrayList<String> setLang(String key) {
+
+        arrayList_lang_desc = new ArrayList<>();
+        db.open();
+        Cursor cur = db.viewLanguage(key, "70");
+
+        if (cur.getCount() > 0) {
+
+            Log.i(TAG, "Count==>" + cur.getCount());
+
+            if (cur.moveToFirst()) {
+
+                do {
+
+                    if (key.equalsIgnoreCase("ENG"))
+                        arrayList_lang_desc.add(cur.getString(3));
+                    else if (key.equalsIgnoreCase("GUJ"))
+                        arrayList_lang_desc.add(cur.getString(4));
+                    else if (key.equalsIgnoreCase("HINDI"))
+                        arrayList_lang_desc.add(cur.getString(5));
+
+                }
+                while (cur.moveToNext());
+
+            }
+        }
+        cur.close();
+        db.close();
+
+        return arrayList_lang_desc;
+
+    }
 }

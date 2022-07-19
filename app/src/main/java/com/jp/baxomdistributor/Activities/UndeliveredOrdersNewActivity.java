@@ -42,6 +42,7 @@ import com.jp.baxomdistributor.BuildConfig;
 import com.jp.baxomdistributor.Interfaces.BitClickListener;
 import com.jp.baxomdistributor.Interfaces.SalesmanDateCheckedListener;
 import com.jp.baxomdistributor.Interfaces.SalesmanSelectionListener;
+import com.jp.baxomdistributor.Models.DelTotAmtDateWiseModel;
 import com.jp.baxomdistributor.Models.DeliverySummeryDetailPOJO;
 import com.jp.baxomdistributor.Models.DeliverySummeryPOJO;
 import com.jp.baxomdistributor.Models.DitributorTablePOJO;
@@ -139,6 +140,9 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
     ArrayList<DeliverySummeryPOJO> arrayList_delivery_summery;
     DeliverySummeryPOJO deliverySummeryPOJO;
+
+    ArrayList<DelTotAmtDateWiseModel> delTotAmtDateWiseModels;
+    DelTotAmtDateWiseModel delTotAmtDateWiseModel;
 
     ArrayList<DeliverySummeryDetailPOJO> arrayList_delivery_summery_detail;
     DeliverySummeryDetailPOJO deliverySummeryDetailPOJO;
@@ -1210,6 +1214,17 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
                     arrayList_delivery_summery.add(deliverySummeryPOJO);
 
+                    JSONArray del_amount_total_date_wise_arr = jsonObject.getJSONArray("del_amount_total_date_wise");
+
+                    delTotAmtDateWiseModels = new ArrayList<>();
+                    for (int i = 0; i < del_amount_total_date_wise_arr.length(); i++) {
+                        JSONObject object = del_amount_total_date_wise_arr.getJSONObject(i);
+                        delTotAmtDateWiseModels.add(delTotAmtDateWiseModel = new DelTotAmtDateWiseModel(
+                                object.getString("order_date"),
+                                object.getString("tot_order_amount")
+                        ));
+                    }
+
                     arrayList_good_summery = new ArrayList<>();
 
                     JSONObject goods_summary_object = jsonObject.getJSONObject("goods_summary");
@@ -1347,7 +1362,7 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
 
         Log.i(TAG, "tot_del_pages=>" + tot_del_pages);
 
-        int start_order = 0, end_order = 40;
+        int start_order = 0, end_order = 35;
 
         for (int i = 0; i < tot_del_pages; i++) {
 
@@ -1357,8 +1372,8 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
             createDelSummeryTable(start_order, end_order, tot_orders);
 
             if (tot_orders >= end_order) {
-                start_order += 40;
-                end_order += 40;
+                start_order += 35;
+                end_order += 35;
             }
         }
 
@@ -2030,6 +2045,24 @@ public class UndeliveredOrdersNewActivity extends AppCompatActivity implements B
                 tot_order_amount = tot_order_amount + Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt());
                 total_orders++;
 
+            }
+        }
+
+
+        int tot_order_top = 855, tot_date_top = 855, tot_amt_top = 855;
+
+        for (int i = 0; i < delTotAmtDateWiseModels.size(); i++) {
+            if (i == 0) {
+
+                PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top);
+                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top);
+                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top);
+
+            } else {
+
+                PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top += 20);
+                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top += 20);
+                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top += 20);
             }
         }
 

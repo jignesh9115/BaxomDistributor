@@ -1,9 +1,11 @@
 package com.jp.baxomdistributor.ui.bussiness_summery;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,8 +26,10 @@ import com.jp.baxomdistributor.Adapters.SchemeWiseBussSummeryAdapter;
 import com.jp.baxomdistributor.Models.DateWiseSummeryModel;
 import com.jp.baxomdistributor.Models.ProdWiseSummeryModel;
 import com.jp.baxomdistributor.Models.SchemeWiseBussSummeryModel;
+import com.jp.baxomdistributor.MultiLanguageUtils.Language;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
+import com.jp.baxomdistributor.Utils.Database;
 import com.jp.baxomdistributor.Utils.GDateTime;
 import com.jp.baxomdistributor.databinding.FragmentBussinessSummeryBinding;
 import com.jp.baxomdistributor.databinding.FragmentHomeBinding;
@@ -75,11 +79,15 @@ public class BussinessSummeryFragment extends Fragment {
     Retrofit retrofit = null;
     Api api;
 
-    SharedPreferences sp_distributor_detail;
+    SharedPreferences sp_distributor_detail, sp_multi_lang;
 
     String from_date = "", to_date = "", last_week_start = "", last_week_end = "";
     ProgressDialog pdialog;
 
+    ArrayList<String> arrayList_lang_desc;
+    Database db;
+
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -88,6 +96,10 @@ public class BussinessSummeryFragment extends Fragment {
         View root = binding.getRoot();
 
         sp_distributor_detail = requireActivity().getSharedPreferences("distributor_detail", Context.MODE_PRIVATE);
+        sp_multi_lang = requireActivity().getSharedPreferences("Language", Context.MODE_PRIVATE);
+        db = new Database(getActivity());
+
+        setLanguage(sp_multi_lang.getString("lang", ""));
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.Base_URL))
@@ -372,5 +384,84 @@ public class BussinessSummeryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void setLanguage(String key) {
+
+        Language language = new Language(key, getActivity(), setLang(key));
+        Language.CommanList commanList = language.getData();
+        if (setLang(key).size() > 0) {
+
+            binding.tvTitleFromDate.setText("" + commanList.getArrayList().get(0));
+            binding.tvTitleToDate.setText("" + commanList.getArrayList().get(1));
+            binding.cbToday.setText("" + commanList.getArrayList().get(2));
+            binding.cbThisWeek.setText("" + commanList.getArrayList().get(3));
+            binding.cbLastWeek.setText("" + commanList.getArrayList().get(21));
+            binding.cbThisMonth.setText("" + commanList.getArrayList().get(4));
+
+            binding.btnApply.setText("" + commanList.getArrayList().get(5));
+
+            binding.tvTitleDateWiseSummery.setText("" + commanList.getArrayList().get(6));
+            binding.tvTitleDateWiseDate.setText("" + commanList.getArrayList().get(7));
+            binding.tvTitleProdWisePts.setText("" + commanList.getArrayList().get(8));
+            binding.tvTitleDateWisePtsValue.setText("" + commanList.getArrayList().get(8));
+
+            binding.tvTitleProdWisePtr.setText("" + commanList.getArrayList().get(9));
+            binding.tvTitleDateWisePtrValue.setText("" + commanList.getArrayList().get(9));
+
+            binding.tvTitleProdWiseBiz.setText("" + commanList.getArrayList().get(10));
+            binding.tvTitleDateWiseBizValue.setText("" + commanList.getArrayList().get(10));
+
+            binding.tvTitleProdWiseTotal.setText("" + commanList.getArrayList().get(11));
+            binding.tvTitleDateWiseTotal.setText("" + commanList.getArrayList().get(11));
+
+            binding.tvTitleProdWiseSummery.setText("" + commanList.getArrayList().get(12));
+
+            binding.tvTitleProdWiseProoduct.setText("" + commanList.getArrayList().get(13));
+            binding.tvTitleProdWiseQuantity.setText("" + commanList.getArrayList().get(14));
+
+            binding.tvTitleSchemeSummery.setText("" + commanList.getArrayList().get(15));
+            binding.tvTitleSchemeDetail.setText("" + commanList.getArrayList().get(16));
+            binding.tvTitleSchemeWiseQuantity.setText("" + commanList.getArrayList().get(17));
+            binding.tvTitleSchemeBiz.setText("" + commanList.getArrayList().get(18));
+            binding.tvTitleSchemeDiscPts.setText("" + commanList.getArrayList().get(19));
+            binding.tvTitleSchemeDiscBiz.setText("" + commanList.getArrayList().get(20));
+
+
+        }
+    }
+
+    public ArrayList<String> setLang(String key) {
+
+        arrayList_lang_desc = new ArrayList<>();
+        db.open();
+        Cursor cur = db.viewLanguage(key, "69");
+
+        if (cur.getCount() > 0) {
+
+            Log.i(TAG, "Count==>" + cur.getCount());
+
+            if (cur.moveToFirst()) {
+
+                do {
+
+                    if (key.equalsIgnoreCase("ENG"))
+                        arrayList_lang_desc.add(cur.getString(3));
+                    else if (key.equalsIgnoreCase("GUJ"))
+                        arrayList_lang_desc.add(cur.getString(4));
+                    else if (key.equalsIgnoreCase("HINDI"))
+                        arrayList_lang_desc.add(cur.getString(5));
+
+                }
+                while (cur.moveToNext());
+
+            }
+        }
+        cur.close();
+        db.close();
+
+        return arrayList_lang_desc;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.jp.baxomdistributor.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -72,6 +73,7 @@ public class SplashActivity extends AppCompatActivity {
     Retrofit retrofit = null;
     Api api;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +183,6 @@ public class SplashActivity extends AppCompatActivity {
                             }
                             return true;
                         }).create();
-
             default:
                 return null;
         }
@@ -446,7 +447,7 @@ public class SplashActivity extends AppCompatActivity {
                 JSONObject object = jsonArray.getJSONObject(i);
 
                 db.open();
-                db.addMultiLanguage(object.getString("screen_id"),
+                    db.addMultiLanguage(object.getString("screen_id"),
                         object.getString("screen_name"),
                         object.getString("lang_eng"),
                         object.getString("lang_guj"),

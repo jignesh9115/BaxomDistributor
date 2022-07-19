@@ -17,8 +17,10 @@
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.14635416666666667" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/button_border_rectangle_black.xml" value="0.24074074074074073" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/button_border_rectangle_nevy_blue.xml" value="0.24074074074074073" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/cb_selecter.xml" value="0.1465" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/edt_bg_rectangle.xml" value="0.26614583333333336" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/ic_add_location.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/ic_selector.xml" value="0.1465" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/image_border_rectangle_white.xml" value="0.14635416666666667" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/img_border.xml" value="0.26614583333333336" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/drawable/left_top_corner_bg.xml" value="0.1615" />
@@ -98,7 +100,7 @@
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_undelivered_orders_by_group_date.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_undelivered_orders_by_salesman.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/entity_view_order_schemes_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/fragment_bussiness_summery.xml" value="0.264" />
+        <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/fragment_bussiness_summery.xml" value="0.2" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/fragment_delivered_sales_orders.xml" value="0.18703703703703703" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/fragment_dist_scheme_stock.xml" value="0.18532818532818532" />
         <entry key="..\:/Android/divyesh android project/BaxomDistributor/app/src/main/res/layout/fragment_dist_stock.xml" value="0.2" />

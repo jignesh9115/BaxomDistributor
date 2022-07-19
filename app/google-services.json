@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "488442631766",
+    "project_id": "baxom-distributor-2e514",
+    "storage_bucket": "baxom-distributor-2e514.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488442631766:android:64d13859351f63fd40cdf7",
+        "android_client_info": {
+          "package_name": "com.jp.baxomdistributor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488442631766-jpcc6u75oo3vs5e8qsgmqvdauto9br7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jp.baxomdistributor",
+            "certificate_hash": "abcade5148a579595000ea0b82b08612a3a57cf7"
+          }
+        },
+        {
+          "client_id": "488442631766-ol7v1nintbc370mu3vb2423e5lponoi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX-vJiyZdB5HdzLyj01I5KAE4-uCkNRmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488442631766-ol7v1nintbc370mu3vb2423e5lponoi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

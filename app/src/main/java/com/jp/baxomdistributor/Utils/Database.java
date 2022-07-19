@@ -120,8 +120,7 @@ public class Database {
 
     public Cursor viewAllLanguage() {
         String query = "select * from " + TABLE_NAME_MULTI_LANGUAGE_TABLE;
-        Cursor cur = db.rawQuery(query, null);
-        return cur;
+        return db.rawQuery(query, null);
     }
 
     public void deleteMultiLang() {

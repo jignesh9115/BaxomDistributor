@@ -2,6 +2,9 @@ package com.jp.baxomdistributor.ui.distributor_scheme_stock;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +25,11 @@ import com.jp.baxomdistributor.Adapters.DistributorSchemeStockAdapter;
 import com.jp.baxomdistributor.Adapters.DistributorStockAdapter;
 import com.jp.baxomdistributor.Models.DistributorSchemeStockModel;
 import com.jp.baxomdistributor.Models.DistributorStockModel;
+import com.jp.baxomdistributor.MultiLanguageUtils.Language;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
 import com.jp.baxomdistributor.Utils.ApiClient;
+import com.jp.baxomdistributor.Utils.Database;
 import com.jp.baxomdistributor.databinding.FragmentDistSchemeStockBinding;
 import com.jp.baxomdistributor.databinding.FragmentDistStockBinding;
 
@@ -59,6 +64,12 @@ public class DistributorSchemeStockFragment extends Fragment {
 
     ProgressDialog pdialog;
 
+    SharedPreferences sp_multi_lang;
+    Language.CommanList commanList;
+    ArrayList<String> arrayList_lang_desc;
+    Database db;
+
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         distributorStockViewModel =
@@ -67,8 +78,23 @@ public class DistributorSchemeStockFragment extends Fragment {
         binding = FragmentDistSchemeStockBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        api = ApiClient.getClient(requireActivity()).create(Api.class);
 
+        sp_multi_lang = requireActivity().getSharedPreferences("Language", Context.MODE_PRIVATE);
+        db = new Database(getActivity());
+
+        Language language = new Language(sp_multi_lang.getString("lang", ""), getActivity(), setLang(sp_multi_lang.getString("lang", "")));
+        commanList = language.getData();
+        if (setLang(sp_multi_lang.getString("lang", "")).size() > 0) {
+            binding.tvNameOfDistTitle.setText("" + commanList.getArrayList().get(0));
+            binding.tvRefresh.setText("" + commanList.getArrayList().get(1));
+            binding.tvNo.setText("" + commanList.getArrayList().get(3));
+            binding.tvSchemeName.setText("" + commanList.getArrayList().get(4));
+            binding.tvQty1.setText("" + commanList.getArrayList().get(5));
+            binding.tvQty2.setText("" + commanList.getArrayList().get(5));
+        }
+
+
+        api = ApiClient.getClient(requireActivity()).create(Api.class);
         get_distributor_list();
 
         binding.spnDistNameStock.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -192,7 +218,7 @@ public class DistributorSchemeStockFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(response.body() + "");
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        binding.tvLastUpdates.setText("Last update on : " + jsonObject.getString("last_stock_updated"));
+                        binding.tvLastUpdates.setText(commanList.getArrayList().get(2) + jsonObject.getString("last_stock_updated"));
                         if (jsonArray.length() > 0) {
                             binding.rvDistSchemeStock.setVisibility(View.VISIBLE);
                             binding.btnUpdateStock.setVisibility(View.VISIBLE);
@@ -320,4 +346,36 @@ public class DistributorSchemeStockFragment extends Fragment {
         ad.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
     }
 
+    public ArrayList<String> setLang(String key) {
+
+        arrayList_lang_desc = new ArrayList<>();
+        db.open();
+        Cursor cur = db.viewLanguage(key, "72");
+
+        if (cur.getCount() > 0) {
+
+            Log.i(TAG, "Count==>" + cur.getCount());
+
+            if (cur.moveToFirst()) {
+
+                do {
+
+                    if (key.equalsIgnoreCase("ENG"))
+                        arrayList_lang_desc.add(cur.getString(3));
+                    else if (key.equalsIgnoreCase("GUJ"))
+                        arrayList_lang_desc.add(cur.getString(4));
+                    else if (key.equalsIgnoreCase("HINDI"))
+                        arrayList_lang_desc.add(cur.getString(5));
+
+                }
+                while (cur.moveToNext());
+
+            }
+        }
+        cur.close();
+        db.close();
+
+        return arrayList_lang_desc;
+
+    }
 }

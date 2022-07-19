@@ -148,11 +148,13 @@
                 android:resource="@xml/provider_path" />
         </provider>
 
-        <service android:name="com.google.android.gms.measurement.AppMeasurementService"
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
-        <receiver android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.measurement.UPLOAD" />

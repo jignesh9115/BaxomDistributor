@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             //drawer_menu.findItem(R.id.nav_undelivered_sales_orders).setTitle("" + commanList.getArrayList().get(1));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders_new).setTitle("" + commanList.getArrayList().get(12));
             drawer_menu.findItem(R.id.nav_undelivered_sales_orders_3_1_0).setTitle("" + commanList.getArrayList().get(13));
-            drawer_menu.findItem(R.id.nav_bussiness_summery).setTitle("Bussiness Summery");
+            drawer_menu.findItem(R.id.nav_bussiness_summery).setTitle("" + commanList.getArrayList().get(14));
             //drawer_menu.findItem(R.id.nav_delivered_sales_orders).setTitle("" + commanList.getArrayList().get(2));
             //drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setTitle("" + commanList.getArrayList().get(11));
             //drawer_menu.findItem(R.id.nav_delivery_fail_sales_orders).setTitle("" + commanList.getArrayList().get(3));
@@ -250,13 +250,15 @@ public class MainActivity extends AppCompatActivity {
             //drawer_menu.findItem(R.id.nav_add_new_purchase_orders).setTitle("" + commanList.getArrayList().get(5));
             //drawer_menu.findItem(R.id.nav_my_purchase_order).setTitle("" + commanList.getArrayList().get(6));
             //drawer_menu.findItem(R.id.nav_my_fullfilled_purchase_orders).setTitle("" + commanList.getArrayList().get(7));
-            drawer_menu.findItem(R.id.nav_dist_stock).setTitle("Distributor Stock");
-            drawer_menu.findItem(R.id.nav_dist_scheme_stock).setTitle("Distributor Scheme Stock");
-            drawer_menu.findItem(R.id.nav_order_against_sales).setTitle("Order Against Sales");
+            drawer_menu.findItem(R.id.nav_dist_stock).setTitle("" + commanList.getArrayList().get(15));
+            drawer_menu.findItem(R.id.nav_dist_scheme_stock).setTitle("" + commanList.getArrayList().get(16));
+            drawer_menu.findItem(R.id.nav_order_against_sales).setTitle("" + commanList.getArrayList().get(17));
             drawer_menu.findItem(R.id.nav_logout).setTitle("" + commanList.getArrayList().get(9));
             drawer_menu.findItem(R.id.nav_change_lang).setTitle("" + commanList.getArrayList().get(10));
 
             binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(0) + "");
+
+            drawer_menu.findItem(R.id.nav_order_against_sales).setVisible(false);
 
             /*if (sp_distributor_detail.getString("parent_id", "").equalsIgnoreCase("0"))
                 drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setVisible(false);*/
@@ -296,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new BussinessSummeryFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle("Bussiness Summery");
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(14));
                     drawer.close();
 
                 } /*else if (item.getItemId() == R.id.nav_delivered_sales_orders) {
@@ -324,21 +326,21 @@ public class MainActivity extends AppCompatActivity {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new OrderAgainstSalesFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle("Order Against Sales");
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(17));
                     drawer.close();
 
                 } else if (item.getItemId() == R.id.nav_dist_stock) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DistributorStockFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle("Distributor Stock");
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(15));
                     drawer.close();
 
                 } else if (item.getItemId() == R.id.nav_dist_scheme_stock) {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new DistributorSchemeStockFragment()).commit();
-                    binding.appBarMain.toolbar.setTitle("Distributor Scheme Stock");
+                    binding.appBarMain.toolbar.setTitle("" + commanList.getArrayList().get(16));
                     drawer.close();
 
                 }
