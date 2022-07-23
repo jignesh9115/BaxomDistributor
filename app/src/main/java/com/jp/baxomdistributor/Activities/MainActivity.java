@@ -258,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
 
             binding.appBarMain.toolbar.setTitle(commanList.getArrayList().get(0) + "");
 
-            drawer_menu.findItem(R.id.nav_order_against_sales).setVisible(false);
-
             /*if (sp_distributor_detail.getString("parent_id", "").equalsIgnoreCase("0"))
                 drawer_menu.findItem(R.id.nav_my_sales_orders_dist).setVisible(false);*/
 

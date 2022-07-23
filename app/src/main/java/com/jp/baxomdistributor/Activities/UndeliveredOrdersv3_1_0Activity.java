@@ -60,7 +60,6 @@ import com.jp.baxomdistributor.MultiLanguageUtils.Language;
 import com.jp.baxomdistributor.R;
 import com.jp.baxomdistributor.Utils.Api;
 import com.jp.baxomdistributor.Utils.Database;
-import com.jp.baxomdistributor.Utils.FileUtils;
 import com.jp.baxomdistributor.Utils.GDateTime;
 import com.jp.baxomdistributor.Utils.PdfUtils;
 import com.jp.baxomdistributor.databinding.ActivityUndeliveredOrdersNewBinding;
@@ -1050,9 +1049,9 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         Call<String> call;
 
         if (action.equalsIgnoreCase("merge shop"))
-            call = api.getMergeShop_SalesOrderpdf_by_group_dates_v3_1_0(dist_id, sales_dates, sales_pdf_dates);
+            call = api.getMergeShop_SalesOrderpdf_by_group_dates_v3_1_0(dist_id, sales_pdf_dates);
         else
-            call = api.getSalesOrderpdf_by_group_dates_v3_1_0(dist_id, sales_dates, sales_pdf_dates);
+            call = api.getSalesOrderpdf_by_group_dates_v3_1_0(dist_id, sales_pdf_dates);
 
         call.enqueue(new Callback<String>() {
             @Override
@@ -1314,7 +1313,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
         //===========code for Distributor table starts==
         int start_dist = 0, end_dist = 4;
-        double tot_dist_pages = (Double.valueOf(tot_dist) / 4);
+        double tot_dist_pages = ((double) tot_dist / 4);
 
         Log.i(TAG, "tot_dist_pages==>" + tot_dist_pages);
         Log.i(TAG, "tot_dist_pages==>" + String.valueOf(tot_dist_pages).split("\\.")[1]);
@@ -1333,44 +1332,93 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         }
 
         //===========code for Delivery Summery table starts==
-        int tot_orders = Integer.parseInt(arrayList_delivery_summery.get(0).getTotal_orders());
+        int tot_orders = arrayList_delivery_summery_detail.size();
         int tot_del_pages = 0;
 
-        if (tot_orders < 40)
-            tot_del_pages = 1;
-        else if (tot_orders > 40 && tot_orders <= 80)
-            tot_del_pages = 2;
+        if (tot_orders <= 40)
+            if (tot_orders <= 35)
+                tot_del_pages = 1;
+            else
+                tot_del_pages = 2;
+        else if (tot_orders > 41 && tot_orders <= 80)
+            if (tot_orders <= 75)
+                tot_del_pages = 2;
+            else
+                tot_del_pages = 3;
         else if (tot_orders > 80 && tot_orders <= 120)
-            tot_del_pages = 3;
+            if (tot_orders <= 115)
+                tot_del_pages = 3;
+            else
+                tot_del_pages = 4;
         else if (tot_orders > 120 && tot_orders <= 160)
-            tot_del_pages = 4;
+            if (tot_orders <= 155)
+                tot_del_pages = 4;
+            else
+                tot_del_pages = 5;
         else if (tot_orders > 160 && tot_orders <= 200)
-            tot_del_pages = 5;
+            if (tot_orders <= 195)
+                tot_del_pages = 5;
+            else
+                tot_del_pages = 6;
         else if (tot_orders > 200 && tot_orders <= 240)
-            tot_del_pages = 6;
+            if (tot_orders <= 235)
+                tot_del_pages = 6;
+            else
+                tot_del_pages = 7;
         else if (tot_orders > 240 && tot_orders <= 280)
-            tot_del_pages = 7;
+            if (tot_orders <= 275)
+                tot_del_pages = 7;
+            else
+                tot_del_pages = 8;
         else if (tot_orders > 280 && tot_orders <= 320)
-            tot_del_pages = 8;
+            if (tot_orders <= 315)
+                tot_del_pages = 9;
+            else
+                tot_del_pages = 10;
         else if (tot_orders > 320 && tot_orders <= 360)
-            tot_del_pages = 9;
+            if (tot_orders <= 355)
+                tot_del_pages = 10;
+            else
+                tot_del_pages = 11;
         else if (tot_orders > 360 && tot_orders <= 400)
-            tot_del_pages = 10;
+            if (tot_orders <= 395)
+                tot_del_pages = 11;
+            else
+                tot_del_pages = 12;
 
         Log.i(TAG, "tot_del_pages=>" + tot_del_pages);
 
-        int start_order = 0, end_order = 35;
-
+        int start_order = 0, end_order = 40;
+        boolean print_tot = false, is_order_printed = false;
         for (int i = 0; i < tot_del_pages; i++) {
 
-            Log.i(TAG, "start_order==>" + start_order);
             Log.i(TAG, "end_order==>" + end_order);
+            Log.d(TAG, "tot_orders==>" + tot_orders);
 
-            createDelSummeryTable(start_order, end_order, tot_orders);
+            if ((i + 1) == tot_del_pages) {
+                print_tot = true;
+
+                if ((tot_orders > 35 && tot_orders < 40) || (tot_orders > 75 && tot_orders < 80)
+                        || (tot_orders > 115 && tot_orders < 120) || (tot_orders > 155 && tot_orders < 160)
+                        || (tot_orders > 195 && tot_orders < 200) || (tot_orders > 235 && tot_orders < 240)
+                        || (tot_orders > 275 && tot_orders < 280) || (tot_orders > 315 && tot_orders < 320)
+                        || (tot_orders > 355 && tot_orders < 360) || (tot_orders > 395 && tot_orders < 400)) {
+                    is_order_printed = true;
+                }
+            }
+
+            createDelSummeryTable(start_order, end_order, print_tot, is_order_printed);
 
             if (tot_orders >= end_order) {
-                start_order += 35;
-                end_order += 35;
+
+                if ((i + 1) == tot_del_pages) {
+                    start_order += 35;
+                    end_order += 35;
+                } else {
+                    start_order += 40;
+                    end_order += 40;
+                }
+
             }
         }
 
@@ -1391,13 +1439,6 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
             e.printStackTrace();
         }
         PdfUtils.closePage();
-
-        /*} catch (Exception e) {
-
-            Log.i(TAG, "Error Occured: " + e.getMessage());
-            Toast.makeText(this, "Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-        }*/
     }
 
     private void createDistributorTable(int tot_dist, int start_dist, int end_dist) {
@@ -1412,7 +1453,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
             if (i < tot_dist) {
 
-                if (i == (start_dist + 0)) {
+                if (i == (start_dist)) {
 
                     //===========code for distributor left top table starts==
                     createdisttableLeftTop(i);
@@ -1440,12 +1481,13 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createdisttableLeftTop(int pos) {
 
         PdfUtils.drawImage(getDrawable(R.drawable.dist_table), 20, 20, 325, 457);
         PdfUtils.drawText("NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_name() + "("
                 + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_number() + ")" + "    No.: "
-                + arrayList_dist_table.get(pos).getArrayList().get(0).getShop_no(), 25, 35);
+                + (pos + 1), 25, 35);
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id().length() < 9)
             PdfUtils.drawText(arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id(), 90, 50);
@@ -1559,12 +1601,13 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         }
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createdisttableRightTop(int pos) {
 
         PdfUtils.drawImage(getDrawable(R.drawable.dist_table), 340, 20, 640, 457);
         PdfUtils.drawText("NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_name() + "("
                 + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_number() + ")" + "    No.: "
-                + arrayList_dist_table.get(pos).getArrayList().get(0).getShop_no(), 345, 35);
+                + (pos + 1), 345, 35);
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id().length() < 9)
             PdfUtils.drawText(arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id(), 410, 50);
@@ -1582,7 +1625,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
         PdfUtils.drawText("SHOP NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getTitle(), 345, 85);
 
-        Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
+        //Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length() < 35) {
 
@@ -1675,12 +1718,13 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         }
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createdisttableLeftBottom(int pos) {
 
         PdfUtils.drawImage(getDrawable(R.drawable.dist_table), 20, 480, 325, 950);
         PdfUtils.drawText("NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_name() + "("
                 + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_number() + ")" + "    No.: "
-                + arrayList_dist_table.get(pos).getArrayList().get(0).getShop_no(), 25, 495);
+                + (pos + 1), 25, 495);
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id().length() < 9)
             PdfUtils.drawText(arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id(), 90, 513);
@@ -1698,7 +1742,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
         PdfUtils.drawText("SHOP NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getTitle(), 25, 548);
 
-        Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
+        //Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length() < 36) {
 
@@ -1791,12 +1835,13 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
         }
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createdisttableRightBottom(int pos) {
 
         PdfUtils.drawImage(getDrawable(R.drawable.dist_table), 340, 480, 640, 950);
         PdfUtils.drawText("NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_name() + "("
                 + arrayList_dist_table.get(pos).getArrayList().get(0).getDist_number() + ")" + "    No.: "
-                + arrayList_dist_table.get(pos).getArrayList().get(0).getShop_no(), 345, 495);
+                + (pos + 1), 345, 495);
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id().length() < 9)
             PdfUtils.drawText(arrayList_dist_table.get(pos).getArrayList().get(0).getOrder_id(), 410, 513);
         else
@@ -1813,7 +1858,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
 
         PdfUtils.drawText("SHOP NAME : " + arrayList_dist_table.get(pos).getArrayList().get(0).getTitle(), 345, 548);
 
-        Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
+        //Log.i(TAG, "getAddress.length()==>" + arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length());
 
         if (arrayList_dist_table.get(pos).getArrayList().get(0).getAddress().length() < 35) {
 
@@ -1907,7 +1952,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
     }
 
     @SuppressLint({"DefaultLocale", "UseCompatLoadingForDrawables"})
-    private void createDelSummeryTable(int start, int end, int tot_order) {
+    private void createDelSummeryTable(int start, int end, boolean print_tot, boolean is_order_printed) {
 
         //create page
         PdfUtils.createPdfPage(0, 660, 975);
@@ -1974,7 +2019,7 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
             /*PdfUtils.drawText(arrayList_delivery_summery.get(0).getTotal_orders(), 105, 100);
             PdfUtils.drawText(String.format("%.2f", Double.parseDouble(arrayList_delivery_summery.get(0).getOrder_amt())), 203, 100);*/
 
-        int orderno_top = 155, shopname_top = 155, salesman_top = 155, order_date_top = 155, orderamt_top = 155, total_orders = 0;
+        int orderno_top = 155, shopname_top = 155, salesman_top = 155, order_date_top = 155, orderamt_top = 155;
         double tot_order_amount = 0.0;
 
         int draw_line_top = 160, draw_line_top1 = 160;
@@ -1983,28 +2028,30 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
             PdfUtils.drawLine(40, draw_line_top += 20, 620, draw_line_top1 += 20);
         }
 
-        for (int i = start; i < end; i++) {
-            if (i < tot_order) {
+        if (!is_order_printed) {
+            for (int i = start; i < end; i++) {
 
-                if (i == start) {
+                if (i < arrayList_delivery_summery_detail.size()) {
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_no(), 45, orderno_top);
+                    if (i == start) {
 
-                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top);
-                    else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top);
+                        PdfUtils.drawText((i + 1) + "", 45, orderno_top);
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top);
+                        if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top);
+                        else
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top);
 
-                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top);
-                    else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top);
 
-                    PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top);
+                        if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top);
+                        else
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top);
 
-                } /*else if (i > (start + 9) && i < (start + 19)) {
+                        PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top);
+
+                    } /*else if (i > (start + 9) && i < (start + 19)) {
 
                     PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_no(), 45, orderno_top += 19);
 
@@ -2021,52 +2068,53 @@ public class UndeliveredOrdersv3_1_0Activity extends AppCompatActivity implement
                     PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top += 19);
                 } */ else {
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_no(), 45, orderno_top += 20);
+                        PdfUtils.drawText((i + 1) + "", 45, orderno_top += 20);
 
-                    if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top += 20);
-                    else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top += 20);
+                        if (arrayList_delivery_summery_detail.get(i).getShop_name().length() > 22)
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name().substring(0, 22) + "...", 92, shopname_top += 20);
+                        else
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getShop_name(), 92, shopname_top += 20);
 
-                    PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top += 20);
+                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getOrder_date(), 260, order_date_top += 20);
 
-                    if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top += 20);
-                    else
-                        PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top += 20);
+                        if (arrayList_delivery_summery_detail.get(i).getSalesman().length() > 12)
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman().substring(0, 9) + "...", 318, salesman_top += 20);
+                        else
+                            PdfUtils.drawText(arrayList_delivery_summery_detail.get(i).getSalesman(), 318, salesman_top += 20);
 
-                    PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top += 20);
+                        PdfUtils.drawText(String.format("%.0f", Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt())), 405, orderamt_top += 20);
+                    }
+
+                    tot_order_amount = tot_order_amount + Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt());
                 }
-
-
-                tot_order_amount = tot_order_amount + Double.parseDouble(arrayList_delivery_summery_detail.get(i).getOrder_amt());
-                total_orders++;
-
-            }
-        }
-        int tot_order_top = 855, tot_date_top = 855, tot_amt_top = 855;
-
-        for (int i = 0; i < delTotAmtDateWiseModels.size(); i++) {
-            if (i == 0) {
-
-                PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top);
-                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top);
-                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top);
-
-            } else {
-
-                PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top += 20);
-                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top += 20);
-                PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top += 20);
             }
         }
 
-        PdfUtils.drawText(total_orders + "", 105, 100);
-        PdfUtils.drawText(String.format("%.2f", tot_order_amount), 210, 100);
+        if (print_tot) {
+            int tot_order_top = 855, tot_date_top = 855, tot_amt_top = 855;
+            for (int i = 0; i < delTotAmtDateWiseModels.size(); i++) {
+                if (i == 0) {
+
+                    PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top);
+                    PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top);
+                    PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top);
+
+                } else {
+
+                    PdfUtils.drawText("TOTAL ORDER", 150, tot_order_top += 20);
+                    PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getDate(), 252, tot_date_top += 20);
+                    PdfUtils.drawText("" + delTotAmtDateWiseModels.get(i).getTot_amount(), 405, tot_amt_top += 20);
+                }
+            }
+        }
+
+        PdfUtils.drawText(arrayList_delivery_summery_detail.size() + "", 105, 100);
+        PdfUtils.drawText(arrayList_delivery_summery.get(0).getOrder_amt(), 205, 100);
 
         PdfUtils.finishPage();
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     private void createPDFUtiltGoodSummeryTable() {
 
         //create page

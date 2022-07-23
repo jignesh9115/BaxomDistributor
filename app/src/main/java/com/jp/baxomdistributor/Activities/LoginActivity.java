@@ -351,6 +351,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=baxom&c=apps")));
                 finish();
             } catch (Exception e) {
+                Log.d(TAG, "showDialog: " + e.getMessage());
             }
 
         });
